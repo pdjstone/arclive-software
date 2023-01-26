@@ -1,0 +1,15 @@
+# Game demos
+
+[lander]
+title="Lander"
+author="David Braben"
+year=1989
+disc="http://acorn.revivalteam.de/Download/Images/Lander.zip"
+tags="game,demo"
+
+[lemmings-demo]
+title="Lemmings/Oh No! More Lemmings (Demo)"
+publisher="Krisalis"
+year=1991
+disc="http://acorn.revivalteam.de/Download/Images/GameDemos16.zip"
+tags="game,demo"
