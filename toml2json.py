@@ -69,6 +69,7 @@ VALID_MACHINE = (
     'a5000',
 )
 
+VALID_FILE_EXTS = ('.arc', '.zip', '.adf')
 
 def find_toml_files(root_dir):
     for root, dirs, files in os.walk(root_dir):
@@ -141,47 +142,72 @@ def parse_toml(root, file):
     return data
 
 def fetch_file(root, path, software_id, known_hash):
-    if path.startswith('http://') or path.startswith('https://'):
-        return download_to_out_dir(root, path, software_id, known_hash)
-    else:
-        return copy_to_out_dir(root, path, software_id)
-
-def download_to_out_dir(root, url, software_id, known_hash):
-    base_name, ext = os.path.splitext(os.path.basename(url))
-    if len(ext) == 0:
-        raise Exception(f"bad extension on URL {url} ({software_id}")
-    new_name = f'{software_id}{ext}'
-    
-    cache_path = os.path.join(CACHE_DIR, new_name)
+    new_name = filename_to_canonical(path, software_id)
     dst_path = os.path.join(out_dir, new_name)
-    if os.path.isfile(cache_path):
-        print(f'Have cached version of {url}. Copying {cache_path} to {dst_path}')
+    cache_path, hash = fetch_cached(path, software_id, known_hash)
+
+    if cache_path:
+        return cache_path, hash
+    if path.startswith('http://') or path.startswith('https://'):
+        cache_path, hash = fetch_url(root, path, software_id, known_hash)
     else:
-        print(f'Downloading {url}')
-        r = requests.get(url)
-        r.raise_for_status()
-        with open(cache_path, 'wb') as f:
-            f.write(r.content)
-    
+        cache_path, hash = fetch_local(root, path, software_id, known_hash)
     shutil.copy(cache_path, dst_path)
-    with open(dst_path,'rb') as f:
+    return dst_path, hash
+
+
+def filename_to_canonical(filename_or_url, software_id):
+    base_name, ext = os.path.splitext(os.path.basename(filename_or_url))
+    if len(ext) == 0 or ext.lower() not in VALID_FILE_EXTS:
+        raise Exception(f"bad extension: {filename_or_url} ({software_id}")
+    new_name = f'{software_id}{ext}'    
+    return new_name
+
+
+def fetch_cached(path, software_id, known_hash=None):
+    new_name = filename_to_canonical(path, software_id)
+    cache_path = os.path.join(CACHE_DIR, new_name)
+    if not os.path.isfile(cache_path):
+        return None, None
+    with open(cache_path,'rb') as f:
         hash = hashlib.sha256(f.read()).hexdigest()
+    if known_hash is not None and known_hash != hash:
+        print(f'warning - wrong hash for cached file {software_id}')
+        return None, None
+    return cache_path, hash
+
+def fetch_url(root, url, software_id, known_hash=None):
+    new_name = filename_to_canonical(url, software_id)
+    cache_path = os.path.join(CACHE_DIR, new_name)
+
+    print(f'Downloading {url}')
+    r = requests.get(url)
+    r.raise_for_status()
+    file_data = r.content
+    hash = hashlib.sha256(file_data).hexdigest()
+
+    if known_hash and hash != known_hash:
+        raise Exception(f'incorrect hash for {software_id} downloaded from {url}')
+        
+    with open(cache_path, 'wb') as f:
+        f.write(file_data)
+   
     return new_name, hash
 
-def copy_to_out_dir(root, path, software_id) -> str:
+def fetch_local(root, path, software_id, known_hash) -> str:
     global out_dir
     src_path = os.path.join(root, path)
+    new_name = filename_to_canonical(path, software_id)
+    cache_path = os.path.join(CACHE_DIR, new_name)
+
     if not os.path.isfile(src_path):
         raise Exception(f"file {src_path} does not exist ({software_id})")
-    base_name, ext = os.path.splitext(os.path.basename(src_path))
-    if len(ext) == 0:
-        raise Exception(f"bad extension on file {src_path} ({software_id}")
-    new_name = f'{software_id}{ext}'
-    dst_path = os.path.join(out_dir, new_name)
-    print(f'Copying {src_path} to {dst_path}')
-    shutil.copy(src_path, dst_path)
+
+    shutil.copy(src_path, cache_path)
     with open(src_path,'rb') as f:
         hash = hashlib.sha256(f.read()).hexdigest()
+    if hash != known_hash:
+        raise Exception(f"Incorrect hash for {software_id} at {path}")
     return new_name, hash 
 
 if __name__ == '__main__':
