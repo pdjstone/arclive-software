@@ -146,14 +146,13 @@ def fetch_file(root, path, software_id, known_hash):
     dst_path = os.path.join(out_dir, new_name)
     cache_path, hash = fetch_cached(path, software_id, known_hash)
 
-    if cache_path:
-        return cache_path, hash
-    if path.startswith('http://') or path.startswith('https://'):
-        cache_path, hash = fetch_url(root, path, software_id, known_hash)
-    else:
-        cache_path, hash = fetch_local(root, path, software_id, known_hash)
+    if not cache_path:     
+        if path.startswith('http://') or path.startswith('https://'):
+            cache_path, hash = fetch_url(root, path, software_id, known_hash)
+        else:
+            cache_path, hash = fetch_local(root, path, software_id, known_hash)
     shutil.copy(cache_path, dst_path)
-    return dst_path, hash
+    return new_name, hash
 
 
 def filename_to_canonical(filename_or_url, software_id):
@@ -206,7 +205,7 @@ def fetch_local(root, path, software_id, known_hash) -> str:
     shutil.copy(src_path, cache_path)
     with open(src_path,'rb') as f:
         hash = hashlib.sha256(f.read()).hexdigest()
-    if hash != known_hash:
+    if known_hash and hash != known_hash:
         raise Exception(f"Incorrect hash for {software_id} at {path}")
     return new_name, hash 
 
