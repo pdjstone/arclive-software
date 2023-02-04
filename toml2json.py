@@ -148,8 +148,10 @@ def fetch_file(root, path, software_id, known_hash):
 
     if not cache_path:     
         if path.startswith('http://') or path.startswith('https://'):
+            #print(f'fetching {software_id} from {path}')
             cache_path, hash = fetch_url(root, path, software_id, known_hash)
         else:
+            #print(f'fetching {software_id} from local path {path}')
             cache_path, hash = fetch_local(root, path, software_id, known_hash)
     shutil.copy(cache_path, dst_path)
     return new_name, hash
@@ -191,7 +193,7 @@ def fetch_url(root, url, software_id, known_hash=None):
     with open(cache_path, 'wb') as f:
         f.write(file_data)
    
-    return new_name, hash
+    return cache_path, hash
 
 def fetch_local(root, path, software_id, known_hash) -> str:
     global out_dir
@@ -201,13 +203,13 @@ def fetch_local(root, path, software_id, known_hash) -> str:
 
     if not os.path.isfile(src_path):
         raise Exception(f"file {src_path} does not exist ({software_id})")
-
+    #print(f'copying {src_path} to {cache_path}')
     shutil.copy(src_path, cache_path)
     with open(src_path,'rb') as f:
         hash = hashlib.sha256(f.read()).hexdigest()
     if known_hash and hash != known_hash:
         raise Exception(f"Incorrect hash for {software_id} at {path}")
-    return new_name, hash 
+    return cache_path, hash 
 
 if __name__ == '__main__':
     src_dir = None

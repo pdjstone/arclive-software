@@ -12,3 +12,12 @@ title="Bloxed"
 description="Fun Tetris clone"
 year=1995
 author="Steven Singer"
+
+[dinosaw]
+title="DinoSaw"
+tags="game,public-domain"
+year=1993
+author="Tom Cooper,Mark Smith"
+disc="GameDemos03.zip"
+description="""It's a prehistoric platformer... either jump over nasty things or hack 'em to death with yer chainsaw. 
+You can tell when yer hurting something cos it bleeds! Nice huh?"""
