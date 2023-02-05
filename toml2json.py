@@ -28,6 +28,7 @@ CACHE_DIR = 'dlcache'
 
 MANDATORY_FIELDS = (
     'title', 
+    'tags',
 )
 
 VALID_FIELDS = (

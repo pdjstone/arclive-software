@@ -1,13 +1,13 @@
 [3dtanks]
 tags="game,public-domain"
 title="3D Tanks"
-disc="3D_Tanks.zip"
+disc="http://acorn.revivalteam.de/Download/Images/3D_Tanks.zip"
 author="Stuart Cupit and Simon Cruise"
 year=1989
 
 [bloxed]
 tags="game,public-domain"
-disc="bloxed.zip"
+disc="http://acorn.revivalteam.de/Download/Images/Bloxed.zip"
 title="Bloxed"
 description="Fun Tetris clone"
 year=1995
@@ -18,6 +18,6 @@ title="DinoSaw"
 tags="game,public-domain"
 year=1993
 author="Tom Cooper,Mark Smith"
-disc="GameDemos03.zip"
+disc="http://acorn.revivalteam.de/Download/Images/GameDemos03.zip"
 description="""It's a prehistoric platformer... either jump over nasty things or hack 'em to death with yer chainsaw. 
 You can tell when yer hurting something cos it bleeds! Nice huh?"""
