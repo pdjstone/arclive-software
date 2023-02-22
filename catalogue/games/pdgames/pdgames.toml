@@ -4,6 +4,7 @@ title="3D Tanks"
 disc="http://acorn.revivalteam.de/Download/Images/3D_Tanks.zip"
 author="Stuart Cupit and Simon Cruise"
 year=1989
+description="Tron-style 3D tank battle"
 
 [bloxed]
 tags="game,public-domain"

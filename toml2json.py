@@ -34,17 +34,17 @@ MANDATORY_FIELDS = (
 VALID_FIELDS = (
     'author', 'publisher',
     'year',
-    'version',
-    'disc', 'archive', # filename of disc image or archive file, relative to toml file
-    'disc-url', 'archive-url',
+    'version', # version number or string
+    'disc', 'archive', # filename (relative to TOML file) or URL of disc image/archive file
     'tags', # comma-separated list of valid tags (see below)
     'description', 
-    'working',
-    'best-os', 'best-machine', # must be a valid OS/machine from below
+    'best-os', # must be a valid OS from below.
+    'best-cpu', # must be a valid CPU from below.
+    'min-mem', # 1MB/2MB/4MB/8MB
     'info-url' # link to software homepage or further information
 )
-VALID_FIELDS = set(VALID_FIELDS +  MANDATORY_FIELDS)
 
+VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
 
 VALID_TAGS = (
     'game', 
@@ -57,19 +57,9 @@ VALID_TAGS = (
     'demoscene'
 )
 
-VALID_OS = (
-    'arthur120',
-    'riscos201',
-    'riscos311'
-)
-
-VALID_MACHINE = (
-    'a3000',
-    'a3010',
-    'a3020',
-    'a5000',
-)
-
+VALID_OS = ('arthur120', 'riscos201', 'riscos311')
+VALID_CPU = ('arm2', 'arm3', 'arm250')
+VALID_MEM = ('1MB', '2MB', '4MB', '8MB')
 VALID_FILE_EXTS = ('.arc', '.zip', '.adf')
 
 def find_toml_files(root_dir):
@@ -128,8 +118,14 @@ def parse_toml(root, file):
         if 'best-os' in disc_meta and disc_meta['best-os'] not in VALID_OS:
             raise Exception(f"'{software_id}' in {toml_path}: Invalid best-os: {disc_meta['best-os']}")
 
-        if 'best-machine' in disc_meta and disc_meta['best-machine'] not in VALID_MACHINE:
-            raise Exception(f"'{software_id}' in {toml_path}: Invalid best-machine: {disc_meta['best-machine']}")
+        if 'best-cpu' in disc_meta and disc_meta['best-cpu'] not in VALID_CPU:
+            raise Exception(f"'{software_id}' in {toml_path}: Invalid best-cpu: {disc_meta['best-cpu']}")
+
+        if 'min-mem' in disc_meta:
+            if disc_meta['min-mem'] not in VALID_MEM:
+                raise Exception(f"'{software_id}' in {toml_path}: Invalid min-mem: {disc_meta['min-mem']}")
+            mem_kb = int(disc_meta['min-mem'][0].removesuffix('MB')) * 1024
+            disc_meta['min-mem'] = mem_kb
 
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
