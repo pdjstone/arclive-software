@@ -6,6 +6,32 @@ publisher="Oregan"
 description="Prehistoric themed sideways scroller"
 disc="http://acorn.revivalteam.de/Download/Images/2067BC.zip"
 
+[alerion]
+title="Alerion"
+year=1994
+tags="game,ex-commercial"
+publisher="Archimedes World"
+author="Felix Andrew"
+description="2D vertical scrolling shooter. This is the 1994 Arhcimedes World release of the original 1988 game."
+disc="http://acorn.revivalteam.de/Download/Images/Alerion.zip"
+
+[alien-invasion]
+title="Alien Invasion"
+year=1994
+tags="game,ex-commercial"
+publisher="Archimedes World"
+author="Adrian S. W. Nelson, G. Stanley"
+description="Invaders remake with customisiable levels and graphics"
+disc="http://acorn.revivalteam.de/Download/Images/Alien%20Invasion.zip"
+
+[aliped]
+title="Aliped"
+year=1990
+publisher="Alien Images"
+tags="game,ex-commercial"
+description="Medieval point-and-click adventure game"
+disc="http://acorn.revivalteam.de/Download/Images/Aliped.zip"
+
 [elite]
 title="Elite"
 tags="game,ex-commercial"
@@ -22,7 +48,6 @@ year=1992
 publisher="Krysalis Software"
 description="Fast-paced vertical 2D shooter"
 disc="http://acorn.revivalteam.de/Download/Images/SWIV.zip"
-
 
 [mr-doo]
 title="Mr. Doo"
@@ -46,3 +71,15 @@ year=1990
 publisher="Minerva Software"
 author="Ian Richardson"
 disc="http://acorn.revivalteam.de/Download/Images/bhis.zip"
+
+[hamsters]
+title="Hamsters"
+tags="game,ex-commercial"
+version=1.10
+year=1994
+author="Tom Cooper"
+best-cpu="arm250"
+disc="http://acorn.revivalteam.de/Download/Images/Hamsters.zip"
+description="""
+Cartoon 2D platformer where you play a small furry creature with a large mallet which you must use to squish cute animals.
+"""

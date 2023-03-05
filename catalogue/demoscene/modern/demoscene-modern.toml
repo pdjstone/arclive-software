@@ -18,6 +18,12 @@ disc="https://bitshifters.github.io/content/bs-django01.zip"
 tags="demoscene,music"
 info-url="https://bitshifters.github.io/posts/prods/bs-chipo-django1.html"
 
-
-#https://bitshifters.github.io/content/bs-django01.zip
-#https://bitshifters.github.io/content/bs-popular-demand.arc
+[bs-popular-demand]
+title="Back by Popular Demand"
+publisher="Bitshifters & Torment"
+author="Kieran, Rhino, Spiny, Phoenix / Quantum "
+year=2020  
+archive="https://bitshifters.github.io/content/bs-popular-demand.arc"
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-popular-demand.html"
+best-cpu="arm250"
