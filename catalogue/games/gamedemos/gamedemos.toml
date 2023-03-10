@@ -5,6 +5,8 @@ title="Lander"
 author="David Braben"
 year=1989
 disc="http://acorn.revivalteam.de/Download/Images/Lander.zip"
+app-path="!Lander"
+ff-ms=17000
 tags="game,demo"
 
 [lemmings-demo]
@@ -12,6 +14,7 @@ title="Lemmings/Oh No! More Lemmings (Demo)"
 publisher="Krisalis Software"
 description="Classic puzzle game. Save the Lemmings!"
 year=1991
+app-path="!LemDemo"
 disc="http://acorn.revivalteam.de/Download/Images/GameDemos16.zip"
 tags="game,demo"
 
@@ -19,7 +22,9 @@ tags="game,demo"
 title="Fervour (Demo)"
 year=1992
 publisher="Clares"
+author="Andrew Hersee"
 disc="http://acorn.revivalteam.de/Download/Images/GameDemos17.zip"
+app-path="Fervour.!FervDemo"
 tags="game,demo"
 
 [nebulus-demo]
@@ -27,6 +32,7 @@ title="Nebulus (Demo)"
 year=1992
 publisher="Krisalis Software"
 disc="http://acorn.revivalteam.de/Download/Images/GameDemos17.zip"
+app-path="Nebulus.!Nebulus"
 tags="game,demo"
 
 [jamespond-demo]

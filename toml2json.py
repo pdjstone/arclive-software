@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import re
 import sys
 import toml
 import json
@@ -23,6 +24,7 @@ all_software_ids = {}
 
 out_dir = None
 
+RISC_OS_COMMA_FILETYPE_PATTERN = r',[a-z90-9]{3}$'
 
 CACHE_DIR = 'dlcache'
 
@@ -41,7 +43,12 @@ VALID_FIELDS = (
     'best-os', # must be a valid OS from below.
     'best-cpu', # must be a valid CPU from below.
     'min-mem', # 1MB/2MB/4MB/8MB
-    'info-url' # link to software homepage or further information
+    'info-url', # link to software homepage or further information
+    'app-path', # path of app to launch when autobooting, relative to root of disc or archive 
+                # (e.g. "!Foo" if in root of disc/archive or "dirname.!Foo") 
+                # Also used for icon extraction
+    'autoboot', # custom boot script, which will override the default "*desktop filer_run <path.to.app-path>"
+    'ff-ms', # number of milliseconds to fast-forward when autobooting
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -60,7 +67,8 @@ VALID_TAGS = (
 VALID_OS = ('arthur120', 'riscos201', 'riscos311')
 VALID_CPU = ('arm2', 'arm3', 'arm250')
 VALID_MEM = ('1MB', '2MB', '4MB', '8MB')
-VALID_FILE_EXTS = ('.arc', '.zip', '.adf')
+VALID_FILE_EXTS = ('.arc', '.zip', '.adf', '.spk')
+RISC_OS_TYPE_MAP = { 'ddc' : 'spk'}
 
 def find_toml_files(root_dir):
     for root, dirs, files in os.walk(root_dir):
@@ -154,10 +162,14 @@ def fetch_file(root, path, software_id, known_hash):
     return new_name, hash
 
 
-def filename_to_canonical(filename_or_url, software_id):
-    base_name, ext = os.path.splitext(os.path.basename(filename_or_url))
-    if len(ext) == 0 or ext.lower() not in VALID_FILE_EXTS:
-        raise Exception(f"bad extension: {filename_or_url} ({software_id}")
+def filename_to_canonical(filename_or_url: str, software_id):
+    if re.search(RISC_OS_COMMA_FILETYPE_PATTERN, filename_or_url, re.IGNORECASE):
+        base_name, filetype = filename_or_url.rsplit(',', 1)
+        ext = '.' + RISC_OS_TYPE_MAP.get(filetype.lower(), None)
+    else:
+        base_name, ext = os.path.splitext(os.path.basename(filename_or_url))
+    if not ext or ext.lower() not in VALID_FILE_EXTS:
+        raise Exception(f"bad extension: {filename_or_url} ({software_id})")
     new_name = f'{software_id}{ext}'    
     return new_name
 
