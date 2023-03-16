@@ -49,6 +49,7 @@ VALID_FIELDS = (
                 # Also used for icon extraction
     'autoboot', # custom boot script, which will override the default "*desktop filer_run <path.to.app-path>"
     'ff-ms', # number of milliseconds to fast-forward when autobooting
+    'sound-filter', # 0 (full), 1 (reduced) or 2 (more reduced)
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -135,6 +136,9 @@ def parse_toml(root, file):
             mem_kb = int(disc_meta['min-mem'][0].removesuffix('MB')) * 1024
             disc_meta['min-mem'] = mem_kb
 
+        if 'sound-filter' in disc_meta:
+            sf = disc_meta['sound-filter']
+            assert type(sf) == int and 0 <= sf <= 2
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
                 raise Exception(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
