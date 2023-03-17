@@ -37,3 +37,40 @@ sound-filter=2
 tags="demoscene"
 info-url="https://bitshifters.github.io/posts/prods/bs-popular-demand.html"
 best-cpu="arm250"
+
+[progen-dither]
+title="I heard you like dithering"
+author="Progen"
+year=2023
+archive="http://b-em.bbcmicro.com/dither.zip"
+tags="demoscene"
+app-path="!Dither"
+best-cpu="arm3"
+min-mem="4MB"
+ff-ms=31500
+info-url="https://stardot.org.uk/forums/viewtopic.php?f=29&t=26152"
+description="4K intro - an experiment with truecolour type effects on VIDC"
+sound-filter=2
+
+[progen-signals]
+title="Signals"
+year=2022
+author="Crazy Q, Kalms, Evil, Progen"
+archive="http://b-em.bbcmicro.com/signals_arc.zip"
+tags="demoscene,music"
+app-path="!Signals"
+description="Atari STe music demo, ported to the Archimedes by Progen"
+sound-filter=2
+ff-ms=21000
+
+[master-horizon]
+title="Horizon"
+year=2019
+author="The Master, Inversephase, Deathmunk"
+archive="HorizonFinal.zip"
+tags="demoscene"
+app-path="!Horizon"
+sound-filter=2
+best-cpu="arm250"
+ff-ms=15000
+info-url="https://stardot.org.uk/forums/viewtopic.php?f=64&t=17368"

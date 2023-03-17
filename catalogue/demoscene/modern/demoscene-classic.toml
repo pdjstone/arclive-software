@@ -1,0 +1,12 @@
+
+# TODO: http://www.icebird.org/classics.html
+
+[funkydemo2]
+title="FunkyDemo2"
+author="John Graley, Dave Beaumont, Alpen Patel"
+archive="http://www.icebird.org/filez/demos/single/FunkyDemo2.zip"
+year=1992
+sound-filter=2
+app-path="!FunkyDem2"
+ff-ms="15000"
+tags="demoscene"
