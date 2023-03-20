@@ -63,6 +63,17 @@ description="Atari STe music demo, ported to the Archimedes by Progen"
 sound-filter=2
 ff-ms=21000
 
+[progen-bad-apple]
+title="Bad Apple"
+year=2021
+author="Anira, Masayoshi Minoshima, Progen"
+tags="demoscene,music"
+app-path="!BadApple"
+archive="http://b-em.bbcmicro.com/BadApple.zip"
+sound-filter=2
+description="Port of the modern classic to Archimedes by progen"
+ff-ms=16000
+
 [master-horizon]
 title="Horizon"
 year=2019
@@ -74,3 +85,14 @@ sound-filter=2
 best-cpu="arm250"
 ff-ms=15000
 info-url="https://stardot.org.uk/forums/viewtopic.php?f=64&t=17368"
+
+[desire-async]
+title="Asynchronous"
+publisher="Desire"
+archive="http://b-em.bbcmicro.com/dsr_async_-archive-.zip"
+app-path="!Async"
+tags="demoscene"
+best-cpu="arm250"
+year=2022
+ff-ms=16000
+sound-filter=2
