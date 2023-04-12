@@ -1,3 +1,5 @@
+#!/usr/bin/env python3 
+
 from zipfile import ZipFile, ZIP_DEFLATED, ZipInfo
 import struct
 from datetime import datetime, timedelta
