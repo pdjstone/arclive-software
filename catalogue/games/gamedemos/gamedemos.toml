@@ -10,13 +10,24 @@ ff-ms=17000
 tags="game,demo"
 
 [lemmings-demo]
-title="Lemmings/Oh No! More Lemmings (Demo)"
+title="Lemmings (Demo)"
 publisher="Krisalis Software"
-description="Classic puzzle game. Save the Lemmings!"
+description="5 demo levels from the classic puzzle game. Save the Lemmings!"
 year=1991
 app-path="!LemDemo"
-disc="http://acorn.revivalteam.de/Download/Images/GameDemos16.zip"
+archive="lemdemo.zip"
 tags="game,demo"
+ff-ms=18000
+
+[ohno-lemmings-demo]
+title="Oh No! More Lemmings (Demo)"
+publisher="Krisalis Software"
+description="5 demo levels from the Lemmings extra levels pack."
+year=1991
+app-path="!OhnoLemdm"
+archive="ohnolemdemo.zip"
+tags="game,demo"
+ff-ms=18000
 
 [fervour-demo]
 title="Fervour (Demo)"
