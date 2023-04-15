@@ -6,14 +6,16 @@ import re
 import struct
 import sys
 import time
+from collections import namedtuple
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo, is_zipfile
-from collections import namedtuple
-import ADFSlib
 from tempfile import TemporaryDirectory
 from typing import Union
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo, is_zipfile
+
+from ADFSlib import ADFSdirectory, ADFSdisc, ADFSfile, ADFS_exception
+
 from filetypes import RISC_OS_FILETYPES
 
 ZIP_EXT_ACORN = 0x4341    # 'AC' - SparkFS / Acorn
@@ -281,9 +283,9 @@ def identify_zipfile(zipfile: ZipFile):
 
 def identify_discimage(filename:str, fd):
     try:
-        adfsdisc = ADFSlib.ADFSdisc(fd)
+        adfsdisc = ADFSdisc(fd)
         return KnownFileType.DISC_IMAGE
-    except ADFSlib.ADFS_exception as e:
+    except ADFS_exception as e:
         return KnownFileType.UNKNOWN
 
 def identify_file(filename: str, fd) -> KnownFileType:
@@ -301,19 +303,39 @@ def extract_single_disc_image_from_zip(fd):
     raise Exception("Did not find single disc image in ZIP file")
 
 def list_disc_image(fd):
-    adfs = ADFSlib.ADFSdisc(fd)
+    adfs = ADFSdisc(fd)
     print(adfs.disc_format())
     adfs.print_catalogue()
+    #print(adfs.files[0].name, adfs.files[0].files)
 
 def extract_disc_image(fd, path='.'):
     adfs = ADFSlib.ADFSdisc(fd)
     adfs.extract_files(path, with_time_stamps=True, filetypes=True)
 
-def convert_disc_to_zip(fd, zip_path):
-    adfs = ADFSlib.ADFSdisc(fd)
+def convert_disc_to_zip(fd, zip_path, extract_paths: list[str]):
+    assert type(extract_paths) == list
+
+    adfs = ADFSdisc(fd)
+
+    extract_items = []
+    for ep in extract_paths:
+        item = adfs.get_path(ep)
+        if not item:
+            raise Exception(f'disc path does not exist: {ep}')
+        extract_items.append(item)
+
     with TemporaryDirectory() as temp_dir:
         print('temp dir', temp_dir)
-        adfs.extract_files(temp_dir, with_time_stamps=True, filetypes=True)
+        extract_dir = temp_dir
+        for item in extract_items:
+            if isinstance(item, ADFSdirectory):
+                if item.name.startswith('!'): # it's an app
+                    extract_dir = os.path.join(temp_dir, item.name)
+                    os.mkdir(extract_dir)
+                files = item.files
+            elif isinstance(item, ADFSfile):
+                files = [item]
+            adfs.extract_files(extract_dir, files, with_time_stamps=True, filetypes=True)
         zip = ZipFile(zip_path, 'w')
         create_riscos_zipfile(zip, [temp_dir])
 
@@ -344,7 +366,7 @@ if __name__ == '__main__':
         if file_type == KnownFileType.UNKNOWN:
             sys.stderr.write(f'{main_file}: unknown file type\n')
             sys.exit(-1)
-        print(f'file type {file_type}')
+        print(f'file type {file_type.name}')
         if file_type == KnownFileType.ZIPPED_DISC_IMAGE:
             fd = extract_single_disc_image_from_zip(fd)
             file_type = KnownFileType.DISC_IMAGE
@@ -358,10 +380,11 @@ if __name__ == '__main__':
         if file_type != KnownFileType.DISC_IMAGE:
             sys.stderr.write('Must provide disc image to convert to archive\n')
             sys.exit(-1)
-        if len(args.files) != 1:
+        if len(args.files) == 0:
             sys.stderr.write('Must provide an output ZIP filename\n')
             sys.exit(-1)
         output_zip_path = args.files[0]
+        extract_paths = args.files[1:]
 
     match args.action:
         case 'l':
@@ -377,5 +400,5 @@ if __name__ == '__main__':
             zip = ZipFile(main_file, mode)
             create_riscos_zipfile(zip, args.files)
         case 'd2z':
-            convert_disc_to_zip(fd, output_zip_path)
+            convert_disc_to_zip(fd, output_zip_path, extract_paths)
 
