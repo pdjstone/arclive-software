@@ -1,14 +1,20 @@
 #!/usr/bin/env python3 
 
-from zipfile import ZipFile, ZIP_DEFLATED, ZipInfo
-import struct
-from datetime import datetime, timedelta
-import os
-import time
-import re
 import argparse
-from filetypes import RISC_OS_FILETYPES
+import os
+import re
+import struct
+import sys
+import time
+from datetime import datetime, timedelta
+from enum import Enum
 from pathlib import Path
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo, is_zipfile
+from collections import namedtuple
+import ADFSlib
+from tempfile import TemporaryDirectory
+from typing import Union
+from filetypes import RISC_OS_FILETYPES
 
 ZIP_EXT_ACORN = 0x4341    # 'AC' - SparkFS / Acorn
 ZIP_ID_ARC0 = 0x30435241  # 'ARC0'
@@ -18,7 +24,21 @@ RISC_OS_LOAD_EXEC_PATTERN = r',([a-f0-9]{8})-([a-f0-9]{8})$'
 
 RISC_OS_EPOCH = datetime(1900,1,1,0,0,0)
 
+DISC_IM_EXTS = ('.adf','.adl')
+
+RISC_OS_ARCHIVE_TYPES = (0xa91, )
+
 # See http://www.riscos.com/support/developers/prm/fileswitch.html#idx-3804
+
+class KnownFileType(Enum):
+    RISC_OS_ZIP = 1
+    ZIPPED_DISC_IMAGE = 2
+    ZIPPED_MULTI_DISC_IMAGE = 3
+    DISC_IMAGE = 4
+    UNKNOWN = 5
+
+def has_disc_image_ext(filename: str) -> bool:
+    return any(filename.endswith(ext) for ext in DISC_IM_EXTS)
 
 
 class RiscOsFileMeta:
@@ -157,7 +177,8 @@ def save_filetypes():
 
 #save_filetypes()
 
-def list_riscos_zip(zipfile: ZipFile):
+def list_riscos_zip(fd):
+    zipfile = ZipFile(fd, 'r')
     for info in zipfile.infolist():
         ro_meta = info.getRiscOsMeta()
         ds = None
@@ -173,6 +194,7 @@ def list_riscos_zip(zipfile: ZipFile):
                 extra = f'{ro_meta.load_addr:08x}-{ro_meta.exec_addr:08x}'
                 ds = datetime(*info.date_time)
         else:
+            ds = datetime(*info.date_time)
             extra = ''
         date_formatted = ds.strftime('%Y-%m-%d %H:%M:%S')
         print(f'{extra: >17} {info.file_size: >7} {date_formatted} {info.filename}')
@@ -184,7 +206,8 @@ def many_files_in_root(zipfile: ZipFile):
         files_in_root.add(first)
     return len(files_in_root) > 1
 
-def extract_riscos_zipfile(zipfile: ZipFile, path='.'):
+def extract_riscos_zipfile(fd, path='.'):
+    zipfile = ZipFile(fd, 'r')
     if many_files_in_root(zipfile):
         name, _ = os.path.splitext(os.path.basename(zipfile.filename))
         path += '/' + name
@@ -219,7 +242,10 @@ def add_dir_tree_to_zip(zipfile: ZipFile, dirpath: Path, basepath: Path):
             filepath = Path(root) / filename
             add_file_to_zip(zipfile, filepath, basepath)
           
-def create_riscos_zipfile(zipfile: ZipFile, paths: list[str]):
+def create_riscos_zipfile(zipfile: ZipFile, paths: list[str]|str):
+    if type(paths) == str:
+        paths = [paths]
+
     for path in paths:
         path = Path(path)
         if path.is_file():
@@ -231,27 +257,125 @@ def create_riscos_zipfile(zipfile: ZipFile, paths: list[str]):
                 basepath = path.parent
             add_dir_tree_to_zip(zipfile, path, basepath)
   
+def identify_zipfile(zipfile: ZipFile):
+    num_ro_meta = 0
+    num_discim_exts = 0
+    for info in zipfile.infolist():
+        ro_meta = info.getRiscOsMeta()
+        if ro_meta:
+            num_ro_meta +=1
+        if has_disc_image_ext(info.filename):
+            num_discim_exts += 1
+
+    if num_discim_exts == 1:
+        item_fd = zipfile.open(info, 'r')
+        result = identify_discimage(info.filename, item_fd)
+        if result == KnownFileType.DISC_IMAGE:
+            return KnownFileType.ZIPPED_DISC_IMAGE
+        return KnownFileType.UNKNOWN
+    if num_discim_exts > 1:
+        raise Exception('not support multi disc zips')
+    if num_ro_meta >= 1:
+        return KnownFileType.RISC_OS_ZIP
+    
+
+def identify_discimage(filename:str, fd):
+    try:
+        adfsdisc = ADFSlib.ADFSdisc(fd)
+        return KnownFileType.DISC_IMAGE
+    except ADFSlib.ADFS_exception as e:
+        return KnownFileType.UNKNOWN
+
+def identify_file(filename: str, fd) -> KnownFileType:
+    if is_zipfile(fd):
+        zipfile = ZipFile(fd)
+        return identify_zipfile(zipfile)
+    else:
+        return identify_discimage(filename, fd)
+
+def extract_single_disc_image_from_zip(fd):
+    zipfile = ZipFile(fd, 'r')
+    for info in zipfile.infolist():
+        if has_disc_image_ext(info.filename):
+            return zipfile.open(info, 'r')
+    raise Exception("Did not find single disc image in ZIP file")
+
+def list_disc_image(fd):
+    adfs = ADFSlib.ADFSdisc(fd)
+    print(adfs.disc_format())
+    adfs.print_catalogue()
+
+def extract_disc_image(fd, path='.'):
+    adfs = ADFSlib.ADFSdisc(fd)
+    adfs.extract_files(path, with_time_stamps=True, filetypes=True)
+
+def convert_disc_to_zip(fd, zip_path):
+    adfs = ADFSlib.ADFSdisc(fd)
+    with TemporaryDirectory() as temp_dir:
+        print('temp dir', temp_dir)
+        adfs.extract_files(temp_dir, with_time_stamps=True, filetypes=True)
+        zip = ZipFile(zip_path, 'w')
+        create_riscos_zipfile(zip, [temp_dir])
+
+HandlerFns = namedtuple('HandlerFns', ['list', 'extract', 'create'], defaults=(None,))
+
+HANDLER_FNS = {
+    KnownFileType.DISC_IMAGE: HandlerFns(list_disc_image, extract_disc_image),
+    KnownFileType.RISC_OS_ZIP: HandlerFns(list_riscos_zip, extract_riscos_zipfile)
+}
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='rozip', description="Extract and create RISC OS ZIP files")
+    parser = argparse.ArgumentParser(prog='roconv', description="Extract and create RISC OS ZIP files")
     parser.add_argument('-d', '--dir', default='.', help='Output directory')
     parser.add_argument('-a', '--append', action='store_true', help='Append files to existing archive')
-    parser.add_argument('action', choices=['x','l','c'], nargs='?', default='l', help='e[x]tract, [l]ist or [c]reate archive')
-    parser.add_argument('zipfile', help='ZIP file to create or list/extract')  
+    parser.add_argument('action', choices=['x','l','c','d2z'], nargs='?', default='l', help='e[x]tract, [l]ist, [c]reate archive or convert disc to ZIP archive [d2z]')
+    parser.add_argument('file', help='ZIP or (zipped) disc file to create or list/extract')  
     parser.add_argument('files', nargs='*', help='Files to extract / add')
     args = parser.parse_args()
 
+    main_file = args.file
+
+    if args.action in ('l', 'x', 'd2z'):
+        if not os.path.isfile(main_file):
+            sys.stderr.write(f'file not found: {main_file}\n')
+            sys.exit(-1)
+        fd = open(main_file, 'rb')
+        file_type = identify_file(main_file, fd)
+        if file_type == KnownFileType.UNKNOWN:
+            sys.stderr.write(f'{main_file}: unknown file type\n')
+            sys.exit(-1)
+        print(f'file type {file_type}')
+        if file_type == KnownFileType.ZIPPED_DISC_IMAGE:
+            fd = extract_single_disc_image_from_zip(fd)
+            file_type = KnownFileType.DISC_IMAGE
+
+    elif args.action == 'c':
+        if not main_file.tolower().endswith('.zip'):
+            sys.stderr.write('Only support creating zip files\n')
+            sys.exit(-1)
+    
+    if args.action == 'd2z':
+        if file_type != KnownFileType.DISC_IMAGE:
+            sys.stderr.write('Must provide disc image to convert to archive\n')
+            sys.exit(-1)
+        if len(args.files) != 1:
+            sys.stderr.write('Must provide an output ZIP filename\n')
+            sys.exit(-1)
+        output_zip_path = args.files[0]
+
     match args.action:
         case 'l':
-            zip = ZipFile(args.zipfile, 'r')
-            list_riscos_zip(zip)
+            list_fn = HANDLER_FNS[file_type].list
+            list_fn(fd)
         case 'x':
-            zip = ZipFile(args.zipfile, 'r')
-            extract_riscos_zipfile(zip, args.dir)
+            extract_fn = HANDLER_FNS[file_type].extract
+            extract_fn(fd, args.dir)
         case 'c':
             mode = 'w'
             if args.append:
                 mode = 'a'
-            zip = ZipFile(args.zipfile, mode)
+            zip = ZipFile(main_file, mode)
             create_riscos_zipfile(zip, args.files)
+        case 'd2z':
+            convert_disc_to_zip(fd, output_zip_path)
 
