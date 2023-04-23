@@ -47,6 +47,7 @@ VALID_FIELDS = (
     'app-path', # path of app to launch when autobooting, relative to root of disc or archive 
                 # (e.g. "!Foo" if in root of disc/archive or "dirname.!Foo") 
                 # Also used for icon extraction
+    'click-icon', # set to true to launch app after loading it by clicking its icon on the icon bar
     'autoboot', # custom boot script, which will override the default "*desktop filer_run <path.to.app-path>"
     'ff-ms', # number of milliseconds to fast-forward when autobooting
     'sound-filter', # 0 (full), 1 (reduced) or 2 (more reduced)

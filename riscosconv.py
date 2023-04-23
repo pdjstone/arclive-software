@@ -40,7 +40,7 @@ class KnownFileType(Enum):
     UNKNOWN = 5
 
 def has_disc_image_ext(filename: str) -> bool:
-    return any(filename.endswith(ext) for ext in DISC_IM_EXTS)
+    return any(filename.lower().endswith(ext) for ext in DISC_IM_EXTS)
 
 
 class RiscOsFileMeta:
