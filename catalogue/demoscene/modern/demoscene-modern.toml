@@ -14,7 +14,7 @@ tags="demoscene"
 info-url="https://bitshifters.github.io/posts/prods/bs-tipsy-cube.html"
 
 [bs-django01]
-title="Chipo Djano 1"
+title="Chipo Django 1"
 publisher="Rabenauge, Bitshifters & the great composers of the Amiga scene!"
 author="Bodo, Insane, Krill/Plush, Leonard/Oxygene, Kieran/Bitshifters, Phoenix/Quantum, Titus, Virgill, Juice, Okeanos, Dalzey, Slash, Vedder, Curt Cool, Triance, Ma2e "
 year=2022
@@ -26,10 +26,10 @@ tags="demoscene,music"
 info-url="https://bitshifters.github.io/posts/prods/bs-chipo-django1.html"
 
 [bs-django02]
-title="Chip Django 2"
+title="Chipo Django 2"
 publisher="Rabenauge, Bitshifters Collective"
 year=2023
-archive="bs-django02.zip"
+archive="https://bitshifters.github.io/content/bs-django02,ddc"
 app-path="!Django02"
 ff-ms=19000
 sound-filter=2
@@ -68,6 +68,7 @@ sound-filter=2
 title="Signals"
 year=2022
 author="Crazy Q, Kalms, Evil, Progen"
+publisher="DHS"
 archive="http://b-em.bbcmicro.com/signals_arc.zip"
 tags="demoscene,music"
 app-path="!Signals"
@@ -108,3 +109,4 @@ best-cpu="arm250"
 year=2022
 ff-ms=16000
 sound-filter=2
+description="1st place entry in NOVA 2022 oldskool demo competition."

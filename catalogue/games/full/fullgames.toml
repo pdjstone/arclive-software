@@ -79,7 +79,54 @@ version=1.10
 year=1994
 author="Tom Cooper"
 best-cpu="arm250"
-disc="http://acorn.revivalteam.de/Download/Images/Hamsters.zip"
+archive="hamsters.zip"
+app-path="!Hamsters"
+click-icon=true
+ff-ms=17000
 description="""
 Cartoon 2D platformer where you play a small furry creature with a large mallet which you must use to squish cute animals.
 """
+
+[asylum]
+title="Asylum"
+tags="game,ex-commercial"
+version="2.02"
+year=2002
+author="Andy Southgate"
+description="""
+Young Sigmund has a few problems. To help him resolve his mental
+instability you must enter the surreal world of his inner mind and
+shut down the malfunctioning brain cells which are causing him these problems.
+"""
+archive="http://asylum.acornarcade.com/files/asy202.zip"
+app-path="AsyNu.!Asylum"
+click-icon=true
+ff-ms=18100
+info-url="http://asylum.acornarcade.com/index.php"
+best-cpu="arm250"
+
+[oddball]
+title="Oddball"
+tags="game"
+version="2.00"
+archive="http://asylum.acornarcade.com/files/oddball.zip"
+author="Andy Southgate"
+year=1995
+description="""
+Oddball is a bat and ball game, but on a massive scale. Just move the bat and 
+hit the ball around until it destroys all of the green blocks. Then do the same 
+for the rest of the levels. One problem. If the ball falls off the world into 
+the swirling Abyss, you've lost it for good. Lose all of the balls and you've 
+lost a life! Lose all of your lives, and that's it...
+"""
+app-path="OddballFD.!OddBall"
+click-icon=true
+ff-ms=18100
+best-cpu="arm250"
+
+[botkiller]
+title="Botkiller"
+tags="game,ex-commercial"
+archive="http://www.acorn-gaming.org.uk/Download/Arcade/BK.zip"
+publisher="Artex Software"
+year=1997
