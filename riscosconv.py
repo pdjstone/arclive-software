@@ -6,6 +6,7 @@ import re
 import struct
 import sys
 import time
+import codecs
 from collections import namedtuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -134,9 +135,19 @@ def _decodeRiscOsExtra(self):
                 
                 
         return None
-    
+
+def _encodeFilenameFlags(self):
+    return self.filename.encode('iso-8859-1'), self.flag_bits
+
+# for Python < 3.11, we need to override the default codec. 
+# for Python >= 3.11 we can use the ZipFile metadata_encoding param
+import encodings.cp437
+import encodings.iso8859_1
+encodings.cp437.decoding_table = encodings.iso8859_1.decoding_table
+
 ZipInfo._decodeExtra = _decodeExtra
 ZipInfo.getRiscOsMeta = _decodeRiscOsExtra
+ZipInfo._encodeFilenameFlags = _encodeFilenameFlags
 
 def get_riscos_zipinfo(path: Path, base_path: Path):
     meta = RiscOsFileMeta.from_filepath(path)
@@ -180,8 +191,10 @@ def save_filetypes():
 #save_filetypes()
 
 def list_riscos_zip(fd):
-    zipfile = ZipFile(fd, 'r')
+    zipfile = ZipFile(fd, 'r',)
     for info in zipfile.infolist():
+        if info.is_dir():
+            continue
         ro_meta = info.getRiscOsMeta()
         ds = None
         if ro_meta:
@@ -215,6 +228,8 @@ def extract_riscos_zipfile(fd, path='.'):
         path += '/' + name
     print(f'Extracting to {path}')
     for info in zipfile.infolist():
+        if info.is_dir():
+            continue
         ro_meta = info.getRiscOsMeta()
         extract_path = os.path.join(path, info.filename + ro_meta.hostfs_file_ext())
         print(extract_path)
@@ -304,31 +319,39 @@ def extract_single_disc_image_from_zip(fd):
 
 def list_disc_image(fd):
     adfs = ADFSdisc(fd)
-    print(adfs.disc_format())
+    print(adfs.disc_format(), adfs.disc_name)
     adfs.print_catalogue()
     #print(adfs.files[0].name, adfs.files[0].files)
 
 def extract_disc_image(fd, path='.'):
-    adfs = ADFSlib.ADFSdisc(fd)
+    adfs = ADFSdisc(fd)
+
+    if len(adfs.files) > 1:
+        path = path + '/' + adfs.disc_name
+        os.makedirs(path, exist_ok=True)
     adfs.extract_files(path, with_time_stamps=True, filetypes=True)
 
-def convert_disc_to_zip(fd, zip_path, extract_paths: list[str]):
+def convert_disc_to_zip(fd, zip_path, extract_paths: list[str] = None):
     assert type(extract_paths) == list
 
     adfs = ADFSdisc(fd)
 
     extract_items = []
-    for ep in extract_paths:
-        item = adfs.get_path(ep)
-        if not item:
-            raise Exception(f'disc path does not exist: {ep}')
-        extract_items.append(item)
+    if extract_paths:
+        for ep in extract_paths:
+            item = adfs.get_path(ep)
+            if not item:
+                raise Exception(f'disc path does not exist: {ep}')
+            extract_items.append(item)
+    else:
+        extract_items = adfs.files 
 
     with TemporaryDirectory() as temp_dir:
         print('temp dir', temp_dir)
         extract_dir = temp_dir
         for item in extract_items:
             if isinstance(item, ADFSdirectory):
+                print('dir', item.name)
                 if item.name.startswith('!'): # it's an app
                     extract_dir = os.path.join(temp_dir, item.name)
                     os.mkdir(extract_dir)
@@ -372,7 +395,7 @@ if __name__ == '__main__':
             file_type = KnownFileType.DISC_IMAGE
 
     elif args.action == 'c':
-        if not main_file.tolower().endswith('.zip'):
+        if not main_file.lower().endswith('.zip'):
             sys.stderr.write('Only support creating zip files\n')
             sys.exit(-1)
     
@@ -391,6 +414,7 @@ if __name__ == '__main__':
             list_fn = HANDLER_FNS[file_type].list
             list_fn(fd)
         case 'x':
+            assert os.path.isdir(args.dir)
             extract_fn = HANDLER_FNS[file_type].extract
             extract_fn(fd, args.dir)
         case 'c':
