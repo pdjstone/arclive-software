@@ -17,7 +17,7 @@ year=1991
 app-path="!LemDemo"
 archive="lemdemo.zip"
 tags="game,demo"
-ff-ms=18000
+ff-ms=18100
 
 [ohno-lemmings-demo]
 title="Oh No! More Lemmings (Demo)"
@@ -27,7 +27,7 @@ year=1991
 app-path="!OhnoLemdm"
 archive="ohnolemdemo.zip"
 tags="game,demo"
-ff-ms=18000
+ff-ms=18100
 
 [fervour-demo]
 title="Fervour (Demo)"
