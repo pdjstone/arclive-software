@@ -1,10 +1,14 @@
 [2067bc]
+# Doesn't work when converted to a ZIP - "No run action specified for this type" error
 title="2067BC"
 year=1992
 tags="game,ex-commercial"
 publisher="Oregan"
 description="Prehistoric themed sideways scroller"
 disc="http://acorn.revivalteam.de/Download/Images/2067BC.zip"
+app-path="!2067BC"
+best-cpu="arm250"
+ff-ms=19000
 
 [alerion]
 title="Alerion"
@@ -14,6 +18,7 @@ publisher="Archimedes World"
 author="Felix Andrew"
 description="2D vertical scrolling shooter. This is the 1994 Arhcimedes World release of the original 1988 game."
 disc="http://acorn.revivalteam.de/Download/Images/Alerion.zip"
+#ff-ms=17000
 
 [alien-invasion]
 title="Alien Invasion"
@@ -54,7 +59,9 @@ title="Mr. Doo"
 tags="game,ex-commercial"
 year=1992
 publisher="Image Systems"
-disc="http://acorn.revivalteam.de/Download/Images/MrDoo.zip"
+archive="mr-doo.zip"
+app-path="!MrDoo"
+ff-ms=17000
 
 [bughunter]
 title="Bug Hunter / Moon Dash"
@@ -62,15 +69,29 @@ tags="game,ex-commercial"
 year=1990
 publisher="Minerva Software"
 author="Ian Richardson"
-disc="http://acorn.revivalteam.de/Download/Images/bug1.zip"
+archive="bughunter.zip"
+app-path="!BugHunter"
+ff-ms=17000
 
-[bughunter-in-space]
+[moondash]
+title="Moon Dash"
+tags="game,ex-commercial"
+year=1990
+publisher="Minerva Software"
+author="Ian Richardson"
+archive="moondash.zip"
+app-path="!MoonDash"
+ff-ms=17000
+
+[bughunter2]
 title="Bug Hunter in Space"
 tags="game,ex-commercial"
 year=1990
 publisher="Minerva Software"
 author="Ian Richardson"
-disc="http://acorn.revivalteam.de/Download/Images/bhis.zip"
+archive="bughunter-in-space.zip"
+app-path="!BugHuntII"
+ff-ms=17000
 
 [hamsters]
 title="Hamsters"
@@ -79,7 +100,7 @@ version=1.10
 year=1994
 author="Tom Cooper"
 best-cpu="arm250"
-archive="hamsters.zip"
+archive="http://arcarc.nl/archive/Games/H/Hamsters/Hamsters%20%2819xx%29%28Tom%20Cooper%29.zip"
 app-path="!Hamsters"
 click-icon=true
 ff-ms=17000
@@ -124,9 +145,31 @@ click-icon=true
 ff-ms=18100
 best-cpu="arm250"
 
-[botkiller]
-title="Botkiller"
+#[botkiller]
+#title="Botkiller"
+#tags="game,ex-commercial"
+#archive="http://www.acorn-gaming.org.uk/Download/Arcade/BK.zip"
+#publisher="Artex Software"
+#year=1997
+
+[chaos]
+title="Spheres of Chaos"
 tags="game,ex-commercial"
-archive="http://www.acorn-gaming.org.uk/Download/Arcade/BK.zip"
-publisher="Artex Software"
-year=1997
+archive="chaos.zip"
+author="Iain McLeod"
+year=1993
+description="Fast-moving psychadelic take the classic asteroids formula"
+app-path="!Chaos"
+ff-ms=17000
+best-cpu="arm250"
+
+[twinworld]
+title="Twinworld"
+year=1991
+description="Fantasy platformer"
+publisher="Ubisoft"
+tags="game,ex-commercial"
+archive="twinworld.zip"
+app-path="!TwinWorld"
+ff-ms=17000
+
