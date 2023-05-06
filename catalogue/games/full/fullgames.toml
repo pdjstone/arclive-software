@@ -1,14 +1,13 @@
 [2067bc]
-# Doesn't work when converted to a ZIP - "No run action specified for this type" error
 title="2067BC"
 year=1992
 tags="game,ex-commercial"
 publisher="Oregan"
 description="Prehistoric themed sideways scroller"
-disc="http://acorn.revivalteam.de/Download/Images/2067BC.zip"
+archive="2067bc.zip"
 app-path="!2067BC"
 best-cpu="arm250"
-ff-ms=19000
+ff-ms=17000
 
 [alerion]
 title="Alerion"
@@ -17,8 +16,9 @@ tags="game,ex-commercial"
 publisher="Archimedes World"
 author="Felix Andrew"
 description="2D vertical scrolling shooter. This is the 1994 Arhcimedes World release of the original 1988 game."
-disc="http://acorn.revivalteam.de/Download/Images/Alerion.zip"
-#ff-ms=17000
+archive="alerion.zip"
+app-path="!Alerion"
+ff-ms=17000
 
 [alien-invasion]
 title="Alien Invasion"
@@ -41,10 +41,14 @@ disc="http://acorn.revivalteam.de/Download/Images/Aliped.zip"
 title="Elite"
 tags="game,ex-commercial"
 year=1995
-disc="http://acorn.revivalteam.de/Download/Images/Elite.zip"
+archive="elite.zip"
 author="Warren Burch, Clive Gringras"
 description="The classic space trading game"
 version="1.14"
+app-path="!élite"
+click-icon=true
+ff-ms=20000
+info-url="http://www.elitehomepage.org/arc/index.htm"
 
 [swiv]
 title="S.W.I.V."
