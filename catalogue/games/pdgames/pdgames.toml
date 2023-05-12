@@ -8,9 +8,11 @@ description="Tron-style 3D tank battle"
 
 [bloxed]
 tags="game,public-domain"
-disc="http://acorn.revivalteam.de/Download/Images/Bloxed.zip"
+archive="bloxed.zip"
 title="Bloxed"
 description="Fun Tetris clone"
+app-path="!Bloxed"
+ff-ms=17000
 year=1995
 author="Steven Singer"
 
@@ -18,7 +20,7 @@ author="Steven Singer"
 title="DinoSaw"
 tags="game,public-domain"
 year=1993
-author="Tom Cooper,Mark Smith"
+author="Tom Cooper, Mark Smith"
 disc="http://acorn.revivalteam.de/Download/Images/GameDemos03.zip"
 description="""It's a prehistoric platformer... either jump over nasty things or hack 'em to death with yer chainsaw. 
 You can tell when yer hurting something cos it bleeds! Nice huh?"""
