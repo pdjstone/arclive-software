@@ -37,6 +37,20 @@ tags="game,ex-commercial"
 description="Medieval point-and-click adventure game"
 disc="http://acorn.revivalteam.de/Download/Images/Aliped.zip"
 
+
+[burnout]
+title="Burn 'Out"
+year="1995"
+publisher="Oregan"
+author="Ian Jeffray, David Flynn, Joe Nash"
+tags="game,ex-commercial"
+archive="http://ian.jeffray.co.uk/riscos/BurnOut/burn'out.zip"
+best-cpu="arm3"
+app-path="!Burn"
+ff-ms=17000
+description="Burn 'Out is a racing game like no other. Racing on a unique island through woodland, beaches and mountains on tracks that have more in common with rollercoaster rides than conventional racetracks, you must pit your skill and reflexes against nine other dune-buggy drivers and finish in the top three to continue to the next race. Choose from a selection of drivers and buggies and prepare for the ultimate arcade racing experience."
+info-url="http://ian.jeffray.co.uk/riscos/BurnOut/"
+
 [elite]
 title="Elite"
 tags="game,ex-commercial"
