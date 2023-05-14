@@ -91,15 +91,16 @@ archive="bughunter.zip"
 app-path="!BugHunter"
 ff-ms=17000
 
-[moondash]
-title="Moon Dash"
-tags="game,ex-commercial"
-year=1990
-publisher="Minerva Software"
-author="Ian Richardson"
-archive="moondash.zip"
-app-path="!MoonDash"
-ff-ms=17000
+# todo - need to !boot bughunter before loading moondash
+# [moondash]
+# title="Moon Dash"
+# tags="game,ex-commercial"
+# year=1990
+# publisher="Minerva Software"
+# author="Ian Richardson"
+# archive="moondash.zip"
+# app-path="!MoonDash"
+# ff-ms=17000
 
 [bughunter2]
 title="Bug Hunter in Space"
@@ -191,3 +192,11 @@ archive="twinworld.zip"
 app-path="!TwinWorld"
 ff-ms=17000
 
+[paradroid2000]
+title="Paradroid 2000"
+year=1993
+publisher="Graftgold Creative Software"
+tags="game,ex-commercial"
+disc="http://acorn.revivalteam.de/Download/Images/Paradroid2000.zip"
+app-path="!Paradroid"
+ff-ms=36000
