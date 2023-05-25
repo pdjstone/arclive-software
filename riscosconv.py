@@ -6,13 +6,11 @@ import re
 import struct
 import sys
 import time
-import codecs
 from collections import namedtuple
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Union
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo, is_zipfile
 
 from ADFSlib import ADFSdirectory, ADFSdisc, ADFSfile, ADFS_exception
@@ -29,7 +27,19 @@ RISC_OS_EPOCH = datetime(1900,1,1,0,0,0)
 
 DISC_IM_EXTS = ('.adf','.adl')
 
-RISC_OS_ARCHIVE_TYPES = (0xa91, )
+RO_ZIP = 0xa91
+RO_TEXT = 0xfff
+RO_DATA = 0xffd
+
+RISC_OS_ARCHIVE_TYPES = (RO_ZIP, )
+
+FILE_EXT_MAP = {
+    '': RO_TEXT,
+    '.txt': RO_TEXT,
+    '.zip': RO_ZIP
+}
+
+DEFAULT_RO_FILETYPE = 0xfff
 
 # See http://www.riscos.com/support/developers/prm/fileswitch.html#idx-3804
 
@@ -83,19 +93,30 @@ class RiscOsFileMeta:
     def from_filepath(path: Path):
         leaf_name = path.name
         st = os.stat(path)
+        ts = unix_timestamp_to_ro_timestamp(st.st_mtime)
         if m := re.search(RISC_OS_COMMA_FILETYPE_PATTERN, leaf_name, re.IGNORECASE):
             filetype = int(m.group(1), 16)
-            mtime = datetime.fromtimestamp(st.st_mtime)
-            delta = mtime - RISC_OS_EPOCH
-            cs = int(delta.total_seconds() * 100)
-            load_addr = (0xfff << 20) | (filetype << 8) | (cs >> 32)
-            exec_addr = cs & 0xffffffff
+            load_addr, exec_addr = make_load_exec(filetype, ts)
         elif m := re.search(RISC_OS_LOAD_EXEC_PATTERN, leaf_name, re.IGNORECASE):
             load_addr = int(m.group(1), 16)
             exec_addr = int(m.group(2), 16)
         else:
-            raise Exception("todo: normal file extensions")
+            extension = path.suffix
+            filetype = FILE_EXT_MAP.get(extension.lower(), None)
+            if not filetype:
+                raise Exception(f"No RISC OS filetype for {leaf_name} {extension}")
+            load_addr, exec_addr = make_load_exec(filetype, ts)
         return RiscOsFileMeta(load_addr, exec_addr)
+
+def make_load_exec(filetype, ro_timestamp):
+    load_addr = (0xfff << 20) | (filetype << 8) | (ro_timestamp >> 32)
+    exec_addr = ro_timestamp & 0xffffffff
+    return load_addr, exec_addr
+
+def unix_timestamp_to_ro_timestamp(timestamp):
+    delta = datetime.fromtimestamp(timestamp) - RISC_OS_EPOCH
+    centiseconds = int(delta.total_seconds() * 100)
+    return centiseconds
 
 def parse_riscos_zip_ext(buf: bytes, offset, fieldLen):
     # See https://www.davidpilling.com/wiki/index.php/SparkFS "A Comment on Zip files"
@@ -151,7 +172,10 @@ ZipInfo._encodeFilenameFlags = _encodeFilenameFlags
 
 def get_riscos_zipinfo(path: Path, base_path: Path):
     meta = RiscOsFileMeta.from_filepath(path)
-    zip_path, _ = str(path.relative_to(base_path)).rsplit(',', 1)
+    if ',' in path.stem:
+        zip_path, _ = str(path.relative_to(base_path)).rsplit(',', 1)
+    else:
+        zip_path = str(path.relative_to(base_path)).removesuffix(path.suffix)
     ds = meta.datestamp
     if not ds:
         ds = datetime.fromtimestamp(path.stat().st_mtime)
