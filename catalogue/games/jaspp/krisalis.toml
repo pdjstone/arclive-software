@@ -1,0 +1,360 @@
+[alone-in-the-dark]
+title = "Alone In the Dark"
+year = 1995
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "A somewhat tricky situation...\n\nSuspended by a rope, the painter Jeremy Hartwood breathed for the last time. Was he overworked? A nervous breakdown perhaps? Or was suicide his escape from the evil presence that resided in his manor house, Derceto?\n\nUnwelcoming and overbearing, Derceto is now an empty manor house avoided by the sane. However, something compels you to explore its depths and discover its secrets...\n\nDid Jeremy Hartwood really commit suicide or was he just insane? Is there an evil presence residing in Derceto?\n\nEnter at your peril ! Derceto is not a country cottage and this is no holiday. Entering is just the easy part, leaving could be hell !"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Alone-in-the-Dark_1.00-5"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Alone"
+
+[battle-chess]
+title = "Battle Chess"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "The most challenging game on earth comes to life in Battle Chess. An entire medieval world at war is reflected on the checkered field.\n\nEveryone who's ever had a knight take a pawn has seen that capture as more than one piece replacing another on the board. In players' minds, the bold knight, resplendent in his armour of silver or ebon, sallies forth and slays the foul footsoldier.\nCombat, mortal combat, is the heart and soul of chess, but this aspect of it can only like in the mind's eye... until now!\n\nLots of computer chess games capture the basics of chess. Only Battle Chess brings chess to life by combining a magnificent chess logic system with colourful, humourous, and dramatic three-dimensional animations."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Battle-Chess_0-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Battle"
+
+[cannon-fodder]
+title = "Cannon Fodder"
+year = 1994
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "\"DON'T WAIT 'TIL YOU SEE THE WHITES OF THEIR EYES...\n\nDON'T KID YOURSELF IT WILL BE OVER BY CHRISTMAS...\n\nDON'T TRY TO SHUT OUT THE SCREAMS...\n\nAND DON'T FORGET TO WASH YOUR HANDS AFTERWARDS...\"\n\nWAR HAS NEVER BEEN SO MUCH FUN..."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Cannon-Fodder_0-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Cannon"
+
+[champions]
+title = "Champions"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Game description to follow"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Champions_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.Champions"
+
+[chuck-rock]
+title = "Chuck Rock"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Chuck Rock hasn't been the same since his long time rival in love, the evil Gary Gritter, kidnapped his wife, the beautiful Ophelia.\n\nHelp Chuck in his quest to rescue Ophelia from the clutches of the evil Gary. Kick, throw rocks and belly-but your way your way through a multitude of comical zones featuring 500 screens of exciting addictive gameplay."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Chuck-Rock_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Chuck"
+
+[gods]
+title = "Gods"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "A city lost in legend. An unconquered warrior seeking reward. A challenge laid down by the Gods.\n\nTaking the role of Hercules, in the ultimate arcade-adventure, you must scour the depths of an ancient city in your search for the great prize of immortality.\n\nFeaturing:\n15 different weapon systems\n20 different potions and power-ups\nA host of intelligent monsters\n\nHave you got what it takes to be a GOD?"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Gods_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Gods"
+
+[heimdall]
+title = "Heimdall"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Norse legend tells of a time when the Gods of Valhalla and Asgard created a race known as the Vikings. At first the Gods loved their children and contact between the two was frequent. As time passed the Gods lost interest in their creations and visits across the Rainbow Bridge ceased.\n\nFrey, one of the oldest and wisest Gods, foresaw that they would one day have need of the Vikings so he visited the leader and told him that in centuries times a great warrior would be born amongst them to lead his people in a mission of great importance, representing the Vikings at the Battle of Ragnarok.\n\nThe warrior that legend speaks of will be known as Heimdall.\n\nFollow Heimdall through his growth from small boy to manhood in this true role playing game, which features interactive characters - choose from up to 30, realtime combat, set in three different Viking worlds, and control of up to 6 characters."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Heimdall_0-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Heimdall"
+
+[hero-quest]
+title = "Hero Quest"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "CHRONICLES OF LORETOME\n----------------------\nHeed well the words of Mentor, Guardian of Loretome, and I will tell you of times past, of darker days when the empire was saved against all hope. For I fear the darkness is about to return.\n\nThe fell legions of Morcar, Lord of Chaos, had swept all before them. At the sight of the Black Banner and the massed hordes of Chaos, even the bravest warriors of the Emperor had turned tail and fled, the land was laid waste and all men despaired.\n\nBut then there came a mighty warrior Prince from the Borderlands named Rodgar the Barbarian. He bore a glittering diamond in his brow, the Star of the West, as worn by the ancient kings of legend. Hope returned and men flocked to his standard, leaving their hiding places in the hills and forests.\n\nOther great heroes joined him. Durgin the fearless Dwarven warrior from the Worlds Edge Mountains. Ladril the Elven fighter mage from distant Athelorn and Telor the Wizard whose sorcery was to save Rodgar on many occasions.\n\nFor many years Rodgar trained his army, being careful to avoid open battle with Morcar's General until all was ready, but ever harrying their supply lines, wiping out many orcs and goblins.\n\nThen came the day for which Rodgar had waited. His army had grown strong and was well practised. Camping on the high passes, Ladril saw the Black hosts from afar and bade Durgin blow the call to arms on his mighty horn. The armies of Rodgar poured down upon the enemy from two sides, and battle was joined. Many foul creatures and good men perished that day. Yet, as the light of day faded it was Darkness that fled the field. But the victory was not absolute. Morcar and his general escaped beyond the sea of Claws, and even now they plot their revenge.\n\nSoon their plots will be ready and the Empire will have need of a new Rodgar. But where are the heroes to equal him? You have much to learn if you are to become as great as Rodgar and his companions. I will help all I can. This book I carry, Loretome, was written when time began. All that ever was and all that ever will be is recorded in its countless pages.\n\nThrough Loretome I may guide you, but I may not intervene, least a greater evil befall the World, and Chaos triumphs forever.\n\nHero Quest the best selling role-playing game has now been developed into an absorbing fantasy adventure for your computer.\n\nTake up the challenge to become a Hero and enter the underground realm of the evil wizard Morcar. But beware, the unlit tunnels hold many dangers, terrible monsters, deadly traps and mysterious rooms."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Hero-Quest_0-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!HeroQuest"
+
+[jahangir-khan-squash]
+title = "Jahangir Khan World Championship Squash"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Jahangir Khan, the World's number one Squash player, now brought to the small screen by Krisalis Software.\n\nThe game features two stand alone simulations, Club level, which is officially endorsed by the Squash Rackets Association, this allows the player to compete in Squash Club Competitions, using menus which include an eight rung leader ladder containing forty players, ball speed control using spot colour options, Match length one, three or five games, play by new or old rules and player statistics.\n\nWorld Championship, the game simulates all the excitement and tension of the 32 seed World Championship Knockout competition.\n\nPlayer one on one two player option, or head to head against the computer."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Jahangir-Khan-Squash_1.02-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!JKSquash"
+
+[james-pond]
+title = "James Pond"
+year = 1990
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "When danger threatens in the icy deep, when hope seems lost and the end looks nigh, there's only one fish with the guts to save the day.\nNow's the time to call James Pond - Underwater Agent. He's fearless, he's clever, he's ozone-friendly.\n\nJames Pond, the fish with a mission (twelve missions, in fact) will take on anything, from retrieving radioactive canisters and plugging the leaks in oil tankers to rescuing doomed lobsters, mermaids and rare orchids from extinction.\n\nNow you can take the part of James Pond in this all-action arcade adventure. With twelve levels and lots of secret areas to explore, brilliant graphics and game design, this sub-sea spectacular is not to be missed!\n\n12 momentous missions, plus lots of bonus chambers.\n\nChoice of weapons or just blow up baddies with bubble-action!\n\nSo many different enemies and pickups you'll wish you had eight tentacles!"
+archive = "https://www.jaspp.org.uk/packages/release-packages/James-Pond_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!JamesPond"
+
+[krisalis-collection]
+title = "Krisalis Collection, The"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Mad Professor Mariarti\n----------------------\nWith your help Professor Mariarti must close down his five laboratories: Chemical Research, Space Rocket Development, Computer Science, Biological Observations and the Mystery Laboratory. You must solve strange puzzles and avoid mutant monsters playing through over 100 screens in your quest to save his sanity. You will be nuts about this game. Its addictiveness will drive you mad, the puzzles will perplex you, your arcade skills will be stretches and it's funny too. Killer ROM chips and typewriter ribbons which coil like snakes are among your adversaries in this quest. The her's mad too but not half as mad as you will be if you don't buy it.\n\nPipe Mania\n----------\nPipe Mania is a game of great inginuety, simple in concept and fiendishly challenging to play. You'll need to act instinctively, but think strategically! One wrong move, one brief hesitation or mis-placed pipe section, and you'll drown in a sea of slime.\n\nRevelation!\n-----------\n�\t88 levels of pure safecracking pleasure\n�\tA new combination of compelling puzzle/arcade gameplay\n�\t1 or 2-player action\n�\tPassword entry system\n�\tSecret bonus levels\n�\tA wealth of Powerups and special Game Features\n�\tJoystick of keyboard control\n�\tIncludes a Matt Furniss soundtrack\n�\tFeatures unique atmospheric graphicsPit your wits against the clock in this revolutionary new approach to computer entertainment. Easy to learn. Impossible to leave and guaranteed to hook you.\nREVELATION! has what it takes to keep you coming back from more - REVELATION! - all computer games are not the same.\n\nTerramex\n--------\nBecome one of the world's five reputable explorers and experience the dangers of a hazardous journey to find Professor Eyestrain and deflect the meteor to which only he has the solution."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Krisalis-Collection_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.KrisalisCol"
+
+[lemmings]
+title = "Lemmings"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "An intriguing game in which you help hordes of mindless but delightful creatures - known as Lemmings- to escape hostile environments in over 100 levels. Lemmings drop through a trapdoor in each level and as they are creatures of very little brain, they need all the help they can get to survive the dangers that lie within.\n\nLemmings are very cute but also very dumb. They will mindlessly walk off cliffs, into water, hazards and traps or they mill around bumping into walls or other obstacles unless you help them get their act together.\n\nYou can assist them by giving them certain skills and powers that will help them get through each level of the game. Once you have assigned skills (shown as icons on the bottom of the screen in each level) to certain Lemmings they can use those skills to help them and their fellow Lemmings cope with the dangers that surround them.\n\nEach level of the game is an increasingly difficult environment that the Lemmings must navigate, At each level you have a different number of skills available for assignments, you have different times available for mastering that level and you have varying numbers of Lemmings that you must save to complete that particular level.\n\nA quick brain, the ability to plan ahead and lifetimes dedication to the Save A Lemming Campaign are required to get the right Lemming to perform the right action at the right time. A forgotten blocker, a rogue miner or a misplaced bridge could spell disaster for every Lemming on the screen."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Lemmings"
+
+[lemmings-2-the-tribes]
+title = "Lemmings 2: The Tribes"
+year = 1994
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "The sensational sequel to the most talked about computer game in the entire history of the world!\n\nGuide 12 Tribes of Lemmings across Lemming Island on an incredible Journey.\n\nThe Lemmings are in trouble and only their ancient talisman and a huge amount of skills can save them in this long-awaited follow-up to the Lemmings Saga.\n\nMeet the Highland Lemmings, Space Lemmings, Beach-Bum Lemmings, Circus Lemmings and many, many more on a quest to save their island..."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings-2-The-Tribes_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Lemmings2"
+
+[lotus-turbo-challenge-2]
+title = "Lotus Turbo Challenge 2"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Lotus Esprit Turbo Challenge was widely acclaimed as the best driving game of 1990.\nThe best just got better with the release of Lotus Turbo Challenge 2.\n\n�\tSynchronised play for up to four drivers with computer link\n�\tOne player full screen imagery\n�\tHair raising new hazards - rain, lightning, fog, snow, commuter traffic, tunnels, bridges and level crossings\n�\tA chance to race across the USA\n�\tA choice of the sleek new Turbo Esprit or the new stylish Elan softop\n�\t8 death defying stages with over 60 Check Points"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Lotus-Turbo-Challenge-2_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!LOTUS"
+
+[mad-professor-mariarti]
+title = "Mad Professor Mariarti"
+year = 1990
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "With your help Professor Mariarti must close down his five laboratories: Chemical Research, Space Rocket Development, Computer Science, Biological Observations and the Mystery Laboratory. You must solve strange puzzles and avoid mutant monsters playing through over 100 screens in your quest to save his sanity.\nYou will be nuts about this game. Its addictiveness will drive you mad, the puzzles will perples you, your arcade skills will be stretched and it's funny too.\nKiller ROM chips and typewriter ribbons which coil like snakes are among your adverseries in this quest. The hero's mad too but not half as mad as you will be if you don't buy it."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Mad-Professor-Mariarti_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!MadProf"
+
+[manchester-united]
+title = "Manchester United"
+year = 1990
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Undoubtedly the most famous football club in the world now brought to you by Krisalis in this action packed arcade game where you have complete management control.\n\nCan you take Manchester United to a historic treble League Champion, F.A. Cup & Littlewoods"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Manchester-United_2.01-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!!MUFC!!"
+
+[manchester-united-europe]
+title = "Manchester United Europe"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Game description to follow"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Manchester-United-Europe_2.1-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!ManUnited"
+
+[nebulus]
+title = "Nebulus"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Down on the planet Nebulus all is not well. Someone or something has been building giant towers in the sea and they didn't even apply for planning permission.\nIn the offices of Destructo Inc. you awake from your afternoon nap with the phone almost erupting on your desk. The boss is shouting about some little destruction job he's got for you. Still half asleep you feel like throwing the phone in the bin but he starts talking about the brand new Mk.7 Mini-Sub he's got for you and the words \"pay rise\". You're out of your office in a flash, leaving the phone dangling out of the window as the boss goes on to talk about the extreme danger involved..."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Nebulus_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Nebulus"
+
+[oh-no-more-lemmings]
+title = "Oh, No! More Lemmings"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "100 Brand New Lemmings Adventures!"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!OhNoLemms"
+
+[omar-sharifs-bridge]
+title = "Omar Sharif's Bridge"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Imagine yourself at the tables of Monte Carlo, playing bridge with the masters of the game... with Omar Sharif, world famous bridge columnist and card player, as your partner and personal tutor!\n\nOmar Sharif's Bridge is the world's first talking bridge game featuring a choice of ACOL or Five Card Majors bidding systems, stunning graphics, sound board support, on-disc tutorial and easy-to-use graphical interface.\n\nOmar Sharif's Bridge, designed for players of all standard, gives literally millions of possible hands, simulating the game with full realism. Additionally, the fully integrated tutorial, with commentary and help features, is designed to teach the game to beginners.\n\nYou'll hear Omar Sharif congratulate you on a bold finesse, or suggest another lead if your game needs fine-tuning. High-resolution full-colour graphics allow you to select from several types of card decks while the user-friendly interface makes bidding and playing fast and intuitive.\n\nThe many features of Omar Sharif's Bridge give you complete control over the game. You can set up your own hands to practice slams, no trump hands, defensive play, or work on specific weaknesses of your game. Explore alternative lines of play with 'Take Back' and 'Rebid' features. With the on-disc tutorial, Omar Sharif's Bridge is the perfect way to learn to play the world's greatest card game... with Omar Sharif as your own personal tutor."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Omar-Sharifs-Bridge_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Bridge"
+
+[pipe-mania]
+title = "Pipe Mania"
+year = 1989
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Pipe Mania is a game of great ingenuity, simple in concept and fiendishly challenging to play.\n\nYou'll need to act instinctively, but think strategically!\n\nOne wrong move, one brief hesitation or mis-placed pipe section, and you'll drown in a sea of slime!"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Pipe-Mania_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!PipeMania"
+
+[populous]
+title = "Populous"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "THE POWER OF LIGHT OR THE FORCE OF DARKNESS? YOU DECIDE!\n\nAs a Divine Being you have a group of followers from whom you derive your power.\nThe more followers you have and the greater their achievements, the more power you wield. Unfortunately, there is another group of people who follow a different deity.\nSince there's barely enough room in the world for your own magnificence, two won't do.\nYou must rid the world of the opposition. To do this, you will use your great power to move the earth and your devout followers to crush the misguided."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Populous_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Populous"
+
+[quest-for-gold]
+title = "Quest For Gold"
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Endorsed by Chafford Hundred Olympic athletes, John Regis, Linford Christie, Sally Gunnell, Fatima Whitbread, Yvonne Murray, Colin Jackson, Dalton Grant, Steve Backley.\nQuest For Gold is a multi event management and athletic simulation featuring 100m sprint, 110m hurdles, javelin, high jump and long jump."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Quest-For-Gold_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!!GOLD!!"
+
+[revelation-buzz]
+title = "Revelation! [BUZZ version]"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Pit your wits against the clock in the revolutionary new approach to computer entertainment. Easy to learn. Impossible to leave and guaranteed to hook you.\n\nREVELATION! has what it takes to keep you coming back for more - REVELATION! - all computer games are not the same."
+archive = "https://www.jaspp.org.uk/packages/release-packages/Revelation-[BUZZ]_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Revelatn"
+
+[swiv]
+title = "S.W.I.V."
+year = 1992
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "S.W.I.V - Secret Weapons Installation Verification\n\nPrimary Objective : Verify existence of the enemy's secret weapons nstallations and destroy them.\n\nS.W.I.V - Special Weapons Interdiction Vehicles\n\nSecondary Objective - Interdiction mission : the destruction by military force of all enemy units\n\nSWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to enter enemy territory as part of the elite assault team of Special Weapons Interdiction Vehicles.\n\nBattle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."
+archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!Swiv"
+
+[swiv-buzz]
+title = "S.W.I.V. [BUZZ version]"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "S.W.I.V - Secret Weapons Installation Verification\n\nPrimary Objective : Verify existence of the enemy's secret weapons nstallations and destroy them.\n\nS.W.I.V - Special Weapons Interdiction Vehicles\n\nSecondary Objective - Interdiction mission : the destruction by military force of all enemy units\n\nSWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to enter enemy territory as part of the elite assault team of Special Weapons Interdiction Vehicles.\n\nBattle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."
+archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV-[BUZZ]_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!SwivBUZZ"
+
+[simcity]
+title = "SimCity"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Game description to follow"
+archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity_1.0-1"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!SimCity"
+
+[simcity2000-a5000]
+title = "SimCity 2000 [A5000 version]"
+year = 1994
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Game description to follow"
+archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[A5000]_0-4"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!SC2000"
+
+[simcity2000-rpc]
+title = "SimCity 2000 [RPC version]"
+year = 1994
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Game description to follow"
+archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[RPC]_0-3"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!SC2000RPC"
+
+[speedball-2]
+title = "SpeedBall 2"
+year = 1994
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 17000
+min-mem = "4MB"
+description = "Take control of Brutal Deluxe, the worst team in Speedball history, and turn them into champions. During the one-player option you can play a knockout competition playing against progressively tougher teams until you lose.\n\nThere's also a Cup option played over four two leg rounds but the main challenge is the full league. In this, Deluxe begin in Division 2 with their eventual aim being to win promotion and go for the title.\n\nShould you prefer you can elect to manage the team, buy and sell players and let the computer handle events on the pitch. Two player games are also available with matches taking place over two legs.\n\nSpeedBall 2 is a mixture between American football and Hockey and is played across a massive metal pitch. The aim of the game is to guide a group of promising newcomers to glory, with the basic contents being a fantastic fast paced ruck where the players beat up anyone in their way as they try to slam the ball into the opponent's goal.\n\nPower-ups and bonus points can be collected which will add extra abilities to your motley crew, such as extra armour, speed or other vital statistics. Money will also be available and can buy extra power or increase your overall playing ability.\n\nSpeedBall 2 is played over 2 halves lasting 90 seconds each. Teams swap ends at half time; the action starts when the ball is launched into play in the centre of the pitch. This happens at the beginning of each period, or after a goal, or after a player has been substituted.\nThe object of the game is to score more points than our opponent - but how you do it is up to you !"
+archive = "https://www.jaspp.org.uk/packages/release-packages/SpeedBall-2_0-2"
+tags = "game,ex-commercial"
+app-path = "Apps.Games.!SpeedBall"
+

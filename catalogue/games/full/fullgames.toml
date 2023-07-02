@@ -64,14 +64,6 @@ click-icon=true
 ff-ms=20000
 info-url="http://www.elitehomepage.org/arc/index.htm"
 
-[swiv]
-title="S.W.I.V."
-tags="game,ex-commercial"
-year=1992
-publisher="Krysalis Software"
-description="Fast-paced vertical 2D shooter"
-disc="http://acorn.revivalteam.de/Download/Images/SWIV.zip"
-
 [mr-doo]
 title="Mr. Doo"
 tags="game,ex-commercial"

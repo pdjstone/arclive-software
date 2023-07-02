@@ -1,0 +1,11 @@
+[adffs]
+title = "ADFFS"
+description = """
+ADFFS provides emulation of the 1772 / 710/711 floppy disc controllers,
+and emulates ADFS responses to disc requests.  ADF, APD and JFD floppy
+disc images can be mounted to floppy drive 0 as if they were physically
+inserted."""
+archive = "adffs281lite.zip"
+app-path="!ADFFS"
+tags = "utility"
+
