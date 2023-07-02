@@ -21,6 +21,7 @@ The software files will be renamed according to the software ID in the toml.
 
 # map of id to toml filename
 all_software_ids = {}
+all_deps = {}
 
 out_dir = None
 
@@ -51,6 +52,7 @@ VALID_FIELDS = (
     'autoboot', # custom boot script, which will override the default "*desktop filer_run <path.to.app-path>"
     'ff-ms', # number of milliseconds to fast-forward when autobooting
     'sound-filter', # 0 (full), 1 (reduced) or 2 (more reduced)
+    'depends', # archive dependencies
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -137,6 +139,12 @@ def parse_toml(root, file):
             mem_kb = int(disc_meta['min-mem'][0].removesuffix('MB')) * 1024
             disc_meta['min-mem'] = mem_kb
 
+        if 'depends' in disc_meta:
+            deps = disc_meta['depends'].split(',')
+            disc_meta['depends'] = deps
+            all_deps[software_id] = deps
+
+
         if 'sound-filter' in disc_meta:
             sf = disc_meta['sound-filter']
             assert type(sf) == int and 0 <= sf <= 2
@@ -173,6 +181,8 @@ def filename_to_canonical(filename_or_url: str, software_id):
         ext = '.' + RISC_OS_TYPE_MAP.get(filetype.lower(), None)
     else:
         base_name, ext = os.path.splitext(os.path.basename(filename_or_url))
+    if (not ext or ext.lower() not in VALID_FILE_EXTS) and 'jaspp' in filename_or_url:
+        ext = '.zip'
     if not ext or ext.lower() not in VALID_FILE_EXTS:
         raise Exception(f"bad extension: {filename_or_url} ({software_id})")
     new_name = f'{software_id}{ext}'    
@@ -245,6 +255,13 @@ if __name__ == '__main__':
     for root, file in find_toml_files(src_dir):
         data = parse_toml(root, file)
         json_data |= data
+
+    for software_id, deps in all_deps.items():
+        for d in deps:
+            if d not in all_software_ids:
+                raise Exception(f'{software_id} depends on unknown ID {d}')
+            if 'archive' not in json_data[d]:
+                raise Exception(f'{software_id} depends on ID {d} which is a disc?')
 
     json_out = os.path.join(out_dir, 'software.json')
     with open(json_out, 'w') as f:
