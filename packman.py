@@ -3,7 +3,7 @@
 from typing import Iterator
 import requests
 import sys
-import toml
+import tomlkit
 import re 
 from urllib.parse import urlparse
 
@@ -54,17 +54,20 @@ def keywords_in_str(s, kws):
 
 def filter_package(pkg):
     pkg_id = pkg['Package']
-    #pkg_id_blacklist = '[SA]', '[RPC]'
+    pkg_id_blacklist = '[SA]', '[RPC]'
     #if keywords_in_str(pkg_id, pkg_id_blacklist):
     #    return False
     if 'Krisalis' not in pkg['Description']:
         return False
     return True
 
-def make_toml(repo_url, packages):
+def make_toml(repo_url, packages) -> tomlkit.document:
+
     url_bits = urlparse(repo_url)
     base_url = url_bits.scheme + '://' + url_bits.netloc
-    toml_data = {}
+    doc = tomlkit.document()
+    doc.add(tomlkit.comment(f"Generated from packman index at: {repo_url}"))
+    
     for pkg in packages:
         package_id = pkg['Package'].replace('[', '').replace(']', '').lower()
         arc_meta = {}
@@ -81,18 +84,17 @@ def make_toml(repo_url, packages):
             arc_meta['title'] = title
         if package_id != 'adffs':
             arc_meta['depends'] = 'adffs'
-        arc_meta['ff-ms'] = 17000
+        arc_meta['ff-ms'] = 23000
         arc_meta['min-mem'] = '4MB' # ADFFS takes up ~700KB
-        arc_meta['description'] = body
+        arc_meta['description'] = tomlkit.string(body, multiline=True)
         arc_meta['archive'] = base_url + pkg['URL']
         arc_meta['tags'] = 'game,ex-commercial'
         if 'Components' in pkg:
             app_path = pkg['Components'].removesuffix(' (Movable)')
             arc_meta['app-path'] = app_path
-        toml_data[package_id] = arc_meta
-
+        doc[package_id] = arc_meta
+    return doc
     
-    return toml_data
 if __name__ == '__main__':
     repo_url = sys.argv[1]
 
@@ -100,5 +102,5 @@ if __name__ == '__main__':
     wanted_packages = filter(filter_package, all_packages)
 
     toml_data = make_toml(repo_url, wanted_packages)
-    print(toml.dumps(toml_data))
+    tomlkit.dump(toml_data, sys.stdout)
     
