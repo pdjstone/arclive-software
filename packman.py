@@ -84,17 +84,17 @@ def make_toml(repo_url, packages) -> tomlkit.document:
             arc_meta['title'] = title
         if package_id != 'adffs':
             arc_meta['depends'] = 'adffs'
-        arc_meta['ff-ms'] = 23000
+        arc_meta['ff-ms'] = 28000
         arc_meta['min-mem'] = '4MB' # ADFFS takes up ~700KB
         arc_meta['description'] = tomlkit.string(body, multiline=True)
         arc_meta['archive'] = base_url + pkg['URL']
-        arc_meta['tags'] = 'game,ex-commercial'
+        arc_meta['tags'] = 'game,ex-commercial,hidden'
         if 'Components' in pkg:
             app_path = pkg['Components'].removesuffix(' (Movable)')
             arc_meta['app-path'] = app_path
         doc[package_id] = arc_meta
     return doc
-    
+
 if __name__ == '__main__':
     repo_url = sys.argv[1]
 

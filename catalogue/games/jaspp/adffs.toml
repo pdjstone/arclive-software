@@ -7,5 +7,5 @@ disc images can be mounted to floppy drive 0 as if they were physically
 inserted."""
 archive = "adffs281lite.zip"
 app-path="!ADFFS"
-tags = "utility"
+tags = "utility,hidden"
 

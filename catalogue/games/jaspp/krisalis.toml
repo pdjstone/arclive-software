@@ -5,7 +5,7 @@ title = "Alone In the Dark"
 year = 1995
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """A somewhat tricky situation...
 
@@ -17,7 +17,7 @@ Did Jeremy Hartwood really commit suicide or was he just insane? Is there an evi
 
 Enter at your peril ! Derceto is not a country cottage and this is no holiday. Entering is just the easy part, leaving could be hell !"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Alone-in-the-Dark_1.00-5"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Alone"
 
 [battle-chess]
@@ -25,7 +25,7 @@ title = "Battle Chess"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """The most challenging game on earth comes to life in Battle Chess. An entire medieval world at war is reflected on the checkered field.
 
@@ -34,7 +34,7 @@ Combat, mortal combat, is the heart and soul of chess, but this aspect of it can
 
 Lots of computer chess games capture the basics of chess. Only Battle Chess brings chess to life by combining a magnificent chess logic system with colourful, humourous, and dramatic three-dimensional animations."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Battle-Chess_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Battle"
 
 [cannon-fodder]
@@ -42,9 +42,9 @@ title = "Cannon Fodder"
 year = 1994
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
-description = """"DON'T WAIT 'TIL YOU SEE THE WHITES OF THEIR EYES...
+description = """DON'T WAIT 'TIL YOU SEE THE WHITES OF THEIR EYES...
 
 DON'T KID YOURSELF IT WILL BE OVER BY CHRISTMAS...
 
@@ -54,7 +54,7 @@ AND DON'T FORGET TO WASH YOUR HANDS AFTERWARDS..."
 
 WAR HAS NEVER BEEN SO MUCH FUN..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Cannon-Fodder_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Cannon"
 
 [champions]
@@ -62,11 +62,11 @@ title = "Champions"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Game description to follow"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Champions_0-2"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.Champions"
 
 [chuck-rock]
@@ -74,13 +74,13 @@ title = "Chuck Rock"
 year = 1991
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Chuck Rock hasn't been the same since his long time rival in love, the evil Gary Gritter, kidnapped his wife, the beautiful Ophelia.
 
 Help Chuck in his quest to rescue Ophelia from the clutches of the evil Gary. Kick, throw rocks and belly-but your way your way through a multitude of comical zones featuring 500 screens of exciting addictive gameplay."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Chuck-Rock_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Chuck"
 
 [gods]
@@ -88,7 +88,7 @@ title = "Gods"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """A city lost in legend. An unconquered warrior seeking reward. A challenge laid down by the Gods.
 
@@ -101,7 +101,7 @@ A host of intelligent monsters
 
 Have you got what it takes to be a GOD?"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Gods_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Gods"
 
 [heimdall]
@@ -109,7 +109,7 @@ title = "Heimdall"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Norse legend tells of a time when the Gods of Valhalla and Asgard created a race known as the Vikings. At first the Gods loved their children and contact between the two was frequent. As time passed the Gods lost interest in their creations and visits across the Rainbow Bridge ceased.
 
@@ -119,7 +119,7 @@ The warrior that legend speaks of will be known as Heimdall.
 
 Follow Heimdall through his growth from small boy to manhood in this true role playing game, which features interactive characters - choose from up to 30, realtime combat, set in three different Viking worlds, and control of up to 6 characters."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Heimdall_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Heimdall"
 
 [hero-quest]
@@ -127,7 +127,7 @@ title = "Hero Quest"
 year = 1991
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """CHRONICLES OF LORETOME
 ----------------------
@@ -151,7 +151,7 @@ Hero Quest the best selling role-playing game has now been developed into an abs
 
 Take up the challenge to become a Hero and enter the underground realm of the evil wizard Morcar. But beware, the unlit tunnels hold many dangers, terrible monsters, deadly traps and mysterious rooms."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Hero-Quest_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!HeroQuest"
 
 [jahangir-khan-squash]
@@ -159,7 +159,7 @@ title = "Jahangir Khan World Championship Squash"
 year = 1991
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Jahangir Khan, the World's number one Squash player, now brought to the small screen by Krisalis Software.
 
@@ -169,7 +169,7 @@ World Championship, the game simulates all the excitement and tension of the 32 
 
 Player one on one two player option, or head to head against the computer."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Jahangir-Khan-Squash_1.02-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!JKSquash"
 
 [james-pond]
@@ -177,7 +177,7 @@ title = "James Pond"
 year = 1990
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """When danger threatens in the icy deep, when hope seems lost and the end looks nigh, there's only one fish with the guts to save the day.
 Now's the time to call James Pond - Underwater Agent. He's fearless, he's clever, he's ozone-friendly.
@@ -192,7 +192,7 @@ Choice of weapons or just blow up baddies with bubble-action!
 
 So many different enemies and pickups you'll wish you had eight tentacles!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/James-Pond_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!JamesPond"
 
 [krisalis-collection]
@@ -200,7 +200,7 @@ title = "Krisalis Collection, The"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Mad Professor Mariarti
 ----------------------
@@ -227,7 +227,7 @@ Terramex
 --------
 Become one of the world's five reputable explorers and experience the dangers of a hazardous journey to find Professor Eyestrain and deflect the meteor to which only he has the solution."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Krisalis-Collection_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.KrisalisCol"
 
 [lemmings]
@@ -235,7 +235,7 @@ title = "Lemmings"
 year = 1991
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """An intriguing game in which you help hordes of mindless but delightful creatures - known as Lemmings- to escape hostile environments in over 100 levels. Lemmings drop through a trapdoor in each level and as they are creatures of very little brain, they need all the help they can get to survive the dangers that lie within.
 
@@ -247,7 +247,7 @@ Each level of the game is an increasingly difficult environment that the Lemming
 
 A quick brain, the ability to plan ahead and lifetimes dedication to the Save A Lemming Campaign are required to get the right Lemming to perform the right action at the right time. A forgotten blocker, a rogue miner or a misplaced bridge could spell disaster for every Lemming on the screen."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Lemmings"
 
 [lemmings-2-the-tribes]
@@ -255,7 +255,7 @@ title = "Lemmings 2: The Tribes"
 year = 1994
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """The sensational sequel to the most talked about computer game in the entire history of the world!
 
@@ -265,7 +265,7 @@ The Lemmings are in trouble and only their ancient talisman and a huge amount of
 
 Meet the Highland Lemmings, Space Lemmings, Beach-Bum Lemmings, Circus Lemmings and many, many more on a quest to save their island..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings-2-The-Tribes_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Lemmings2"
 
 [lotus-turbo-challenge-2]
@@ -273,7 +273,7 @@ title = "Lotus Turbo Challenge 2"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Lotus Esprit Turbo Challenge was widely acclaimed as the best driving game of 1990.
 The best just got better with the release of Lotus Turbo Challenge 2.
@@ -285,7 +285,7 @@ The best just got better with the release of Lotus Turbo Challenge 2.
 �\tA choice of the sleek new Turbo Esprit or the new stylish Elan softop
 �\t8 death defying stages with over 60 Check Points"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lotus-Turbo-Challenge-2_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!LOTUS"
 
 [mad-professor-mariarti]
@@ -293,13 +293,13 @@ title = "Mad Professor Mariarti"
 year = 1990
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """With your help Professor Mariarti must close down his five laboratories: Chemical Research, Space Rocket Development, Computer Science, Biological Observations and the Mystery Laboratory. You must solve strange puzzles and avoid mutant monsters playing through over 100 screens in your quest to save his sanity.
 You will be nuts about this game. Its addictiveness will drive you mad, the puzzles will perples you, your arcade skills will be stretched and it's funny too.
 Killer ROM chips and typewriter ribbons which coil like snakes are among your adverseries in this quest. The hero's mad too but not half as mad as you will be if you don't buy it."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Mad-Professor-Mariarti_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!MadProf"
 
 [manchester-united]
@@ -307,13 +307,13 @@ title = "Manchester United"
 year = 1990
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Undoubtedly the most famous football club in the world now brought to you by Krisalis in this action packed arcade game where you have complete management control.
 
 Can you take Manchester United to a historic treble League Champion, F.A. Cup & Littlewoods"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Manchester-United_2.01-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!!MUFC!!"
 
 [manchester-united-europe]
@@ -321,11 +321,11 @@ title = "Manchester United Europe"
 year = 1991
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Game description to follow"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Manchester-United-Europe_2.1-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!ManUnited"
 
 [nebulus]
@@ -333,12 +333,12 @@ title = "Nebulus"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Down on the planet Nebulus all is not well. Someone or something has been building giant towers in the sea and they didn't even apply for planning permission.
 In the offices of Destructo Inc. you awake from your afternoon nap with the phone almost erupting on your desk. The boss is shouting about some little destruction job he's got for you. Still half asleep you feel like throwing the phone in the bin but he starts talking about the brand new Mk.7 Mini-Sub he's got for you and the words "pay rise". You're out of your office in a flash, leaving the phone dangling out of the window as the boss goes on to talk about the extreme danger involved..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Nebulus_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Nebulus"
 
 [oh-no-more-lemmings]
@@ -346,11 +346,11 @@ title = "Oh, No! More Lemmings"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """100 Brand New Lemmings Adventures!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-2"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!OhNoLemms"
 
 [omar-sharifs-bridge]
@@ -358,7 +358,7 @@ title = "Omar Sharif's Bridge"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Imagine yourself at the tables of Monte Carlo, playing bridge with the masters of the game... with Omar Sharif, world famous bridge columnist and card player, as your partner and personal tutor!
 
@@ -370,7 +370,7 @@ You'll hear Omar Sharif congratulate you on a bold finesse, or suggest another l
 
 The many features of Omar Sharif's Bridge give you complete control over the game. You can set up your own hands to practice slams, no trump hands, defensive play, or work on specific weaknesses of your game. Explore alternative lines of play with 'Take Back' and 'Rebid' features. With the on-disc tutorial, Omar Sharif's Bridge is the perfect way to learn to play the world's greatest card game... with Omar Sharif as your own personal tutor."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Omar-Sharifs-Bridge_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Bridge"
 
 [pipe-mania]
@@ -378,7 +378,7 @@ title = "Pipe Mania"
 year = 1989
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Pipe Mania is a game of great ingenuity, simple in concept and fiendishly challenging to play.
 
@@ -386,7 +386,7 @@ You'll need to act instinctively, but think strategically!
 
 One wrong move, one brief hesitation or mis-placed pipe section, and you'll drown in a sea of slime!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Pipe-Mania_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!PipeMania"
 
 [populous]
@@ -394,7 +394,7 @@ title = "Populous"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """THE POWER OF LIGHT OR THE FORCE OF DARKNESS? YOU DECIDE!
 
@@ -403,7 +403,7 @@ The more followers you have and the greater their achievements, the more power y
 Since there's barely enough room in the world for your own magnificence, two won't do.
 You must rid the world of the opposition. To do this, you will use your great power to move the earth and your devout followers to crush the misguided."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Populous_0-2"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Populous"
 
 [quest-for-gold]
@@ -411,12 +411,12 @@ title = "Quest For Gold"
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Endorsed by Chafford Hundred Olympic athletes, John Regis, Linford Christie, Sally Gunnell, Fatima Whitbread, Yvonne Murray, Colin Jackson, Dalton Grant, Steve Backley.
 Quest For Gold is a multi event management and athletic simulation featuring 100m sprint, 110m hurdles, javelin, high jump and long jump."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Quest-For-Gold_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!!GOLD!!"
 
 [revelation-buzz]
@@ -424,13 +424,13 @@ title = "Revelation! [BUZZ version]"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Pit your wits against the clock in the revolutionary new approach to computer entertainment. Easy to learn. Impossible to leave and guaranteed to hook you.
 
 REVELATION! has what it takes to keep you coming back for more - REVELATION! - all computer games are not the same."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Revelation-[BUZZ]_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!RevBUZZ"
 
 [swiv]
@@ -438,7 +438,7 @@ title = "S.W.I.V."
 year = 1992
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """S.W.I.V - Secret Weapons Installation Verification
 
@@ -452,7 +452,7 @@ SWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to en
 
 Battle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Swiv"
 
 [swiv-buzz]
@@ -460,7 +460,7 @@ title = "S.W.I.V. [BUZZ version]"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """S.W.I.V - Secret Weapons Installation Verification
 
@@ -474,7 +474,7 @@ SWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to en
 
 Battle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV-[BUZZ]_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SwivBUZZ"
 
 [simcity]
@@ -482,11 +482,11 @@ title = "SimCity"
 year = 1993
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Game description to follow"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity_1.0-2"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SimCity"
 
 [simcity2000-a5000]
@@ -494,11 +494,11 @@ title = "SimCity 2000 [A5000 version]"
 year = 1994
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Game description to follow"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[A5000]_0-5"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SC2000"
 
 [simcity2000-rpc]
@@ -506,11 +506,11 @@ title = "SimCity 2000 [RPC version]"
 year = 1994
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Game description to follow"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[RPC]_0-4"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SC2000RPC"
 
 [speedball-2]
@@ -518,7 +518,7 @@ title = "SpeedBall 2"
 year = 1994
 publisher = "Krisalis Software"
 depends = "adffs"
-ff-ms = 23000
+ff-ms = 28000
 min-mem = "4MB"
 description = """Take control of Brutal Deluxe, the worst team in Speedball history, and turn them into champions. During the one-player option you can play a knockout competition playing against progressively tougher teams until you lose.
 
@@ -533,6 +533,5 @@ Power-ups and bonus points can be collected which will add extra abilities to yo
 SpeedBall 2 is played over 2 halves lasting 90 seconds each. Teams swap ends at half time; the action starts when the ball is launched into play in the centre of the pitch. This happens at the beginning of each period, or after a goal, or after a player has been substituted.
 The object of the game is to score more points than our opponent - but how you do it is up to you !"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/SpeedBall-2_0-3"
-tags = "game,ex-commercial"
+tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SpeedBall"
-

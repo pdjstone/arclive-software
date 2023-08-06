@@ -65,7 +65,8 @@ VALID_TAGS = (
     'utility',
     'music',
     'ex-commercial',
-    'demoscene'
+    'demoscene',
+    'hidden' # don't show in software browser, but allow loading the game via URL param
 )
 
 VALID_OS = ('arthur120', 'riscos201', 'riscos311')
