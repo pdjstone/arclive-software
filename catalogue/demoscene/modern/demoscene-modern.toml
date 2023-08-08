@@ -1,5 +1,18 @@
 # Modern demoscene creations (i.e. post-90s!) 
 
+[bs-chequered-past]
+title="Chequered Past"
+publisher="Bitshifters & Torment"
+author="Kieran^Bitshifters, Phoenix^Quantum, Rhino^Torment, Spiny^Torment"
+year=2023
+archive="bs-chequered-past.zip"
+best-cpu="arm250"
+app-path="!Chequered"
+ff-ms=17000
+sound-filter=2
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-chequered-past.html"
+
 [bs-tipsy-cube]
 title="Tipsy Cube"
 publisher="Bitshifters & Slipstream"
