@@ -53,7 +53,7 @@ info-url="https://www.pouet.net/prod.php?which=94151"
 [bs-popular-demand]
 title="Back by Popular Demand"
 publisher="Bitshifters & Torment"
-author="Kieran, Rhino, Spiny, Phoenix / Quantum "
+author="Kieran, Rhino, Spiny, Phoenix / Quantum"
 year=2020  
 archive="https://bitshifters.github.io/content/bs-popular-demand.arc"
 app-path="!Demand"
@@ -61,6 +61,62 @@ ff-ms=15000
 sound-filter=2
 tags="demoscene"
 info-url="https://bitshifters.github.io/posts/prods/bs-popular-demand.html"
+best-cpu="arm250"
+
+[bs-mikroreise]
+title="Mikroreise"
+publisher="Bitshifters & Torment"
+author="Kieran^Bitshifters, Rhino^Torment, Spiny^Torment"
+year=2023  
+description="""
+The Deadline demoparty in Berlin has a unique Three Dee competition in which participants 
+are challenged to make the best demo production using Anaglyph 3D. This is a stereoscopic 
+3D effect using red-cyan filtered glasses.
+
+Mikroreise means Micro Journey (or Small Trip) in German, and was our humble entry for 
+the compo. You will need some red-cyan glasses to see this demo in 3D!!
+"""
+archive="https://bitshifters.github.io/content/bs-mikroreise,ddc"
+app-path="!Reise"
+ff-ms=15000
+sound-filter=2
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-mikroreise.html"
+best-cpu="arm250"
+
+[bs-push]
+title="Push"
+publisher="Bitshifters & Torment"
+author="Kieran^Bitshifters, Rhino^Torment"
+year=2024
+description="""
+A 64Kb demo for the Acorn Archimedes released at Revision 2024 in the Oldschool Demo compo. 
+An experiment in real-time particle physics.
+"""
+archive="https://bitshifters.github.io/content/bs-push,ddc"
+app-path="!Push"
+ff-ms=15000
+sound-filter=2
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-push.html"
+best-cpu="arm250"
+
+[bs-archieklang]
+title="ArchieKlang Announcetro"
+publisher="Bitshifters & Alcatraz & Torment"
+author="Kieran^Bitshifters, Virgill^Alcatraz, Rhino^Torment "
+year=2024
+description="""
+A cheeky 28kb intro for the Acorn Archimedes released at NOVA 2024 in the Oldschool Demo Compo. 
+This is the first production on the Archimedes to use Virgill’s AmigaKlang soft synth -
+it generates 280+kb of sample data from just a few kb of code!
+"""
+archive="https://bitshifters.github.io/content/bs-archieklang,ddc"
+app-path="!AKlang"
+ff-ms=20000
+sound-filter=2
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-archieklang.html"
 best-cpu="arm250"
 
 [progen-dither]
@@ -123,3 +179,15 @@ year=2022
 ff-ms=16000
 sound-filter=2
 description="1st place entry in NOVA 2022 oldskool demo competition."
+
+[desire-fathom]
+title="Fathom"
+publisher="Desire"
+archive="http://b-em.bbcmicro.com/dsr_fathom.zip"
+app-path="!Fathom"
+tags="demoscene"
+best-cpu="arm3"
+year=2024
+ff-ms=16000
+sound-filter=2
+description="64k intro released at NOVA 2024"
