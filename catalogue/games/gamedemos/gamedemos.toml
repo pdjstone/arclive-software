@@ -7,7 +7,9 @@ year=1989
 disc="http://acorn.revivalteam.de/Download/Images/Lander.zip"
 app-path="!Lander"
 ff-ms=17000
+mouse-capture="force" # prevent ship from exploding while moving mouse onto canvas
 tags="game,demo"
+description="The first-ever game written and released for the Archimedes"
 
 [lemmings-demo]
 title="Lemmings (Demo)"
@@ -47,6 +49,7 @@ publisher="Krisalis Software"
 archive="nebulus-demo.zip"
 app-path="!Nebulus"
 tags="game,demo"
+ff-ms=17000
 
 [jamespond-demo]
 title="James Pond (Demo)"

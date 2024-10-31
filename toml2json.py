@@ -53,6 +53,7 @@ VALID_FIELDS = (
     'ff-ms', # number of milliseconds to fast-forward when autobooting
     'sound-filter', # 0 (full), 1 (reduced) or 2 (more reduced)
     'depends', # archive dependencies
+    'mouse-capture', # force/never (auto is default, so never needed)
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -73,6 +74,7 @@ VALID_OS = ('arthur120', 'riscos201', 'riscos311')
 VALID_CPU = ('arm2', 'arm3', 'arm250')
 VALID_MEM = ('1MB', '2MB', '4MB', '8MB')
 VALID_FILE_EXTS = ('.arc', '.zip', '.adf', '.spk')
+VALID_MOUSE_CAPTURE = ('force', 'never')
 RISC_OS_TYPE_MAP = { 'ddc' : 'spk'}
 
 def find_toml_files(root_dir):
@@ -134,6 +136,9 @@ def parse_toml(root, file):
         if 'best-cpu' in disc_meta and disc_meta['best-cpu'] not in VALID_CPU:
             raise Exception(f"'{software_id}' in {toml_path}: Invalid best-cpu: {disc_meta['best-cpu']}")
 
+        if 'mouse-capture' in disc_meta and disc_meta['mouse-capture'] not in VALID_MOUSE_CAPTURE:
+            raise Exception(f"'{software_id}' in {toml_path}: Invalid mouse-capture: {disc_meta['mouse-capture']}")
+
         if 'min-mem' in disc_meta:
             if disc_meta['min-mem'] not in VALID_MEM:
                 raise Exception(f"'{software_id}' in {toml_path}: Invalid min-mem: {disc_meta['min-mem']}")
@@ -145,10 +150,10 @@ def parse_toml(root, file):
             disc_meta['depends'] = deps
             all_deps[software_id] = deps
 
-
         if 'sound-filter' in disc_meta:
             sf = disc_meta['sound-filter']
             assert type(sf) == int and 0 <= sf <= 2
+
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
                 raise Exception(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
