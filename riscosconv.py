@@ -134,8 +134,11 @@ def parse_riscos_zip_ext(buf: bytes, offset, fieldLen):
 if not hasattr(ZipInfo, '_decodeExtra'):
     raise Exception("Cannot monkey patch ZipInfo - has implementation changed?")
 
-def _decodeExtra(self):
+def _decodeExtra(self, *args):
     pass
+
+# prevent Python from trying to decode extra ZIP fields
+ZipInfo._decodeExtra = _decodeExtra
 
 def _decodeRiscOsExtra(self):
         offset = 0
@@ -154,21 +157,20 @@ def _decodeRiscOsExtra(self):
             else:
                 offset += fieldLen + 4
                 
-                
         return None
 
+ZipInfo.getRiscOsMeta = _decodeRiscOsExtra
+
+# We need to override the default filename codec 
+# Python >= 3.11 supports metadata_encoding param but only for reading
+import encodings.iso8859_1
+import encodings.cp437
 def _encodeFilenameFlags(self):
     return self.filename.encode('iso-8859-1'), self.flag_bits
 
-# for Python < 3.11, we need to override the default codec. 
-# for Python >= 3.11 we can use the ZipFile metadata_encoding param
-import encodings.cp437
-import encodings.iso8859_1
-encodings.cp437.decoding_table = encodings.iso8859_1.decoding_table
 
-ZipInfo._decodeExtra = _decodeExtra
-ZipInfo.getRiscOsMeta = _decodeRiscOsExtra
 ZipInfo._encodeFilenameFlags = _encodeFilenameFlags
+encodings.cp437.decoding_table = encodings.iso8859_1.decoding_table
 
 def get_riscos_zipinfo(path: Path, base_path: Path):
     meta = RiscOsFileMeta.from_filepath(path)
