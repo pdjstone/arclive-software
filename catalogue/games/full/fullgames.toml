@@ -54,10 +54,10 @@ info-url="http://ian.jeffray.co.uk/riscos/BurnOut/"
 [elite]
 title="Elite"
 tags="game,ex-commercial"
-year=1995
+year=1991
 archive="elite.zip"
 author="Warren Burch, Clive Gringras"
-description="The classic space trading game"
+description="The classic space trading game, updated for the Archimedes"
 version="1.14"
 app-path="!élite"
 click-icon=true
@@ -156,12 +156,16 @@ click-icon=true
 ff-ms=18100
 best-cpu="arm250"
 
-#[botkiller]
-#title="Botkiller"
-#tags="game,ex-commercial"
-#archive="http://www.acorn-gaming.org.uk/Download/Arcade/BK.zip"
-#publisher="Artex Software"
-#year=1997
+[botkiller]
+title="Botkiller"
+tags="game,ex-commercial"
+archive="http://www.acorn-gaming.org.uk/Download/Arcade/BK.zip"
+publisher="Artex Software"
+app-path="!Botkiller"
+ff-ms=17000
+best-cpu="arm250"
+min-mem="2MB"
+year=1997
 
 [chaos]
 title="Spheres of Chaos"
