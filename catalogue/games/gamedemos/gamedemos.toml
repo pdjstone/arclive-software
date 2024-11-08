@@ -69,3 +69,14 @@ archive="cataclysm-demo.zip"
 app-path="!CtclysD"
 ff-ms=17000
 tags="game,demo"
+
+[chocksaway-demo]
+title="Chocks Away (Demo)"
+year=1991
+publisher="4th Dimension"
+author="Andrew Hutchings"
+archive="chocksaway-demo.zip"
+app-path="!Chocks_2"
+ff-ms=20000
+tags="game,demo"
+best-cpu="arm3"
