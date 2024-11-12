@@ -80,3 +80,35 @@ app-path="!Chocks_2"
 ff-ms=20000
 tags="game,demo"
 best-cpu="arm3"
+
+[quark-demo]
+title="Quark (Demo)"
+year=1993
+publisher="Oregan Software"
+author="The Zygotics"
+archive="quark-demo.zip"
+app-path="!"
+ff-ms=15000
+tags="game,demo"
+
+[technodream-demo]
+title="TechnoDream (Demo)"
+publisher="Superior Software"
+author="Graeme Richardson"
+year=1993
+archive="technodream-demo.zip"
+app-path="!TechDream"
+ff-ms=17000
+tags="game,demo"
+description="Side scrolling shoot-em-up sequel to Nevryon"
+
+[flashback-demo]
+title="Flashback"
+year=1994
+archive="flashback-demo.zip"
+app-path="!Flashdemo"
+ff-ms=17000
+tags="game,demo"
+author="Delphine Software, Dave Lawrence"
+publisher="U.S. Gold"
+best-cpu="arm250"

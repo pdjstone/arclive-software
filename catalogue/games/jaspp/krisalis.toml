@@ -105,6 +105,7 @@ tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Gods"
 
 [heimdall]
+# control issues - joystick required?
 title = "Heimdall"
 year = 1993
 publisher = "Krisalis Software"
@@ -374,6 +375,8 @@ tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Bridge"
 
 [pipe-mania]
+# Issue with packman version - always get "game over" after first level (even after successfully completing it)
+# .jfd version works ok
 title = "Pipe Mania"
 year = 1989
 publisher = "Krisalis Software"
