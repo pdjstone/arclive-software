@@ -7,6 +7,7 @@ import json
 import shutil
 import hashlib
 import requests
+import subprocess
 
 from toml.decoder import TomlDecodeError
 
@@ -25,18 +26,28 @@ all_deps = {}
 
 out_dir = None
 
+
+if shutil.which('pngcrush'):
+    print('using pngcrush')
+    def copy_img(src, dst):
+        return subprocess.run(['pngcrush', src, dst])
+else:
+    print('WARNING - pngcrush not installed')
+    copy_img =  shutil.copyfile
+
 RISC_OS_COMMA_FILETYPE_PATTERN = r',[a-z90-9]{3}$'
 
 CACHE_DIR = 'dlcache'
 
 MANDATORY_FIELDS = (
     'title', 
+    'year',
     'tags',
 )
 
 VALID_FIELDS = (
     'author', 'publisher',
-    'year',
+
     'version', # version number or string
     'disc', 'archive', # filename (relative to TOML file) or URL of disc image/archive file
     'tags', # comma-separated list of valid tags (see below)
@@ -158,12 +169,23 @@ def parse_toml(root, file):
             if field not in VALID_FIELDS:
                 raise Exception(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
 
+        if screenshots := find_screenshots(root, software_id):
+            disc_meta['screenshots'] = screenshots
         all_software_ids[software_id] = toml_path
         disc_meta['id'] = software_id
         with open(toml_hash_path, 'w') as f:
             toml.dump(hashes, f)
 
     return data
+
+def find_screenshots(root, software_id):
+    file_pattern = software_id + r'-\d+.png'
+    files = sorted([f.name for f in os.scandir(root) if re.match(file_pattern, f.name)])
+    if not files: 
+        return
+    for f in files:
+        copy_img(os.path.join(root, f), os.path.join(out_dir, 'screenshots', f))
+    return files
 
 def fetch_file(root, path, software_id, known_hash):
     new_name = filename_to_canonical(path, software_id)
@@ -254,6 +276,7 @@ if __name__ == '__main__':
     
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir, exist_ok=True)
+        os.makedirs(os.path.join(out_dir, 'screenshots'), exist_ok=True)
 
     if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR, exist_ok=True)
