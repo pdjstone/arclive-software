@@ -13,12 +13,14 @@ disc="https://www.4corn.co.uk/archive/archiology/osdiscs/arthur/Welcome.adf"
 
 [riscos2-app1]
 title='RISC OS 2 Application Disc 1'
+year=1989
 publisher="Acorn"
 disc="Apps RiscOS2 disc1.zip"
 tags='utility'
 
 [riscos2-app2]
 title='RISC OS 2 Application Disc 2'
+year=1989
 publisher="Acorn"
 disc='Apps RiscOS2 disc2.zip'
 tags='utility'
