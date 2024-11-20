@@ -179,7 +179,7 @@ class Sprite:
             attrs += ' mask'
         if self.has_palette:
             attrs += f' palette({self.palette_size})'
-        return f'Sprite({self.name} mode={self.mode}{attrs} w={self.width} h={self.height} ww={self.width_words} fb={self.first_bit} lb={self.last_bit})'
+        return f'Sprite({self.name} mode={self.mode}{attrs} w={self.width} h={self.height})'
 
     @property
     def pixel_data_raw(self):
@@ -247,7 +247,7 @@ def pil_image(sprite: Sprite) -> Image:
     img.putpalette(pal)
     mode = MODES[spr.mode]
     if mode.px_height > mode.px_width:
-        img = img.resize((img.height * 2, img.width), Resampling.NEAREST)
+        img = img.resize((img.width, img.height * 2), Resampling.NEAREST)
     return img
            
 
@@ -257,6 +257,6 @@ if __name__ == '__main__':
         print(sprite_area)
         os.makedirs('sprites', exist_ok=True)
         for spr in sprite_area.sprites():
-            print(spr.name)
+            print(spr)
             img = pil_image(spr)
             img.save(f'sprites/{spr.name}.png')
