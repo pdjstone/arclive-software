@@ -27,7 +27,7 @@ class Mode:
 MODES = { m.mode : m for m in (
     Mode(0, colours=2, px_width=2, px_height=4),
     Mode(1, colours=4, px_width=4, px_height=4),
-    Mode(4, colours=2, px_width=4, px_height=4),
+    Mode(4, colours=2, px_width=2, px_height=4),
     Mode(8, colours=4, px_width=2, px_height=4),
     Mode(9, colours=16, px_width=4, px_height=4),
     Mode(12, colours=16, px_width=2, px_height=4),
@@ -227,27 +227,30 @@ def pil_palette(sprite: Sprite) -> ImagePalette:
         colours = MODES[sprite.mode].colours
         pal = WIMP_PALETTES[colours]
 
-    pal_mode = 'RGB'
     if sprite.has_mask:
-        pal_mode = 'RGBA'
-        pal = [(c << 8) | 0xff for c in pal]  # transform to RGBA
-        pal.append(0x00000000)
-    pal_bytes = b''.join([c.to_bytes(len(pal_mode), 'big') for c in pal])
-    return ImagePalette(pal_mode, pal_bytes)
+        pal = list(pal) + [0]
+
+    pal_bytes = b''.join([c.to_bytes(3, 'big') for c in pal])
+    return ImagePalette('RGB', pal_bytes)
 
 
 def pil_image(sprite: Sprite) -> Image:
     pixel_data =  sprite.pixel_bytes
     pal = pil_palette(sprite)
+    info = {}
+
     if sprite.has_mask:
-       mask_val = MODES[sprite.mode].colours
-       pixel_data = bytearray([p if m > 0 else mask_val for p,m in zip(sprite.pixel_bytes, sprite.mask_bytes)])
-  
-    img = Image.frombytes('P', (spr.width, spr.height),pixel_data)
+        mask_val = sprite.mode_info.colours
+        pixel_data = bytearray([p if m > 0 else mask_val for p,m in zip(sprite.pixel_bytes, sprite.mask_bytes)])
+        info['transparency'] = mask_val
+
+    img = Image.frombytes('P', (spr.width, spr.height), pixel_data)
+    img.info.update(info)
     img.putpalette(pal)
-    mode = MODES[spr.mode]
-    if mode.px_height > mode.px_width:
+
+    if sprite.mode_info.px_height > sprite.mode_info.px_width:
         img = img.resize((img.width, img.height * 2), Resampling.NEAREST)
+
     return img
            
 
