@@ -1,12 +1,16 @@
-import array
+
 import os
+import sys
+import array
+
+from os import SEEK_SET
+from struct import unpack
+from dataclasses import dataclass
+
 from PIL import Image
 from PIL.Image import Resampling
 from PIL.ImagePalette import ImagePalette
-from dataclasses import dataclass
-import sys
-from struct import unpack
-from os import SEEK_SET
+
 
 @dataclass
 class Mode:
@@ -38,6 +42,7 @@ MODES = { m.mode : m for m in (
     Mode(20, colours=16, px_width=2, px_height=2),
     Mode(21, colours=256, px_width=2, px_height=2),
 )}
+
 
 WIMP_PALETTE_MODE_12 = (
     0xffffff, 0xdddddd, 0xbbbbbb, 0x999999,
@@ -122,9 +127,6 @@ class Palette:
     def __getitem__(self, n):
         return PaletteEntry(self.palette[n])
 
-def chunks(lst, n):
-    for i in range(0, len(lst), n):
-        yield lst[i:i + n]
 
 class Sprite:
     PALETTE_OFFSET = 44
@@ -179,7 +181,7 @@ class Sprite:
             attrs += ' mask'
         if self.has_palette:
             attrs += f' palette({self.palette_size})'
-        return f'Sprite({self.name} mode={self.mode}{attrs} w={self.width} h={self.height})'
+        return f'Sprite(name={self.name} mode={self.mode}{attrs} w={self.width} h={self.height})'
 
     @property
     def pixel_data_raw(self):
@@ -194,6 +196,9 @@ class Sprite:
         return self.fd.read(self.width_words * 4 * self.height)
 
     def _raw_to_bytearray(self, raw_data: bytes):
+        """
+        Convert the raw sprite data to a 1-byte per pixel bytearray
+        """
         data = array.array('I', raw_data)
         bpp = self.mode_info.bpp
         ppw = self.mode_info.ppw
