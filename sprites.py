@@ -6,10 +6,10 @@ import array
 from os import SEEK_SET
 from struct import unpack
 from dataclasses import dataclass
+from typing import List
 
 from PIL import Image
 from PIL.Image import Resampling
-from PIL.ImagePalette import ImagePalette
 
 
 @dataclass
@@ -41,6 +41,7 @@ MODES = { m.mode : m for m in (
     Mode(19, colours=4, px_width=2, px_height=2),
     Mode(20, colours=16, px_width=2, px_height=2),
     Mode(21, colours=256, px_width=2, px_height=2),
+    Mode(28, colours=256, px_width=2, px_height=2),
 )}
 
 
@@ -106,6 +107,18 @@ class PaletteEntry:
         self.val = val
 
     @property
+    def r(self):
+        return (self.rgb >> 16) & 0xff
+
+    @property
+    def g(self):
+        return (self.rgb >> 8) & 0xff
+
+    @property
+    def b(self):
+        return self.rgb & 0xff
+
+    @property
     def rgb(self):
         bgr = self.val & 0xffffffff
         r = (bgr >> 8) & 0xff
@@ -114,7 +127,7 @@ class PaletteEntry:
         return r << 16 | g << 8 | b
         
     def __str__(self):
-        return f'({self.val:016x} {self.rgb:08x})'
+        return f'({self.val:016x} {self.rgb:06x})'
         
 
 class Palette:
@@ -153,7 +166,10 @@ class Sprite:
         
     @property
     def mode_info(self):
-        return MODES.get(self.mode, None)
+        try:
+            return MODES[self.mode]
+        except KeyError:
+            raise Exception(f'No mode info for mode {self.mode}')
 
     @property
     def palette_size(self) -> int:
@@ -171,9 +187,7 @@ class Sprite:
     def palette(self):
         if not self.has_palette:
             raise RuntimeError('Sprite does not have palette')
-        self.fd.seek(self.file_offset + Sprite.PALETTE_OFFSET, SEEK_SET)
-        data = self.fd.read(8*self.palette_size)
-        return Palette(data)
+        return Palette(self.palette_data_raw)
 
     def __str__(self):
         attrs = ''
@@ -182,6 +196,13 @@ class Sprite:
         if self.has_palette:
             attrs += f' palette({self.palette_size})'
         return f'Sprite(name={self.name} mode={self.mode}{attrs} w={self.width} h={self.height})'
+
+    @property
+    def palette_data_raw(self):
+        if not self.has_palette:
+            return None
+        self.fd.seek(self.file_offset + Sprite.PALETTE_OFFSET - 4, SEEK_SET)
+        return self.fd.read(8*self.palette_size)
 
     @property
     def pixel_data_raw(self):
@@ -225,34 +246,52 @@ class Sprite:
     def mask_bytes(self):
         return self._raw_to_bytearray(self.mask_data_raw)   
 
-def pil_palette(sprite: Sprite) -> ImagePalette:
+def palette_64_to_rgb(palette: Palette):
+    pal = [c.rgb for c in palette]
+    for j in range(64, 256, 64):
+        for i in range(0,64):
+            c = palette[i]
+            r = (((j + i) & 0x10) >> 1) | (c.r >> 4)
+            g = (((j + i) & 0x40) >> 3) | \
+                (((j + i) & 0x20) >> 3) | (c.g >> 4)
+            b = (((j + i) & 0x80) >> 4) | (c.b >> 4)
+            val = ((r + (r << 4)) << 16) | ((g + (g << 4)) << 8) | (b + (b << 4))
+            pal.append(val)
+    return pal
+
+def get_rgb_palette(sprite: Sprite) -> List[int]:
     if sprite.has_palette:
-        pal = [c.rgb for c in sprite.palette]
+        if sprite.mode_info.colours < 256:
+            assert len(sprite.palette) == sprite.mode_info.colours
+            pal = [c.rgb for c in sprite.palette]
+        elif len(sprite.palette) == 64:
+            pal = palette_64_to_rgb(sprite.palette)
+        elif len(sprite.palette) == 16:
+            raise NotImplementedError()
+        else:
+            raise ValueError(f'Unexpected number of colours in palette: {len(sprite.palette)}')
     else:
         colours = MODES[sprite.mode].colours
         pal = WIMP_PALETTES[colours]
+    return pal
 
-    if sprite.has_mask:
-        pal = list(pal) + [0]
-
-    pal_bytes = b''.join([c.to_bytes(3, 'big') for c in pal])
-    return ImagePalette('RGB', pal_bytes)
-
-
+   
 def pil_image(sprite: Sprite) -> Image:
-    pixel_data =  sprite.pixel_bytes
-    pal = pil_palette(sprite)
-    info = {}
-
+    pal = get_rgb_palette(sprite)
+    pixel_data = bytearray(spr.width * spr.height)
+    img = spr.pixel_bytes
+    mask = None
     if sprite.has_mask:
-        mask_val = sprite.mode_info.colours
-        pixel_data = bytearray([p if m > 0 else mask_val for p,m in zip(sprite.pixel_bytes, sprite.mask_bytes)])
-        info['transparency'] = mask_val
-
-    img = Image.frombytes('P', (spr.width, spr.height), pixel_data)
-    img.info.update(info)
-    img.putpalette(pal)
-
+        mask = spr.mask_bytes
+    
+    alpha = 0xff
+    for i in range(len(pixel_data)):
+        if mask:
+            alpha = 0xff if mask[i] else 0
+        val = (pal[img[i]] << 8) | alpha
+        pixel_data[i*4:i*4+4] = val.to_bytes(4, 'big')   
+    img = Image.frombytes('RGBA', (spr.width, spr.height), pixel_data)
+   
     if sprite.mode_info.px_height > sprite.mode_info.px_width:
         img = img.resize((img.width, img.height * 2), Resampling.NEAREST)
 
@@ -268,3 +307,4 @@ if __name__ == '__main__':
             print(spr)
             img = pil_image(spr)
             img.save(f'sprites/{spr.name}.png')
+
