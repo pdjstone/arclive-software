@@ -26,14 +26,8 @@ all_deps = {}
 
 out_dir = None
 
+pngcrush_available = shutil.which('pngcrush')
 
-if shutil.which('pngcrush'):
-    print('using pngcrush')
-    def copy_img(src, dst):
-        return subprocess.run(['pngcrush', src, dst])
-else:
-    print('WARNING - pngcrush not installed')
-    copy_img =  shutil.copyfile
 
 RISC_OS_COMMA_FILETYPE_PATTERN = r',[a-z90-9]{3}$'
 
@@ -87,6 +81,18 @@ VALID_MEM = ('1MB', '2MB', '4MB', '8MB')
 VALID_FILE_EXTS = ('.arc', '.zip', '.adf', '.spk')
 VALID_MOUSE_CAPTURE = ('force', 'never')
 RISC_OS_TYPE_MAP = { 'ddc' : 'spk'}
+
+
+def copy_img(src: str, dst: str):
+    assert src.lower().endswith('.png')
+    if pngcrush_available:
+        with open(src, 'rb') as f:
+            header = f.read(0x50)
+        if b'pngcrush' not in header:
+            print(f'Using pngcrush for {src}')
+            subprocess.run(['pngcrush' ,'-ow', '-text', 'b', 'Software', 'pngcrush', src])
+    shutil.copyfile(src, dst)
+
 
 def find_toml_files(root_dir):
     for root, dirs, files in os.walk(root_dir):
@@ -165,6 +171,9 @@ def parse_toml(root, file):
             sf = disc_meta['sound-filter']
             assert type(sf) == int and 0 <= sf <= 2
 
+        if 'app-path' in disc_meta:
+            extract_icon(disc_meta)
+
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
                 raise Exception(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
@@ -178,6 +187,11 @@ def parse_toml(root, file):
 
     return data
 
+
+def extract_icon(disc_meta):
+    pass
+
+
 def find_screenshots(root, software_id):
     file_pattern = software_id + r'-\d+.png'
     files = sorted([f.name for f in os.scandir(root) if re.match(file_pattern, f.name)])
@@ -186,6 +200,7 @@ def find_screenshots(root, software_id):
     for f in files:
         copy_img(os.path.join(root, f), os.path.join(out_dir, 'screenshots', f))
     return files
+
 
 def fetch_file(root, path, software_id, known_hash):
     new_name = filename_to_canonical(path, software_id)
@@ -229,6 +244,7 @@ def fetch_cached(path, software_id, known_hash=None):
         return None, None
     return cache_path, hash
 
+
 def fetch_url(root, url, software_id, known_hash=None):
     new_name = filename_to_canonical(url, software_id)
     cache_path = os.path.join(CACHE_DIR, new_name)
@@ -247,6 +263,7 @@ def fetch_url(root, url, software_id, known_hash=None):
    
     return cache_path, hash
 
+
 def fetch_local(root, path, software_id, known_hash) -> str:
     global out_dir
     src_path = os.path.join(root, path)
@@ -262,6 +279,7 @@ def fetch_local(root, path, software_id, known_hash) -> str:
     if known_hash and hash != known_hash:
         raise Exception(f"Incorrect hash for {software_id} at {path}")
     return cache_path, hash 
+
 
 if __name__ == '__main__':
     src_dir = None
