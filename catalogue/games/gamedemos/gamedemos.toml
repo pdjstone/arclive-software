@@ -103,7 +103,7 @@ tags="game,demo"
 description="Side scrolling shoot-em-up sequel to Nevryon"
 
 [flashback-demo]
-title="Flashback"
+title="Flashback (Demo)"
 year=1994
 archive="flashback-demo.zip"
 app-path="!Flashdemo"
@@ -112,3 +112,15 @@ tags="game,demo"
 author="Delphine Software, Dave Lawrence"
 publisher="U.S. Gold"
 best-cpu="arm250"
+
+[starfighter3000-demo]
+title="Star Fighter 3000 (Demo)"
+year=1994
+publisher="Fednet Software"
+best-cpu="arm3"
+archive="http://starfighter.acornarcade.com/download/stardemo.zip"
+app-path="Star_Demo.!Star3000"
+description="Futuristic 3D flight action shooter game"
+mouse-capture="force"
+ff-ms=10000
+tags="game,demo"
