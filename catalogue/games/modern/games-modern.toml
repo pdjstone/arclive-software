@@ -1,0 +1,13 @@
+[12minsto9]
+title="12 Mins to 9"
+year=2023
+author="Robert Hampton"
+description="A RISC OS desktop version of the 2048 puzzle game"
+archive="https://riscos.roberthampton.me.uk/downloads/12minsto9-100.zip"
+tags="game,desktop"
+depends="newlook"
+best-cpu="arm3"
+ff-ms=6000
+autoboot="WimpMode 28"
+app-path="!12MinsTo9"
+click-icon=true

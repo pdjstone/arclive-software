@@ -133,7 +133,7 @@ shut down the malfunctioning brain cells which are causing him these problems.
 archive="http://asylum.acornarcade.com/files/asy202.zip"
 app-path="AsyNu.!Asylum"
 click-icon=true
-ff-ms=18100
+ff-ms=15000
 info-url="http://asylum.acornarcade.com/index.php"
 best-cpu="arm250"
 

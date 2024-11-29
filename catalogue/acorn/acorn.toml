@@ -16,14 +16,14 @@ title='RISC OS 2 Application Disc 1'
 year=1989
 publisher="Acorn"
 disc="Apps RiscOS2 disc1.zip"
-tags='utility'
+tags='utility,desktop'
 
 [riscos2-app2]
 title='RISC OS 2 Application Disc 2'
 year=1989
 publisher="Acorn"
 disc='Apps RiscOS2 disc2.zip'
-tags='utility'
+tags='utility,desktop'
 
 [riscos3-app1]
 title="RISC OS 3 Applications disc 1"
@@ -32,7 +32,7 @@ publisher="Acorn"
 description="Extra tools and utilities released with RISC OS 3."
 disc="http://arcarc.nl/archive/ROMS/OS/OS%20Support%20Discs/RISC%20OS%203.10/RISC%20OS%203.10%20Applications%20Disc%201%20%281992%29%28Acorn%20Computers%29.adf"
 best-os="riscos311"
-tags="utility"
+tags="utility,desktop"
 
 [riscos3-app2]
 title="RISC OS 3 Applications disc 2"
@@ -41,7 +41,7 @@ publisher="Acorn"
 description="Extra tools and utilities released with RISC OS 3."
 disc="http://arcarc.nl/archive/ROMS/OS/OS%20Support%20Discs/RISC%20OS%203.10/RISC%20OS%203.10%20Applications%20Disc%202%20%281992%29%28Acorn%20Computers%29.adf"
 best-os="riscos311"
-tags="utility"
+tags="utility,desktop"
 
 [riscos3-support]
 title="RISC OS 3 Support disc"
@@ -50,4 +50,12 @@ publisher="Acorn"
 description="Extra tools and utilities released with RISC OS 3."
 disc="http://arcarc.nl/archive/ROMS/OS/OS%20Support%20Discs/RISC%20OS%203.10/RISC%20OS%203.10%20Support%20Disc%20%281992%29%28Acorn%20Computers%29.adf"
 best-os="riscos311"
-tags="utility"
+tags="utility,desktop"
+
+[newlook]
+title="NewLook"
+year=1993
+publisher="Acorn"
+description="This program provides a 'new look' for computers fitted with RISC OS 3.10 (or later). It adds support for 3D appearance of windows, and for a 'textured' background to the desktop. The use of !NewLook replaces the use of !SetIcons from the applications suite."
+archive="http://www.riscos.com/ftp_space/310/files/nulook.zip"
+tags="utility,desktop"

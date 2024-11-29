@@ -67,6 +67,7 @@ VALID_TAGS = (
     'game', 
     'demo', 
     'public-domain', 
+    'desktop',
     'education',
     'utility',
     'music',
