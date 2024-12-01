@@ -1,0 +1,8 @@
+[sparkfs]
+title="SparkFS"
+year=1992
+author="David Pilling"
+disc="https://arcarc.nl/archive/Apps/S/SparkFS/SparkFS%201.27%20%281994%29%28David%20Pilling%29%28Not%20RPC%29.adf"
+tags="utility,desktop"
+description="Utility to extract and create ZIP, Tar and Spark archives. This is the last version that works out the box on RISC OS 3.1"
+version=1.28
