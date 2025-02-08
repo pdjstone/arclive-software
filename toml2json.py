@@ -11,6 +11,9 @@ import subprocess
 
 from toml.decoder import TomlDecodeError
 
+from riscosconv import load_disc, ro_path_to_path
+from sprites import SpriteArea
+
 """
 Usage: ./toml2json.py src_dir out_dir
 
@@ -172,17 +175,19 @@ def parse_toml(root, file):
             sf = disc_meta['sound-filter']
             assert type(sf) == int and 0 <= sf <= 2
 
-        if 'app-path' in disc_meta:
-            extract_icon(disc_meta)
-
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
                 raise Exception(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
+        
+        disc_meta['id'] = software_id
+
+        if 'app-path' in disc_meta:
+            extract_icon(disc_meta)
 
         if screenshots := find_screenshots(root, software_id):
             disc_meta['screenshots'] = screenshots
         all_software_ids[software_id] = toml_path
-        disc_meta['id'] = software_id
+        
         with open(toml_hash_path, 'w') as f:
             toml.dump(hashes, f)
 
@@ -190,7 +195,36 @@ def parse_toml(root, file):
 
 
 def extract_icon(disc_meta):
-    pass
+    sprite_files = ('!Sprites22', '!Sprites')
+    sprite_fd = None
+    app_path = ro_path_to_path(disc_meta['app-path'])
+
+    software_path = disc_meta.get('archive') or disc_meta.get('disc')
+    software_path = os.path.join(out_dir, software_path)
+
+    disc = load_disc(software_path)
+    if not disc:
+        print(f"Could not load {software_path}")
+    for sf in sprite_files:
+        if sprite_fd := disc.open(str(app_path/sf)):
+            break
+
+    if sprite_fd:
+        #print(software_path, sf)
+        #print('    ', sprite_fd)
+        sprite_area = SpriteArea(sprite_fd)
+        try:
+            spr_name = app_path.name
+           
+            if spr_name == '!Burn':
+                for s in sprite_area.sprites():
+                    spr_name = s.name
+            sprite = sprite_area[spr_name]
+            #print('     ', sprite)
+            sprite_out_path = os.path.join(out_dir, 'icons', disc_meta['id'] + '-icon.png')
+            sprite.get_pil_image().save(sprite_out_path)
+        except KeyError:
+            print(f'     No sprite for {spr_name}')
 
 
 def find_screenshots(root, software_id):
@@ -296,6 +330,7 @@ if __name__ == '__main__':
     if not os.path.isdir(out_dir):
         os.makedirs(out_dir, exist_ok=True)
         os.makedirs(os.path.join(out_dir, 'screenshots'), exist_ok=True)
+        os.makedirs(os.path.join(out_dir, 'icons'), exist_ok=True)
 
     if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR, exist_ok=True)

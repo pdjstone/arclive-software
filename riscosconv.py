@@ -1,194 +1,80 @@
 #!/usr/bin/env python3 
 
 import argparse
+from io import BytesIO
 import os
 import re
-import struct
 import sys
 import time
 from collections import namedtuple
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from tempfile import TemporaryDirectory
-from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo, is_zipfile
+from typing import IO, Optional
+from zipfile import ZipFile, is_zipfile
 
 from ADFSlib import ADFSdirectory, ADFSdisc, ADFSfile, ADFS_exception
 
 from filetypes import RISC_OS_FILETYPES
-
-ZIP_EXT_ACORN = 0x4341    # 'AC' - SparkFS / Acorn
-ZIP_ID_ARC0 = 0x30435241  # 'ARC0'
-
-RISC_OS_COMMA_FILETYPE_PATTERN = r',([a-f0-9]{3})$'
-RISC_OS_LOAD_EXEC_PATTERN = r',([a-f0-9]{8})-([a-f0-9]{8})$'
-
-RISC_OS_EPOCH = datetime(1900,1,1,0,0,0)
+from ro_file_meta import DiscImageBase, RiscOsFileMeta, FileMeta
+from riscos_zip import RiscOsZip, convert_disc_to_zip, get_riscos_zipinfo
+from nspark import NSparkArchive
 
 DISC_IM_EXTS = ('.adf','.adl')
 
-RO_ZIP = 0xa91
-RO_TEXT = 0xfff
-RO_DATA = 0xffd
-
-RISC_OS_ARCHIVE_TYPES = (RO_ZIP, )
-
-FILE_EXT_MAP = {
-    '': RO_TEXT,
-    '.txt': RO_TEXT,
-    '.zip': RO_ZIP
-}
-
-DEFAULT_RO_FILETYPE = 0xfff
-
-# See http://www.riscos.com/support/developers/prm/fileswitch.html#idx-3804
 
 class KnownFileType(Enum):
     RISC_OS_ZIP = 1
     ZIPPED_DISC_IMAGE = 2
     ZIPPED_MULTI_DISC_IMAGE = 3
     DISC_IMAGE = 4
-    UNKNOWN = 5
+    SPARK_ARCHIVE = 5
+    ARCFS_ARCHIVE = 6
+    UNKNOWN = 7
 
 def has_disc_image_ext(filename: str) -> bool:
     return any(filename.lower().endswith(ext) for ext in DISC_IM_EXTS)
 
 
-class RiscOsFileMeta:
-    def __init__(self, load_addr, exec_addr, attr=3):
-        self.load_addr = load_addr
-        self.exec_addr = exec_addr
-        self.file_attr = attr
-
-    @property
-    def filetype(self):
-        if self.load_addr >> 20 == 0xfff:
-            return self.load_addr >> 8 & 0xfff
-        return None
-
-    @property
-    def datestamp(self):
-        if self.load_addr >> 20 == 0xfff:
-            cs = ((self.load_addr & 0xff) << 32) | self.exec_addr
-            delta = timedelta(milliseconds=cs*10)
-            return RISC_OS_EPOCH + delta
-        return None
-
-    def hostfs_file_ext(self):
-        if self.load_addr >> 20 == 0xfff:
-            return f',{self.filetype:03x}'
-        return f',{self.load_addr:08x}-{self.exec_addr:08x}'
+class RiscOsAdfsDisc(DiscImageBase):
+    def __init__(self, fd):
+        self.disc = ADFSdisc(fd)
 
     def __repr__(self):
-        if self.filetype:
-            return f'RiscOsFileMeta(type={self.filetype:03x} date={self.datestamp} attr={self.file_attr:x})'
-        else:   
-            return f'RiscOsFileMeta(load={self.load_addr:x} exec={self.exec_addr:x} attr={self.file_attr:x})'
+        return f'ADFS Disc - {self.disc.disc_name}'
+    
+    @property
+    def disc_name(self):
+        return self.disc.disc_name
+    
+    def list(self, files=None, path=''):
+        if files is None:
+            files = self.disc.files
+        for f in files:
+            if isinstance(f, ADFSfile):
+                ro_meta = RiscOsFileMeta(f.load_address, f.execution_address)
+                ds = ro_meta.datestamp
+                if not ds:
+                    ds = datetime.now()
+                full_path = (path + '/' + f.name).removeprefix('/')
+                yield full_path, FileMeta(ro_meta, ds, f.length)
+            elif isinstance(f, ADFSdirectory):
+                yield from self.list(f.files, path + '/' + f.name)
+            
+    def get_file_meta(self, path):
+        f = self.disc.get_path(path)
+        ro_meta = RiscOsFileMeta(f.load_address, f.execution_address)
+        ds = ro_meta.datestamp
+        if not ds:
+            ds = datetime.now()
+        return FileMeta(ro_meta, ds, f.length)
 
-    def zip_extra(self) -> bytes:
-        return struct.pack('<HHIIII', ZIP_EXT_ACORN, 20, ZIP_ID_ARC0, 
-            self.load_addr, self.exec_addr, self.file_attr)
-
-    @staticmethod
-    def from_filepath(path: Path):
-        leaf_name = path.name
-        st = os.stat(path)
-        ts = unix_timestamp_to_ro_timestamp(st.st_mtime)
-        if m := re.search(RISC_OS_COMMA_FILETYPE_PATTERN, leaf_name, re.IGNORECASE):
-            filetype = int(m.group(1), 16)
-            load_addr, exec_addr = make_load_exec(filetype, ts)
-        elif m := re.search(RISC_OS_LOAD_EXEC_PATTERN, leaf_name, re.IGNORECASE):
-            load_addr = int(m.group(1), 16)
-            exec_addr = int(m.group(2), 16)
-        else:
-            extension = path.suffix
-            filetype = FILE_EXT_MAP.get(extension.lower(), None)
-            if not filetype:
-                raise Exception(f"No RISC OS filetype for {leaf_name} {extension}")
-            load_addr, exec_addr = make_load_exec(filetype, ts)
-        return RiscOsFileMeta(load_addr, exec_addr)
-
-def make_load_exec(filetype, ro_timestamp):
-    load_addr = (0xfff << 20) | (filetype << 8) | (ro_timestamp >> 32)
-    exec_addr = ro_timestamp & 0xffffffff
-    return load_addr, exec_addr
-
-def unix_timestamp_to_ro_timestamp(timestamp):
-    delta = datetime.fromtimestamp(timestamp) - RISC_OS_EPOCH
-    centiseconds = int(delta.total_seconds() * 100)
-    return centiseconds
-
-def parse_riscos_zip_ext(buf: bytes, offset, fieldLen):
-    # See https://www.davidpilling.com/wiki/index.php/SparkFS "A Comment on Zip files"
-    if fieldLen == 24:
-        fieldLen = 20
-    id2 = int.from_bytes(buf[offset+4:offset+8], 'little')
-    if id2 != ZIP_ID_ARC0:
-        return None
-
-    load, exec, attr = struct.unpack('<III', buf[offset+8:offset+8+12])
-    meta = RiscOsFileMeta(load, exec, attr)
-    return meta, fieldLen
-
-
-if not hasattr(ZipInfo, '_decodeExtra'):
-    raise Exception("Cannot monkey patch ZipInfo - has implementation changed?")
-
-def _decodeExtra(self, *args):
-    pass
-
-# prevent Python from trying to decode extra ZIP fields
-ZipInfo._decodeExtra = _decodeExtra
-
-def _decodeRiscOsExtra(self):
-        offset = 0
-        
-        # extraFieldTotalLength is total length of all extra fields
-        # Iterate through each extra field and parse if known
-        while offset < len(self.extra):
-            fieldType, fieldLen = struct.unpack('<HH', self.extra[offset:offset+4])
-            extraMeta = None
-            overrideFieldLen = None
-            if fieldType == ZIP_EXT_ACORN:
-                extraMeta, overrideFieldLen = parse_riscos_zip_ext(self.extra, offset, fieldLen)
-                return extraMeta
-            if overrideFieldLen and overrideFieldLen > 0:
-                offset += overrideFieldLen + 4; 
-            else:
-                offset += fieldLen + 4
-                
-        return None
-
-ZipInfo.getRiscOsMeta = _decodeRiscOsExtra
-
-# We need to override the default filename codec 
-# Python >= 3.11 supports metadata_encoding param but only for reading
-import encodings.iso8859_1
-import encodings.cp437
-def _encodeFilenameFlags(self):
-    return self.filename.encode('iso-8859-1'), self.flag_bits
-
-
-ZipInfo._encodeFilenameFlags = _encodeFilenameFlags
-encodings.cp437.decoding_table = encodings.iso8859_1.decoding_table
-
-def get_riscos_zipinfo(path: Path, base_path: Path):
-    meta = RiscOsFileMeta.from_filepath(path)
-    if ',' in path.stem:
-        zip_path, _ = str(path.relative_to(base_path)).rsplit(',', 1)
-    else:
-        zip_path = str(path.relative_to(base_path)).removesuffix(path.suffix)
-    ds = meta.datestamp
-    if not ds:
-        ds = datetime.fromtimestamp(path.stat().st_mtime)
-   
-    date_time = ds.year, ds.month, ds.day, ds.hour, ds.minute, ds.second
-    zipinfo = ZipInfo(zip_path, date_time)
-    zipinfo.extra = meta.zip_extra()
-    st = os.stat(path)
-    if st.st_size > 512:
-        zipinfo.compress_type = ZIP_DEFLATED
-    return zipinfo
+    def open(self, path) -> IO[bytes]:
+        f = self.disc.get_path(path)
+        if not f:
+            return None
+        return BytesIO(f.data)
+    
 
 
 def load_ro_filetypes():
@@ -206,6 +92,16 @@ def load_ro_filetypes():
 
 #FILETYPE_MAP = load_ro_filetypes()
 
+def ro_path_to_path(ro_path) -> Path:
+    p = Path()
+    for s in ro_path.split('.'):
+        p /= s
+    return p
+
+def adfs_extract_ro_path(disc: ADFSdisc, path: Path, filetype=None):
+    for file in disc.files:
+        print(file)
+        
 
 def save_filetypes():
     with open('filetypes.py', 'w') as f:
@@ -216,13 +112,10 @@ def save_filetypes():
 
 #save_filetypes()
 
-def list_riscos_zip(fd):
-    zipfile = ZipFile(fd, 'r',)
-    for info in zipfile.infolist():
-        if info.is_dir():
-            continue
-        ro_meta = info.getRiscOsMeta()
-        ds = None
+def list_disc(disc: DiscImageBase):
+    for file_name, file_meta in disc.list():
+        ro_meta = file_meta.ro_meta
+        ds = file_meta.timestamp
         if ro_meta:
             if ro_meta.filetype:
                 name, desc = RISC_OS_FILETYPES.get(ro_meta.filetype, (None, None))
@@ -230,43 +123,35 @@ def list_riscos_zip(fd):
                     extra = f'{name} {ro_meta.filetype:03x}'
                 else:
                     extra = f'{ro_meta.filetype:03x}'
-                ds = ro_meta.datestamp
             else:
                 extra = f'{ro_meta.load_addr:08x}-{ro_meta.exec_addr:08x}'
-                ds = datetime(*info.date_time)
         else:
-            ds = datetime(*info.date_time)
             extra = ''
         date_formatted = ds.strftime('%Y-%m-%d %H:%M:%S')
-        print(f'{extra: >17} {info.file_size: >7} {date_formatted} {info.filename}')
+        print(f'{extra: >17} {file_meta.file_size: >7} {date_formatted} {file_name}')
 
-def many_files_in_root(zipfile: ZipFile):
+def many_files_in_root(disc: DiscImageBase):
     files_in_root = set()
-    for info in zipfile.infolist():
-        first = info.filename.split('/', 1).pop(0)
+    for file_name, meta in disc.list():
+        first = file_name.split('/', 1).pop(0)
         files_in_root.add(first)
     return len(files_in_root) > 1
 
-def extract_riscos_zipfile(fd, path='.'):
-    zipfile = ZipFile(fd, 'r')
-    if many_files_in_root(zipfile):
-        name, _ = os.path.splitext(os.path.basename(zipfile.filename))
+def extract_riscos_disc(disc: DiscImageBase, path='.'):
+    if many_files_in_root(disc):
+        name, _ = os.path.splitext(os.path.basename(disc.disc_name))
         path += '/' + name
     print(f'Extracting to {path}')
-    for info in zipfile.infolist():
-        if info.is_dir():
-            continue
-        ro_meta = info.getRiscOsMeta()
-        extract_path = os.path.join(path, info.filename + ro_meta.hostfs_file_ext())
+    for filename, meta in disc.list():
+        ro_meta = meta.ro_meta
+        extract_path = os.path.join(path, filename + ro_meta.hostfs_file_ext())
         print(extract_path)
         extract_dir = os.path.dirname(extract_path)
         os.makedirs(extract_dir, exist_ok=True)
-        with zipfile.open(info, 'r') as f:
+        with disc.open(filename) as f:
             with open(extract_path, 'wb') as ff:
                 ff.write(f.read())
-        ds = ro_meta.datestamp
-        if not ds:
-            ds = datetime(*info.date_time)
+        ds = meta.timestamp
         if ds:
             ts = time.mktime(ds.timetuple())
             ts_ns = int(ts * 1_000_000_000) + ds.microsecond * 1000
@@ -322,7 +207,7 @@ def identify_zipfile(zipfile: ZipFile):
         return KnownFileType.RISC_OS_ZIP
     
 
-def identify_discimage(filename:str, fd):
+def identify_discimage(filename: str, fd):
     try:
         adfsdisc = ADFSdisc(fd)
         return KnownFileType.DISC_IMAGE
@@ -333,8 +218,31 @@ def identify_file(filename: str, fd) -> KnownFileType:
     if is_zipfile(fd):
         zipfile = ZipFile(fd)
         return identify_zipfile(zipfile)
-    else:
-        return identify_discimage(filename, fd)
+    
+    fd.seek(0, os.SEEK_SET)
+    data = fd.read(8)
+    fd.seek(0, os.SEEK_SET)
+
+    # From spark.h in NSpark
+    if data[0] == 0x1a and (data[1] & 0xf0 == 0x80 or data[1] == 0xff):
+        return KnownFileType.SPARK_ARCHIVE
+  
+    if data == b'Archive\x00':
+        return KnownFileType.ARCFS_ARCHIVE
+  
+    return identify_discimage(filename, fd)
+
+def load_disc(main_file: str) -> Optional[DiscImageBase]:
+    with open(main_file, 'rb') as fd:
+        file_type = identify_file(main_file, fd)
+    if file_type == KnownFileType.UNKNOWN:
+        return None
+    fd = open(main_file, 'rb')
+    if file_type == KnownFileType.ZIPPED_DISC_IMAGE:
+        fd = extract_single_disc_image_from_zip(fd)
+        file_type = KnownFileType.DISC_IMAGE
+    riscos_disc = HANDLER_FNS[file_type](fd)
+    return riscos_disc
 
 def extract_single_disc_image_from_zip(fd):
     zipfile = ZipFile(fd, 'r')
@@ -343,11 +251,6 @@ def extract_single_disc_image_from_zip(fd):
             return zipfile.open(info, 'r')
     raise Exception("Did not find single disc image in ZIP file")
 
-def list_disc_image(fd):
-    adfs = ADFSdisc(fd)
-    print(adfs.disc_format(), adfs.disc_name)
-    adfs.print_catalogue()
-    #print(adfs.files[0].name, adfs.files[0].files)
 
 def extract_disc_image(fd, path='.'):
     adfs = ADFSdisc(fd)
@@ -357,42 +260,14 @@ def extract_disc_image(fd, path='.'):
         os.makedirs(path, exist_ok=True)
     adfs.extract_files(path, with_time_stamps=True, filetypes=True)
 
-def convert_disc_to_zip(fd, zip_path, extract_paths: list[str] = None):
-    assert type(extract_paths) == list
-
-    adfs = ADFSdisc(fd)
-
-    extract_items = []
-    if extract_paths:
-        for ep in extract_paths:
-            item = adfs.get_path(ep)
-            if not item:
-                raise Exception(f'disc path does not exist: {ep}')
-            extract_items.append(item)
-    else:
-        extract_items = adfs.files 
-
-    with TemporaryDirectory() as temp_dir:
-        print('temp dir', temp_dir)
-        extract_dir = temp_dir
-        for item in extract_items:
-            if isinstance(item, ADFSdirectory):
-                print('dir', item.name)
-                if item.name.startswith('!'): # it's an app
-                    extract_dir = os.path.join(temp_dir, item.name)
-                    os.mkdir(extract_dir)
-                files = item.files
-            elif isinstance(item, ADFSfile):
-                files = [item]
-            adfs.extract_files(extract_dir, files, with_time_stamps=True, filetypes=True)
-        zip = ZipFile(zip_path, 'w')
-        create_riscos_zipfile(zip, [temp_dir])
 
 HandlerFns = namedtuple('HandlerFns', ['list', 'extract', 'create'], defaults=(None,))
 
 HANDLER_FNS = {
-    KnownFileType.DISC_IMAGE: HandlerFns(list_disc_image, extract_disc_image),
-    KnownFileType.RISC_OS_ZIP: HandlerFns(list_riscos_zip, extract_riscos_zipfile)
+    KnownFileType.DISC_IMAGE: RiscOsAdfsDisc,
+    KnownFileType.RISC_OS_ZIP: RiscOsZip,
+    KnownFileType.ARCFS_ARCHIVE: NSparkArchive,
+    KnownFileType.SPARK_ARCHIVE: NSparkArchive
 }
 
 if __name__ == '__main__':
@@ -426,7 +301,7 @@ if __name__ == '__main__':
             sys.exit(-1)
     
     if args.action == 'd2z':
-        if file_type != KnownFileType.DISC_IMAGE:
+        if file_type not in (KnownFileType.DISC_IMAGE, KnownFileType.ARCFS_ARCHIVE, KnownFileType.SPARK_ARCHIVE):
             sys.stderr.write('Must provide disc image to convert to archive\n')
             sys.exit(-1)
         if len(args.files) == 0:
@@ -435,14 +310,14 @@ if __name__ == '__main__':
         output_zip_path = args.files[0]
         extract_paths = args.files[1:]
 
+    riscos_disc = HANDLER_FNS[file_type](fd)
+    print(riscos_disc)
     match args.action:
         case 'l':
-            list_fn = HANDLER_FNS[file_type].list
-            list_fn(fd)
+            list_disc(riscos_disc)
         case 'x':
             assert os.path.isdir(args.dir)
-            extract_fn = HANDLER_FNS[file_type].extract
-            extract_fn(fd, args.dir)
+            extract_riscos_disc(riscos_disc, args.dir)
         case 'c':
             mode = 'w'
             if args.append:
@@ -450,5 +325,5 @@ if __name__ == '__main__':
             zip = ZipFile(main_file, mode)
             create_riscos_zipfile(zip, args.files)
         case 'd2z':
-            convert_disc_to_zip(fd, output_zip_path, extract_paths)
+            convert_disc_to_zip(riscos_disc, output_zip_path, extract_paths)
 
