@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from io import BytesIO
 import os
 import re
 import sys
@@ -6,13 +7,13 @@ import toml
 import json
 import shutil
 import hashlib
-import requests
+import pycurl
 import subprocess
 
 from toml.decoder import TomlDecodeError
 
-from riscosconv import load_disc, ro_path_to_path
-from sprites import SpriteArea
+from riscosconv.cli import load_disc, ro_path_to_path
+from riscosconv.sprites import SpriteArea
 
 """
 Usage: ./toml2json.py src_dir out_dir
@@ -201,10 +202,16 @@ def extract_icon(disc_meta):
 
     software_path = disc_meta.get('archive') or disc_meta.get('disc')
     software_path = os.path.join(out_dir, software_path)
-
-    disc = load_disc(software_path)
+    disc = None
+    try:
+        disc = load_disc(software_path)
+    except:
+        print(f"Could not load {software_path}")
+        raise
+    
     if not disc:
         print(f"Could not load {software_path}")
+        return
     for sf in sprite_files:
         if sprite_fd := disc.open(str(app_path/sf)):
             break
@@ -285,9 +292,20 @@ def fetch_url(root, url, software_id, known_hash=None):
     cache_path = os.path.join(CACHE_DIR, new_name)
 
     print(f'Downloading {url}')
-    r = requests.get(url)
-    r.raise_for_status()
-    file_data = r.content
+   
+    buffer = BytesIO()
+    c = pycurl.Curl()
+    c.setopt(c.URL, url)
+    c.setopt(c.WRITEDATA, buffer)
+    c.setopt(c.SSL_VERIFYPEER, 0)
+    c.perform()
+    c.close()
+    buffer.seek(0)
+    file_data = buffer.read()
+
+    if len(file_data) == 0:
+        raise Exception(f"Unable to download {software_id} from {url}")
+    
     hash = hashlib.sha256(file_data).hexdigest()
 
     if known_hash and hash != known_hash:
