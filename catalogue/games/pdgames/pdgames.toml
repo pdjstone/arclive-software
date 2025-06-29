@@ -25,6 +25,20 @@ disc="http://acorn.revivalteam.de/Download/Images/GameDemos03.zip"
 description="""It's a prehistoric platformer... either jump over nasty things or hack 'em to death with yer chainsaw. 
 You can tell when yer hurting something cos it bleeds! Nice huh?"""
 
+[marsquake]
+title="Marsquake"
+tags="game,public-domain"
+year=1997
+version=1.10
+author="Paul Taylor"
+archive="https://arcarc.nl/archive/Games/M/Mars%20Quake%20%28FR%29/Mars%20Quake%20%28FR%29%201.10%20%281998%29%28Paul%20Taylor%29.zip"
+description="Sequel to Moonquake, first released on the September 1997 Acorn User cover disc."
+app-path="!Marsquake"
+click-icon=true
+best-cpu="arm3"
+ff-ms=17000
+
+
 [moonquake]
 title="Moonquake"
 tags="game,public-domain"
