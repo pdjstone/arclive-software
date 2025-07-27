@@ -141,7 +141,7 @@ def parse_toml(root, file):
             hashes[software_id] = hash
 
         for field in MANDATORY_FIELDS:
-            if type(field) == str:
+            if type(field) is str:
                 if field not in disc_meta:
                     raise Exception(f"Field '{field}' missing from '{software_id}' in {toml_path}")
         
@@ -174,7 +174,7 @@ def parse_toml(root, file):
 
         if 'sound-filter' in disc_meta:
             sf = disc_meta['sound-filter']
-            assert type(sf) == int and 0 <= sf <= 2
+            assert type(sf) is int and 0 <= sf <= 2
 
         for field in disc_meta.keys():
             if field not in VALID_FIELDS:
@@ -212,13 +212,16 @@ def extract_icon(disc_meta):
     if not disc:
         print(f"Could not load {software_path}")
         return
-    for sf in sprite_files:
-        if sprite_fd := disc.open(str(app_path/sf)):
-            break
-
+    
+    try:
+        for sf in sprite_files:
+            if sprite_fd := disc.open(str(app_path/sf)):
+                break
+    except:
+        print(f"Could not get sprite from {software_path}")
+        raise
+    
     if sprite_fd:
-        #print(software_path, sf)
-        #print('    ', sprite_fd)
         sprite_area = SpriteArea(sprite_fd)
         try:
             spr_name = app_path.name
@@ -292,7 +295,6 @@ def fetch_url(root, url, software_id, known_hash=None):
     cache_path = os.path.join(CACHE_DIR, new_name)
 
     print(f'Downloading {url}')
-   
     buffer = BytesIO()
     c = pycurl.Curl()
     c.setopt(c.URL, url)

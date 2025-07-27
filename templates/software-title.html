@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ software_title }}{% endblock %}
+
+{% block content %}
+<h1>{% if icon %}<img class="app-icon" src="{{ icon }}">{% endif %}{{ software_title }}</h1>
+
+<dl>
+    {% if year %} <dt>Year: </dt> <dd>{{ year }}</dd>{% endif %}
+    {% if publisher %}<dt>Publisher:</dt> <dd>{{ publisher }}</dd>{% endif %}
+    {% if author %}<dt>Authors:</dt> <dd>{{ authors }}</dd>{% endif %}
+    <dt>Categories:</dt> <dd>{% for c in categories %}<a href="/category/{{ c }}">{{ c }}</a>{% endfor %}</dd>
+</dl>
+{% if screenshots %}
+    <ul class="image-scroller">
+        {% for s in screenshots %}
+        <li><img src="{{ s }}"></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

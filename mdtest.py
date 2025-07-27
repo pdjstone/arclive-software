@@ -4,7 +4,7 @@ from markdown_it import MarkdownIt
 from markdown_it.tree import SyntaxTreeNode
 from markdown_it.token import Token
 from better_front_matter_plugin import better_front_matter_plugin
-
+import tomllib
 
 def text_content(node: SyntaxTreeNode):
     content = ''
@@ -53,12 +53,13 @@ if __name__ == '__main__':
 
     tokens = md.parse(md_src)
     fm_token = next((t for t in tokens if t.type=='front_matter'), None)
-
-    print(fm_token.content)
+    toml_text = fm_token.content
+    toml_data = tomllib.loads(toml_text)
+    print(toml_data)
 
     quickstart_tokens = extract_subsection(tokens, 'Quick Start')
     
     print(md.renderer.render(quickstart_tokens, {}, {}))
 
     main_heading = find_tag(tokens, 'h1')
-    print(text_content(main_heading))
+    print("main title: {}".format(text_content(main_heading)))
