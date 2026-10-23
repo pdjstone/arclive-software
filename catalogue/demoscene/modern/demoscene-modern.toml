@@ -50,6 +50,18 @@ tags="demoscene,music"
 description="Released at Revision 2023, with tracks from Soda7, Slime, Maze, Triace, Okeanos, NE7, Tobach, Dalezy,Slash,Virgill Curt Cool, Punnik, Lord and 4mat."
 info-url="https://www.pouet.net/prod.php?which=94151"
 
+[bs-django03]
+title="Chipo Django 3"
+publisher="Bitshifters & Rabenauge"
+year=2026
+archive="https://bitshifters.github.io/content/bs-django03,ddc"
+app-path="!dj3"
+ff-ms=19000
+sound-filter=2
+tags="demoscene,music"
+description="Bitshifters & Rabenauge return with a new chiptune pack for the Amiga, Atari and Archimedes! Released at the Revision 2026 demoparty in Saabruecken, Easter 2026, in a very competitive Wild Compo. A huge thanks to all the musicians for submitting such amazing tunes for the pack."
+info-url="https://www.pouet.net/prod.php?which=106004"
+
 [bs-popular-demand]
 title="Back by Popular Demand"
 publisher="Bitshifters & Torment"
@@ -118,6 +130,21 @@ sound-filter=2
 tags="demoscene"
 info-url="https://bitshifters.github.io/posts/prods/bs-archieklang.html"
 best-cpu="arm250"
+
+[bs-allstar]
+title="Allstar Megademo"
+publisher="Bitshifters & Desire & Slipstream"
+author="Kieran^Bitshifters, Progen^Desire, Enfys^Slipstream, Rhino^Torment, P_Malin^Bitshifters, Hammerfist^Desire, Maze^Desire, ne7^Triad"
+year=2025
+description="""An epic four part megademo for the Acorn Archimedes released at NOVA 2025 in the Oldschool Demo Compo, winning first place! This demo is designed for original 8MHz ARM2 machines with minimum 2Mb RAM. It will run from real floppy disks, although it’s so epic that it spans three of them!"""
+archive="https://bitshifters.github.io/content/bs-allstar,ddc"
+app-path="!AllStar"
+ff-ms=15000
+sound-filter=2
+tags="demoscene"
+info-url="https://bitshifters.github.io/posts/prods/bs-allstar.html"
+best-cpu="arm250"
+
 
 [progen-dither]
 title="I heard you like dithering"
