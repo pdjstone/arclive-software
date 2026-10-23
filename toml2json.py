@@ -12,7 +12,8 @@ import subprocess
 
 from toml.decoder import TomlDecodeError
 
-from riscosconv.cli import load_disc, ro_path_to_path
+from riscosconv.cli import load_disc
+from riscosconv.riscos_path import PureRiscOsPath
 from riscosconv.sprites import SpriteArea
 
 """
@@ -198,7 +199,7 @@ def parse_toml(root, file):
 def extract_icon(disc_meta):
     sprite_files = ('!Sprites22', '!Sprites')
     sprite_fd = None
-    app_path = ro_path_to_path(disc_meta['app-path'])
+    app_path = PureRiscOsPath(disc_meta['app-path'])
 
     software_path = disc_meta.get('archive') or disc_meta.get('disc')
     software_path = os.path.join(out_dir, software_path)
@@ -215,7 +216,7 @@ def extract_icon(disc_meta):
     
     try:
         for sf in sprite_files:
-            if sprite_fd := disc.open(str(app_path/sf)):
+            if sprite_fd := disc.open(app_path / sf):
                 break
     except:
         print(f"Could not get sprite from {software_path}")
