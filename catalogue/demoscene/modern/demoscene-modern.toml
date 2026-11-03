@@ -61,6 +61,7 @@ sound-filter=2
 tags="demoscene,music"
 description="Bitshifters & Rabenauge return with a new chiptune pack for the Amiga, Atari and Archimedes! Released at the Revision 2026 demoparty in Saabruecken, Easter 2026, in a very competitive Wild Compo. A huge thanks to all the musicians for submitting such amazing tunes for the pack."
 info-url="https://www.pouet.net/prod.php?which=106004"
+best-cpu="arm250"
 
 [bs-popular-demand]
 title="Back by Popular Demand"
