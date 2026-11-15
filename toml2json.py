@@ -249,8 +249,6 @@ def find_screenshots(root, software_id):
 
 
 def fetch_file(root, path, software_id, known_hash):
-    new_name = filename_to_canonical(path, software_id)
-    dst_path = os.path.join(out_dir, new_name)
     cache_path, hash = fetch_cached(path, software_id, known_hash)
 
     if not cache_path:     
@@ -260,6 +258,11 @@ def fetch_file(root, path, software_id, known_hash):
         else:
             #print(f'fetching {software_id} from local path {path}')
             cache_path, hash = fetch_local(root, path, software_id, known_hash)
+    # Served as <id>-<hash><ext>, so each version of a file has its own URL
+    # and can be cached for good. dlcache keeps the plain <id><ext> name
+    base_name, ext = os.path.splitext(filename_to_canonical(path, software_id))
+    new_name = f'{base_name}-{hash[:12]}{ext}'
+    dst_path = os.path.join(out_dir, new_name)
     shutil.copy(cache_path, dst_path)
     return new_name, hash
 
