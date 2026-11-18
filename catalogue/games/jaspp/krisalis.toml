@@ -1,5 +1,18 @@
 # Generated from packman index at: https://www.jaspp.org.uk/packages/release
 
+[adffs]
+title = "FDC emulator and ARM JIT"
+ff-ms = 28000
+year=2013
+min-mem = "4MB"
+description = """ADFFS provides emulation of the 1772 / 710/711 floppy disc controllers,
+and emulates ADFS responses to disc requests.  ADF, APD and JFD floppy
+disc images can be mounted to floppy drive 0 as if they were physically
+inserted."""
+archive = "https://www.jaspp.org.uk/packages/release-packages/ADFFS_2.88-1"
+tags = "game,ex-commercial,hidden"
+app-path = "Apps.Games.!ADFFS"
+
 [alone-in-the-dark]
 title = "Alone In the Dark"
 year = 1995
@@ -105,7 +118,6 @@ tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Gods"
 
 [heimdall]
-# control issues - joystick required?
 title = "Heimdall"
 year = 1993
 publisher = "Krisalis Software"
@@ -350,7 +362,7 @@ depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
 description = """100 Brand New Lemmings Adventures!"""
-archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-2"
+archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-3"
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!OhNoLemms"
 
@@ -375,8 +387,6 @@ tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Bridge"
 
 [pipe-mania]
-# Issue with packman version - always get "game over" after first level (even after successfully completing it)
-# .jfd version works ok
 title = "Pipe Mania"
 year = 1989
 publisher = "Krisalis Software"
@@ -422,20 +432,6 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/Quest-For-Gold_0-3
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!!GOLD!!"
 
-[revelation-buzz]
-title = "Revelation! [BUZZ version]"
-year = 1993
-publisher = "Krisalis Software"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """Pit your wits against the clock in the revolutionary new approach to computer entertainment. Easy to learn. Impossible to leave and guaranteed to hook you.
-
-REVELATION! has what it takes to keep you coming back for more - REVELATION! - all computer games are not the same."""
-archive = "https://www.jaspp.org.uk/packages/release-packages/Revelation-[BUZZ]_0-3"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!RevBUZZ"
-
 [swiv]
 title = "S.W.I.V."
 year = 1992
@@ -457,28 +453,6 @@ Battle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, me
 archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV_0-3"
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Swiv"
-
-[swiv-buzz]
-title = "S.W.I.V. [BUZZ version]"
-year = 1993
-publisher = "Krisalis Software"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """S.W.I.V - Secret Weapons Installation Verification
-
-Primary Objective : Verify existence of the enemy's secret weapons nstallations and destroy them.
-
-S.W.I.V - Special Weapons Interdiction Vehicles
-
-Secondary Objective - Interdiction mission : the destruction by military force of all enemy units
-
-SWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to enter enemy territory as part of the elite assault team of Special Weapons Interdiction Vehicles.
-
-Battle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."""
-archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV-[BUZZ]_0-3"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!SwivBUZZ"
 
 [simcity]
 title = "SimCity"
@@ -504,18 +478,6 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[A5000
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SC2000"
 
-[simcity2000-rpc]
-title = "SimCity 2000 [RPC version]"
-year = 1994
-publisher = "Krisalis Software"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """Game description to follow"""
-archive = "https://www.jaspp.org.uk/packages/release-packages/SimCity2000-[RPC]_0-4"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!SC2000RPC"
-
 [speedball-2]
 title = "SpeedBall 2"
 year = 1994
@@ -538,3 +500,27 @@ The object of the game is to score more points than our opponent - but how you d
 archive = "https://www.jaspp.org.uk/packages/release-packages/SpeedBall-2_0-3"
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SpeedBall"
+
+[world-champ-boxing-manager]
+title = "World Championship Boxing Manager"
+year = 1991
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 28000
+min-mem = "4MB"
+description = """World Championship Boxing Manager puts you in control of up to 5 boxers. You must use your skills as a Manager/Promoter against the computers artificial intelligence, which controls 17 manages who together have 100 boxers under contract."""
+archive = "https://www.jaspp.org.uk/packages/release-packages/World-Champ-Boxing-Manager_3.0-2"
+tags = "game,ex-commercial,hidden"
+app-path = "Apps.Games.!BoxingMan"
+
+[world-class-leaderboard]
+title = "World Class Leaderboard"
+year = 1993
+publisher = "Krisalis Software"
+depends = "adffs"
+ff-ms = 28000
+min-mem = "4MB"
+description = """Game description to follow"""
+archive = "https://www.jaspp.org.uk/packages/release-packages/World-Class-Leaderboard_0-3"
+tags = "game,ex-commercial,hidden"
+app-path = "Apps.Games.!LdrBoard"
