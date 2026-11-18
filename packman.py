@@ -54,9 +54,12 @@ def keywords_in_str(s, kws):
 
 def filter_package(pkg):
     pkg_id = pkg['Package']
-    pkg_id_blacklist = '[SA]', '[RPC]'
-    #if keywords_in_str(pkg_id, pkg_id_blacklist):
-    #    return False
+    if pkg_id == 'ADFFS':
+        return True
+    pkg_id_blacklist = '[SA]', '[RPC]', '[BUZZ]', '[32Bit]'
+    #print(pkg_id)
+    if keywords_in_str(pkg_id, pkg_id_blacklist):
+        return False
     if 'Krisalis' not in pkg['Description']:
         return False
     return True
