@@ -1,18 +1,5 @@
 # Generated from packman index at: https://www.jaspp.org.uk/packages/release
 
-[adffs]
-title = "FDC emulator and ARM JIT"
-ff-ms = 28000
-year=2013
-min-mem = "4MB"
-description = """ADFFS provides emulation of the 1772 / 710/711 floppy disc controllers,
-and emulates ADFS responses to disc requests.  ADF, APD and JFD floppy
-disc images can be mounted to floppy drive 0 as if they were physically
-inserted."""
-archive = "https://www.jaspp.org.uk/packages/release-packages/ADFFS_2.88-1"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!ADFFS"
-
 [alone-in-the-dark]
 title = "Alone In the Dark"
 year = 1995
@@ -260,7 +247,7 @@ Each level of the game is an increasingly difficult environment that the Lemming
 
 A quick brain, the ability to plan ahead and lifetimes dedication to the Save A Lemming Campaign are required to get the right Lemming to perform the right action at the right time. A forgotten blocker, a rogue miner or a misplaced bridge could spell disaster for every Lemming on the screen."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings_0-3"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!Lemmings"
 
 [lemmings-2-the-tribes]
@@ -278,7 +265,7 @@ The Lemmings are in trouble and only their ancient talisman and a huge amount of
 
 Meet the Highland Lemmings, Space Lemmings, Beach-Bum Lemmings, Circus Lemmings and many, many more on a quest to save their island..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings-2-The-Tribes_0-3"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!Lemmings2"
 
 [lotus-turbo-challenge-2]
@@ -351,7 +338,7 @@ min-mem = "4MB"
 description = """Down on the planet Nebulus all is not well. Someone or something has been building giant towers in the sea and they didn't even apply for planning permission.
 In the offices of Destructo Inc. you awake from your afternoon nap with the phone almost erupting on your desk. The boss is shouting about some little destruction job he's got for you. Still half asleep you feel like throwing the phone in the bin but he starts talking about the brand new Mk.7 Mini-Sub he's got for you and the words "pay rise". You're out of your office in a flash, leaving the phone dangling out of the window as the boss goes on to talk about the extreme danger involved..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Nebulus_0-3"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!Nebulus"
 
 [oh-no-more-lemmings]
@@ -363,7 +350,7 @@ ff-ms = 28000
 min-mem = "4MB"
 description = """100 Brand New Lemmings Adventures!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-3"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!OhNoLemms"
 
 [omar-sharifs-bridge]
@@ -386,7 +373,7 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/Omar-Sharifs-Bridg
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Bridge"
 
-[pipe-mania]
+[Xxpipe-mania]
 title = "Pipe Mania"
 year = 1989
 publisher = "Krisalis Software"

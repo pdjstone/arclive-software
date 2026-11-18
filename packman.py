@@ -54,8 +54,9 @@ def keywords_in_str(s, kws):
 
 def filter_package(pkg):
     pkg_id = pkg['Package']
-    if pkg_id == 'ADFFS':
-        return True
+    # this is the full version of ADFFS, we want lite
+    #if pkg_id == 'ADFFS':
+    #    return True
     pkg_id_blacklist = '[SA]', '[RPC]', '[BUZZ]', '[32Bit]'
     #print(pkg_id)
     if keywords_in_str(pkg_id, pkg_id_blacklist):

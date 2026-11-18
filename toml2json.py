@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
 """
 Recursively scans src_dir for .toml files containing catalogues of disc
-images (e.g. .adf) and archive files (e.g. .zip). Creates a single
-software.json file in out_dir and copies/downloads the software to that
-directory. The software files are renamed according to the software ID in
-the toml.
+images (e.g. .adf) and archive files (e.g. .zip), and .md files that each
+describe one title. Creates a single software.json file in out_dir and
+copies/downloads the software to that directory. The software files are
+renamed according to the software ID in the toml (or the .md's name).
 
-Downloads are kept in dlcache, and each file's hash in a -hashes.toml file
-beside its toml. A file whose hash doesn't match is an error, unless
+A .md file starts with TOML front matter between +++ lines, holding the same
+fields as a TOML entry except title and description. Its H1 is the title, and
+everything after it the description. Descriptions (from either) are Markdown:
+the text up to the first heading is the short description, which goes in
+software.json as HTML. A longer one goes in docs/ as an HTML fragment, named
+in full-description. A "Quick Start" section goes in quickstart as HTML.
+
+Downloads are kept in dlcache, and each file's hash in a hash file in the
+directory of the .toml or .md that uses it, named after the directory (e.g.
+jaspp/jaspp-hashes.toml), which holds the hashes for all the titles there. A file whose hash doesn't match is an error, unless
 --refresh is given.
 """
 from io import BytesIO
@@ -24,6 +32,10 @@ import time
 import pycurl
 import subprocess
 from tqdm import tqdm
+from markdown_it import MarkdownIt
+from markdown_it.tree import SyntaxTreeNode
+
+from better_front_matter_plugin import better_front_matter_plugin
 
 from toml.decoder import TomlDecodeError
 
@@ -94,6 +106,8 @@ VALID_FIELDS = (
     'sound-filter', # 0 (full), 1 (reduced) or 2 (more reduced)
     'depends', # archive dependencies
     'mouse-capture', # force/never (auto is default, so never needed)
+    'expose-files', # list of files in the disc or archive (paths relative to its root)
+                    # to make available in the UI, e.g. a readme
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -118,6 +132,11 @@ VALID_FILE_EXTS = ('.arc', '.zip', '.adf', '.spk')
 VALID_MOUSE_CAPTURE = ('force', 'never')
 RISC_OS_TYPE_MAP = { 'ddc' : 'spk'}
 
+# Inline HTML is allowed, e.g. <kbd>
+markdown = MarkdownIt('commonmark').use(better_front_matter_plugin, marker_chr='+')
+QUICKSTART_HEADING = 'quick start'
+DOCS_DIR = 'docs'
+
 
 def copy_img(src: str, dst: str):
     assert src.lower().endswith('.png')
@@ -135,20 +154,144 @@ def copy_img(src: str, dst: str):
 def find_toml_files(root_dir):
     for root, dirs, files in os.walk(root_dir):
         for f in files:
-            if f.endswith('.toml') and not f.endswith('-hashes.toml'):
+            if f.endswith('.toml') and not f.endswith('-hashes.toml') or f.endswith('.md'):
                 yield root, f
+
+
+def text_content(node: SyntaxTreeNode):
+    return ''.join(t.content for t in node.to_tokens() if t.type == 'inline')
+
+
+def render_nodes(nodes):
+    tokens = [t for n in nodes for t in n.to_tokens()]
+    return markdown.renderer.render(tokens, markdown.options, {})
+
+
+def heading_level(node: SyntaxTreeNode):
+    return int(node.tag[1:])
+
+
+def parse_markdown_file(md_path):
+    """A .md title: returns ({software_id: meta}), with the description as the
+    nodes after the H1 (in '_description_nodes')"""
+    software_id = os.path.basename(md_path).removesuffix('.md')
+    with open(md_path, encoding='utf-8') as f:
+        nodes = SyntaxTreeNode(markdown.parse(f.read())).children
+    meta = {}
+    if nodes and nodes[0].type == 'front_matter':
+        try:
+            meta = toml.loads(nodes[0].content)
+        except TomlDecodeError as e:
+            raise CatalogueError(f"TOML error in front matter of {md_path}: {e}")
+        nodes = nodes[1:]
+    for field in ('title', 'description'):
+        if field in meta:
+            raise CatalogueError(f"{md_path}: '{field}' comes from the document, "
+                                 "so can't be in the front matter")
+    if not nodes or nodes[0].tag != 'h1':
+        raise CatalogueError(f"{md_path}: must start with front matter and then an H1 (the title)")
+    meta['title'] = text_content(nodes[0])
+    meta['_description_nodes'] = nodes[1:]
+    return {software_id: meta}
+
+
+def is_quickstart(node):
+    return node.type == 'heading' and text_content(node).strip().lower() == QUICKSTART_HEADING
+
+
+def section_nodes(nodes, start, level=None):
+    """nodes from start up to the next heading (if level is None), or the
+    next one at level or higher (so subheadings are included)"""
+    section = []
+    for n in nodes[start:]:
+        if n.type == 'heading' and (level is None or heading_level(n) <= level):
+            break
+        section.append(n)
+    return section
+
+
+def convert_description(disc_meta):
+    """Turns the Markdown description into HTML: the short description, the
+    full one (written to docs/) if it's longer, and the Quick Start section"""
+    nodes = disc_meta.pop('_description_nodes', None)
+    if nodes is None:
+        if 'description' not in disc_meta:
+            return
+        nodes = SyntaxTreeNode(markdown.parse(disc_meta['description'])).children
+    disc_meta.pop('description', None)
+
+    short = section_nodes(nodes, 0)
+    if not short:
+        # Starts with a heading, so use its section (unless it's the Quick Start)
+        for i, n in enumerate(nodes):
+            if n.type == 'heading' and not is_quickstart(n):
+                short = section_nodes(nodes, i + 1)
+                break
+    if short:
+        disc_meta['description'] = render_nodes(short)
+    if len(short) < len(nodes):
+        html = render_nodes(nodes)
+        hash = hashlib.sha256(html.encode()).hexdigest()
+        name = f"{DOCS_DIR}/{disc_meta['id']}-{hash[:12]}.html"
+        with open(os.path.join(out_dir, name), 'w', encoding='utf-8') as f:
+            f.write(html)
+        disc_meta['full-description'] = name
+
+    quickstart = None
+    for i, n in enumerate(nodes):
+        if is_quickstart(n):
+            quickstart = section_nodes(nodes, i + 1, heading_level(n))
+            break
+    if quickstart:
+        disc_meta['quickstart'] = render_nodes(quickstart)
+
+
+def load_catalogue_file(path):
+    """{software_id: meta} from a .toml or .md file"""
+    if path.endswith('.md'):
+        return parse_markdown_file(path)
+    try:
+        return toml.load(path)
+    except TomlDecodeError as e:
+        raise CatalogueError(f"TOML error in file {path}: " + str(e))
+
+
+# directory -> {software_id: hash}, for the titles in that directory
+dir_hashes = {}
+
+
+def hash_file_path(root):
+    """The hash file for the titles in directory root, named after it"""
+    return os.path.join(root, os.path.basename(os.path.normpath(root)) + '-hashes.toml')
+
+
+def load_hashes(root):
+    if root not in dir_hashes:
+        path = hash_file_path(root)
+        dir_hashes[root] = toml.load(path) if os.path.isfile(path) else {}
+    return dir_hashes[root]
+
+
+def save_hashes(root):
+    with open(hash_file_path(root), 'w') as f:
+        toml.dump(dir_hashes[root], f)
+
+
+def prune_hashes():
+    """Drop the hashes of titles that are no longer in their directory"""
+    for root, hashes in dir_hashes.items():
+        here = {id for id, path in all_software_ids.items() if os.path.dirname(path) == root}
+        if gone := set(hashes) - here:
+            for id in gone:
+                del hashes[id]
+            report(f"{hash_file_path(root)}: removed hashes for {', '.join(sorted(gone))}")
+            save_hashes(root)
 
 
 def parse_toml(root, file):
     toml_path = os.path.join(root, file)
-    toml_hash_path = os.path.join(root, os.path.basename(file).removesuffix('.toml') + '-hashes.toml')
-    try:
-        data = toml.load(toml_path)
-    except TomlDecodeError as e:
-        raise CatalogueError(f"TOML error in file {toml_path}: " + str(e))
-    hashes = {}
-    if os.path.isfile(toml_hash_path):
-        hashes = toml.load(toml_hash_path)
+    data = load_catalogue_file(toml_path)
+    hashes = load_hashes(root)
 
     for software_id, disc_meta in data.items():
         show_status(software_id)
@@ -211,23 +354,31 @@ def parse_toml(root, file):
             sf = disc_meta['sound-filter']
             assert type(sf) is int and 0 <= sf <= 2
 
+        expose_files = disc_meta.get('expose-files', [])
+        if type(expose_files) is not list or not all(type(f) is str for f in expose_files):
+            raise CatalogueError(f"'{software_id}' in {toml_path}: expose-files must be a list of paths")
+
         for field in disc_meta.keys():
-            if field not in VALID_FIELDS:
+            if field not in VALID_FIELDS and field != '_description_nodes':
                 raise CatalogueError(f"Unknown field '{field}' in '{software_id}' ({toml_path})")
         
         disc_meta['id'] = software_id
 
-        if 'app-path' in disc_meta:
+        convert_description(disc_meta)
+
+        if 'app-path' in disc_meta or expose_files:
             disc = load_software(disc_meta)
+        if 'app-path' in disc_meta:
             check_app_path(disc, software_id, disc_meta['app-path'], disc_meta[file_field], toml_path)
             extract_icon(disc, disc_meta)
+        if expose_files:
+            check_files(disc, software_id, expose_files, disc_meta[file_field], toml_path)
 
         if screenshots := find_screenshots(root, software_id):
             disc_meta['screenshots'] = screenshots
         all_software_ids[software_id] = toml_path
         
-        with open(toml_hash_path, 'w') as f:
-            toml.dump(hashes, f)
+        save_hashes(root)
         if progress:
             progress.update()
 
@@ -262,6 +413,16 @@ def check_app_path(disc, software_id, app_path, file_name, toml_path):
         tops.add(PureRiscOsPath(path).parts[0])
     raise CatalogueError(f"'{software_id}' in {toml_path}: app-path '{app_path}' isn't in "
                     f"{file_name} (its root holds: {', '.join(sorted(tops))})")
+
+
+def check_files(disc, software_id, paths, file_name, toml_path):
+    """Check each of paths is a file in the disc or archive (file_name).
+    RISC OS names are case-insensitive"""
+    files = {tuple(p.lower() for p in PureRiscOsPath(path).parts) for path, _ in disc.list()}
+    for path in paths:
+        if tuple(p.lower() for p in PureRiscOsPath(path).parts) not in files:
+            raise CatalogueError(f"'{software_id}' in {toml_path}: expose-files has '{path}', "
+                                 f"which isn't a file in {file_name}")
 
 
 def extract_icon(disc, disc_meta):
@@ -511,10 +672,8 @@ if __name__ == '__main__':
     if not os.path.isdir(src_dir):
         parser.error(f"No such src_dir {src_dir}")
     
-    if not os.path.isdir(out_dir):
-        os.makedirs(out_dir, exist_ok=True)
-        os.makedirs(os.path.join(out_dir, 'screenshots'), exist_ok=True)
-        os.makedirs(os.path.join(out_dir, 'icons'), exist_ok=True)
+    for d in ('screenshots', 'icons', DOCS_DIR):
+        os.makedirs(os.path.join(out_dir, d), exist_ok=True)
 
     if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR, exist_ok=True)
@@ -522,8 +681,8 @@ if __name__ == '__main__':
     total = 0
     for root, file in toml_files:
         try:
-            total += len(toml.load(os.path.join(root, file)))
-        except TomlDecodeError:
+            total += len(load_catalogue_file(os.path.join(root, file)))
+        except CatalogueError:
             pass        # parse_toml reports it
     progress = tqdm(total=total, unit='title', dynamic_ncols=True, leave=False,
                     disable=None)     # off when stderr isn't a terminal (e.g. a log)
@@ -539,6 +698,7 @@ if __name__ == '__main__':
                     raise CatalogueError(f'{software_id} depends on unknown ID {d}')
                 if 'archive' not in json_data[d]:
                     raise CatalogueError(f'{software_id} depends on ID {d} which is a disc?')
+        prune_hashes()
     except CatalogueError as e:
         progress.close()
         print(f'Error: {e}', file=sys.stderr)

@@ -1,6 +1,6 @@
 +++
 tags="game,ex-commercial"
-version=1.10
+version="1.10"
 year=1994
 author="Tom Cooper"
 best-cpu="arm250"
@@ -11,8 +11,6 @@ ff-ms=17000
 +++
 
 # Hamsters
-
-## Description
 
 Cartoon 2D platformer where you play a small furry creature with a large mallet which you must use to squish cute animals.
 
