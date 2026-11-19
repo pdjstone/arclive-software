@@ -50,7 +50,8 @@ def check_files(disc, software_id, paths, file_name, toml_path):
 
 
 def extract_icon(disc, software_id, app_path, file_name, out_path):
-    """Save the app's icon (its sprite in its !Sprites) to out_path as a PNG"""
+    """Save the app's icon (its sprite in its !Sprites) to out_path as a PNG.
+    Returns whether there was one"""
     app_path = PureRiscOsPath(app_path)
     sprite_fd = None
     try:
@@ -61,13 +62,14 @@ def extract_icon(disc, software_id, app_path, file_name, out_path):
         raise CatalogueError(f"Could not read {app_path}'s sprites from {file_name} "
                              f"('{software_id}'): {e!r}") from e
     if not sprite_fd:
-        return
+        return False
     try:
         sprite = SpriteArea(sprite_fd)[app_path.name]
     except KeyError:
         warn(f"{software_id}: no sprite {app_path.name} in {app_path}'s sprites, so no icon")
-        return
+        return False
     sprite.get_pil_image().save(out_path)
+    return True
 
 
 def validate_software(name, data, software_id, app_path, toml_path):
