@@ -160,13 +160,13 @@ def main():
         parser.error(f"No such src_dir {args.src_dir}")
 
     files = find_catalogue_files(args.src_dir)
-    total = 0
+    total_items = 0
     for path in files:
         try:
-            total += len(load_catalogue_file(path)[0])
+            total_items += len(load_catalogue_file(path)[0])
         except CatalogueError:
             pass        # reported when it's built
-    errors.progress = tqdm(total=total, unit='title', dynamic_ncols=True, leave=False,
+    errors.progress = tqdm(total=total_items, unit='title', dynamic_ncols=True, leave=False,
                            disable=None)     # off when stderr isn't a terminal (e.g. a log)
     try:
         build = Build(args.out_dir, args.refresh)

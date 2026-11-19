@@ -23,15 +23,4 @@ Descriptions are Markdown in both. The text up to the first heading is the short
 ./toml2json.py --refresh catalogue/ out/  # fetch every file again
 ```
 
-Downloads are kept in `dlcache/` in the current directory. The code is in `arclivecat/`:
-
-| Module | Does |
-|---|---|
-| `fields.py` | The fields a title can have, and checking them |
-| `descriptions.py` | `.md` titles, and turning descriptions into HTML |
-| `front_matter.py` | The markdown-it plugin for the `+++` front matter |
-| `fetch.py` | Getting each title's file, through `dlcache/` |
-| `hashes.py` | The hash files |
-| `software.py` | Reading discs and archives (riscos-conv): app-path and expose-files checks, icons |
-| `screenshots.py` | Copying screenshots |
-| `errors.py` | `CatalogueError` and progress messages |
+Downloads are kept in `dlcache/` in the current directory.

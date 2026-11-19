@@ -41,6 +41,8 @@ def filename_to_canonical(filename_or_url: str, software_id):
         ext = '.' + RISC_OS_TYPE_MAP.get(filetype.lower(), '')
     else:
         ext = PurePosixPath(filename_or_url).suffix
+    # JASPP package URLs have no extension (e.g. .../Pipe-Mania_0-3), or a
+    # version that looks like one (.../Alone-in-the-Dark_1.00-5), but are zips
     if (not ext or ext.lower() not in VALID_FILE_EXTS) and 'jaspp' in filename_or_url:
         ext = '.zip'
     if not ext or ext.lower() not in VALID_FILE_EXTS:
