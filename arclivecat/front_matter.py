@@ -1,4 +1,5 @@
-"""Process front matter."""
+"""Front matter for markdown-it: mdit_py_plugins' front_matter_plugin, but
+with a choice of marker character (the catalogue uses +++, around TOML)"""
 
 from functools import partial
 from markdown_it import MarkdownIt
@@ -7,7 +8,7 @@ from markdown_it.rules_block import StateBlock
 from mdit_py_plugins.utils import is_code_block
 
 
-def better_front_matter_plugin(md: MarkdownIt, marker_chr: str ='-') -> None:
+def front_matter_plugin(md: MarkdownIt, marker_chr: str ='-') -> None:
     """Plugin ported from
     `markdown-it-front-matter <https://github.com/ParkSB/markdown-it-front-matter>`__.
 

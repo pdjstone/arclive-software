@@ -4,3 +4,34 @@ A collection of disc images and archive files that can be loaded into [Archimede
 
 There is also a Python script which downloads or copies each disc image/archive into a single directory and creates a `software.json` file containing all the metadata. This is loaded by Archimedes Live.
 
+
+## Catalogue files
+
+Titles are defined in `catalogue/`, in either:
+
+- a `.toml` file, with one table per title (the table name is its ID), or
+- a `.md` file for one title (the file name is its ID): TOML front matter between `+++` lines, then an H1 with the title, and the description in Markdown. A `## Quick Start` section is shown beside the emulator as a reminder of the controls.
+
+Descriptions are Markdown in both. The text up to the first heading is the short description; the whole of a longer one is written to `docs/` as HTML. Each directory has a hash file named after it (e.g. `jaspp/jaspp-hashes.toml`) with the hashes of its titles' files.
+
+## Building
+
+`toml2json.py` runs with [uv](https://docs.astral.sh/uv/), which installs its dependencies:
+
+```sh
+./toml2json.py catalogue/ out/            # or: uv run toml2json.py catalogue/ out/
+./toml2json.py --refresh catalogue/ out/  # fetch every file again
+```
+
+Downloads are kept in `dlcache/` in the current directory. The code is in `arclivecat/`:
+
+| Module | Does |
+|---|---|
+| `fields.py` | The fields a title can have, and checking them |
+| `descriptions.py` | `.md` titles, and turning descriptions into HTML |
+| `front_matter.py` | The markdown-it plugin for the `+++` front matter |
+| `fetch.py` | Getting each title's file, through `dlcache/` |
+| `hashes.py` | The hash files |
+| `software.py` | Reading discs and archives (riscos-conv): app-path and expose-files checks, icons |
+| `screenshots.py` | Copying screenshots |
+| `errors.py` | `CatalogueError` and progress messages |
