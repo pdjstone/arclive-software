@@ -14,6 +14,8 @@ Titles are defined in `catalogue/`, in either:
 
 Descriptions are Markdown in both. The text up to the first heading is the short description; the whole of a longer one is written to `docs/` as HTML. Each directory has a hash file named after it (e.g. `jaspp/jaspp-hashes.toml`) with the hashes of its titles' files.
 
+To move a title from a `.toml` to its own `.md` (in the same directory), run `./toml2md.py ID`; `-n` prints the `.md` without changing anything.
+
 ## Building
 
 `toml2json.py` runs with [uv](https://docs.astral.sh/uv/), which installs its dependencies:
