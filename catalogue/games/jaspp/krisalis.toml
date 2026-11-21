@@ -419,28 +419,6 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/Quest-For-Gold_0-3
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!!GOLD!!"
 
-[swiv]
-title = "S.W.I.V."
-year = 1992
-publisher = "Krisalis Software"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """S.W.I.V - Secret Weapons Installation Verification
-
-Primary Objective : Verify existence of the enemy's secret weapons nstallations and destroy them.
-
-S.W.I.V - Special Weapons Interdiction Vehicles
-
-Secondary Objective - Interdiction mission : the destruction by military force of all enemy units
-
-SWIV - Choose between a helicopter gunship or an Armoured Jeep and prepare to enter enemy territory as part of the elite assault team of Special Weapons Interdiction Vehicles.
-
-Battle against enemy helicopters, tanks, submarines, hovercraft, snowmobiles, mechanised flying fish, giant weapons installations and much more in this vertically scrolling shoot 'em up. But beware, the enemy are armed with the latest deadly weaponry, including the lethal SILKWORM IV homing missile."""
-archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV_0-3"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!Swiv"
-
 [simcity]
 title = "SimCity"
 year = 1993
