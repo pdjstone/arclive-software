@@ -9,9 +9,10 @@ from toml.decoder import TomlDecodeError
 
 from .errors import CatalogueError
 from .front_matter import front_matter_plugin
+from .kbd import kbd_class_plugin
 
-# Inline HTML is allowed, e.g. <kbd>
-markdown = MarkdownIt('commonmark').use(front_matter_plugin, marker_chr='+')
+# Inline HTML is allowed, e.g. <kbd>, which gets its key's colour as a class
+markdown = MarkdownIt('commonmark').use(front_matter_plugin, marker_chr='+').use(kbd_class_plugin)
 QUICKSTART_HEADING = 'quick start'
 DOCS_DIR = 'docs'
 
