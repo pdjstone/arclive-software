@@ -114,7 +114,7 @@ class Build:
             disc = load_software(self.out_dir / meta[file_field], software_id)
         if app_path:
             check_app_path(disc, software_id, app_path, meta[file_field], path)
-            icon = f'icons/{software_id}-icon.png'
+            icon = f'icons/{software_id}.png'
             if extract_icon(disc, software_id, app_path, meta[file_field], self.out_dir / icon):
                 meta['icon'] = icon
         if expose_files:
