@@ -7,5 +7,6 @@ disc images can be mounted to floppy drive 0 as if they were physically
 inserted."""
 archive = "adffs288lite.zip"
 app-path="!ADFFS"
+boot-overrides = "boot-overrides"
 tags = "utility,hidden"
 year=2013
