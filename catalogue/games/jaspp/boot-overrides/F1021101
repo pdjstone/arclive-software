@@ -9,8 +9,10 @@ HideCommandWindow
 Set Pond$Dir <Obey$Dir>
 IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 13 80 ELSE ScreenSize 80
 RMAFree 256
-RMEnsure QTMTracker 1.43 RMLoad ADFFS:trackers.QTMModule
-RMEnsure MusicModule2 0.02 RMLoad ADFFS:trackers.MusMod2
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt keeps IRQs off for up to ~1 ms, which can delay the
+| game's timer 1 palette changes
+RMEnsure MusicModule2 0 RMLoad <Pond$Dir>.MUSMOD2
 Set JSflag 0
 IF ADFFS$OSVersion<&50000 THEN RMEnsure Joystick 0.0 Set JSflag 1
 IF JSflag>0 THEN RMLoad ADFFS:extras.JoyMod
@@ -27,6 +29,5 @@ IF JSflag>0 THEN RMEnsure Joystick 0.0 Set JSflag 0
 IF JSflag>0 THEN RMKill Joystick
 UnSet JSflag
 RMKill MusicModule2
-RMKill QTMTracker
 UnSet Pond$Dir
 RestoreCSD
