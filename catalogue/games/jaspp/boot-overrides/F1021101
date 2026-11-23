@@ -1,0 +1,32 @@
+| To install to HD:
+| 1. Copy !JamesPond to HD
+| 2. Replace the contents of !JamesPond.!Run with:
+|  ADFBootFloppy F1021101
+IF "<Obey$Dir>"="@" THEN Set Obey$Dir ADFS::0.$.!JamesPond
+StoreCSD
+DIR <Obey$Dir>
+HideCommandWindow
+Set Pond$Dir <Obey$Dir>
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 13 80 ELSE ScreenSize 80
+RMAFree 256
+RMEnsure QTMTracker 1.43 RMLoad ADFFS:trackers.QTMModule
+RMEnsure MusicModule2 0.02 RMLoad ADFFS:trackers.MusMod2
+Set JSflag 0
+IF ADFFS$OSVersion<&50000 THEN RMEnsure Joystick 0.0 Set JSflag 1
+IF JSflag>0 THEN RMLoad ADFFS:extras.JoyMod
+mussamplerate 3
+fx19
+ADFWimpSlot 480k
+IF ADFFS$CPUID>=&A10 THEN GOARM3JIT 0
+ADFClipScreen 8:5
+<Pond$Dir>.Loader
+ADFClipScreen
+IF ADFFS$CPUID>=&A10 THEN GOARM3JIT
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
+IF JSflag>0 THEN RMEnsure Joystick 0.0 Set JSflag 0
+IF JSflag>0 THEN RMKill Joystick
+UnSet JSflag
+RMKill MusicModule2
+RMKill QTMTracker
+UnSet Pond$Dir
+RestoreCSD
