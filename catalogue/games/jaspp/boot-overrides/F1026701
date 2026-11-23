@@ -8,8 +8,11 @@ IF "<Obey$Dir>"="@" THEN Set Obey$Dir ADFS::OhNoLemms.$.!OhNoLemms
 RMAFree 200
 IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 12 80 ELSE ScreenSize 80
 Echo <22><12>
-RMEnsure QTMTracker 1.43 RMLoad ADFFS:trackers.QTMModule
-RMEnsure MusicModule2 0.05 RMLoad ADFFS:trackers.MusMod2
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt can run past VSync with IRQs off, which moves the
+| palette change above the panel down the screen (e.g. while +/- is held)
+RMEnsure MusicModule2 0 RMLoad <Obey$Dir>.MusMod2
+Mussamplerate 3
 
 Set Lem$Dir <Obey$Dir>
 StoreCSD
@@ -66,7 +69,6 @@ ADFClipScreen
 IF ADFFS$CPUID>=&A10 THEN GOARM3JIT
 IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
 RMKill MusicModule2
-RMKill QTMTracker
 FX 15 0
 If Lem$Speaker = 1 Then *Speaker On
 If Lem$Speaker = 0 Then *Speaker Off
