@@ -6,8 +6,10 @@ Set Nebu$Dir <Obey$dir>
 
 IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 13 80 ELSE ScreenSize 80
 RMAFree 200
-RMEnsure QTMTracker 1.43 RMLoad ADFFS:trackers.QTMModule
-RMEnsure MusicModule2 0.02 RMLoad ADFFS:trackers.MusMod2
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt keeps IRQs off for up to 1 ms, which delays the title
+| screen's palette changes
+RMEnsure MusicModule 1.02 RMLoad <Nebu$Dir>.MusMod
 Set JSflag 0
 IF ADFFS$OSVersion<&50000 THEN RMEnsure Joystick 0.0 Set JSflag 1
 IF JSflag>0 THEN RMLoad ADFFS:extras.JoyMod
@@ -38,6 +40,5 @@ IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
 IF JSflag>0 THEN RMEnsure Joystick Set JSflag 0
 IF JSflag>0 THEN RMKill Joystick
 Unset JSflag
-RMKill MusicModule2
-RMKill QTMTracker
+RMKill MusicModule
 RestoreCSD
