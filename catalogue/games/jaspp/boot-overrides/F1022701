@@ -13,8 +13,11 @@ IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 9 80 ELSE ScreenSize 80
 Echo <22><9>
 HideCommandWindow
 RMAFree 200
-RMEnsure QTMTracker 1.43 RMLoad ADFFS:trackers.QTMModule
-RMEnsure MusicModule2 0.02 RMLoad ADFFS:trackers.MusMod2
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt can run past VSync with IRQs off, which moves the
+| palette change above the panel down the screen (e.g. while +/- is held)
+RMEnsure MusicModule2 0 RMLoad <Lem$Dir>.MusMod2
+Mussamplerate 3
 
 IF ADFFS$CPUID<=3 THEN ADFWimpSlot 496k 664k ELSE ADFWimpSlot 664k
 SetEval fix$up 0
@@ -42,7 +45,6 @@ ADFClipScreen
 IF fix$up THEN GOARM3JIT
 IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
 RMKill MusicModule2
-RMKill QTMTracker
 FX 15 0
 IF Lem$Speaker = 1 THEN *Speaker On
 IF Lem$Speaker = 0 THEN *Speaker Off
