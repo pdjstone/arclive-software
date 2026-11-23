@@ -41,9 +41,10 @@ from toml.decoder import TomlDecodeError
 from tqdm import tqdm
 
 from arclivecat import errors
+from arclivecat.adffs import override_boot_scripts
 from arclivecat.descriptions import DOCS_DIR, convert_description, parse_markdown_file
 from arclivecat.errors import CatalogueError, report, show_status
-from arclivecat.fetch import Fetcher
+from arclivecat.fetch import Fetcher, sha256
 from arclivecat.fields import validate
 from arclivecat.hashes import HashStore
 from arclivecat.screenshots import find_screenshots
@@ -106,6 +107,9 @@ class Build:
             report(f'{software_id}: new file {source} (hash {hash[:12]})')
         hashes[software_id] = hash
 
+        if overrides := meta.pop('boot-overrides', None):
+            meta[file_field] = self.override_boot_scripts(meta[file_field], root / overrides, software_id)
+
         convert_description(meta, self.out_dir, description_nodes)
 
         app_path = meta.get('app-path')
@@ -126,6 +130,18 @@ class Build:
         self.catalogue[software_id] = meta
         self.paths[software_id] = path
         self.hashes.save(root)
+
+    def override_boot_scripts(self, name, scripts_dir, software_id):
+        """Puts the scripts in scripts_dir into the ADFFS archive called name
+        in out_dir. Returns its new name: like the old one, but with the hash
+        of what's in it now"""
+        old_path = self.out_dir / name
+        data = override_boot_scripts(old_path.read_bytes(), scripts_dir, software_id)
+        stem, ext = old_path.stem.rsplit('-', 1)[0], old_path.suffix
+        new_name = f'{stem}-{sha256(data)[:12]}{ext}'
+        old_path.unlink()
+        (self.out_dir / new_name).write_bytes(data)
+        return new_name
 
     def finish(self):
         """Checks dependencies, drops the hashes of titles that have gone, and
