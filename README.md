@@ -18,7 +18,7 @@ To move a title from a `.toml` to its own `.md` (in the same directory), run `./
 
 ### ADFFS boot scripts
 
-The JASPP titles are started by [ADFFS](https://www.jaspp.org.uk/) with `*ADFBootFloppy <disc ID>`, which runs ADFFS's boot script for that game from `!ADFFS.obey` (a zip of Obey files named by disc ID). ADFFS's `boot-overrides` field names a directory of scripts that replace its own: `catalogue/games/jaspp/boot-overrides/`, with each file named by the disc ID it replaces (e.g. `F1026001` for Nebulus). The build puts them into `!ADFFS.obey`, keeping the file's metadata. Each override is committed first as ADFFS's script and then changed, so `git log -p` on it shows why.
+The JASPP titles are started by [ADFFS](https://www.jaspp.org.uk/) with `*ADFBootFloppy <disc ID>`, which runs ADFFS's boot script for that game from `!ADFFS.obey` (a zip of Obey files named by disc ID). The scripts in `boot-overrides/`, beside ADFFS's catalogue file (`catalogue/games/jaspp/`), replace ADFFS's own: each is named by the disc ID it replaces (e.g. `F1026001` for Nebulus). When it builds the `adffs` title, the build puts them into `!ADFFS.obey`, keeping the file's metadata. Each override is committed first as ADFFS's script and then changed, so `git log -p` on it shows why.
 
 ## Building
 

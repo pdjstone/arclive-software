@@ -41,7 +41,7 @@ from toml.decoder import TomlDecodeError
 from tqdm import tqdm
 
 from arclivecat import errors
-from arclivecat.adffs import override_boot_scripts
+from arclivecat.adffs import ADFFS_ID, BOOT_OVERRIDES_DIR, override_boot_scripts
 from arclivecat.descriptions import DOCS_DIR, convert_description, parse_markdown_file
 from arclivecat.errors import CatalogueError, report, show_status
 from arclivecat.fetch import Fetcher, sha256
@@ -107,8 +107,9 @@ class Build:
             report(f'{software_id}: new file {source} (hash {hash[:12]})')
         hashes[software_id] = hash
 
-        if overrides := meta.pop('boot-overrides', None):
-            meta[file_field] = self.override_boot_scripts(meta[file_field], root / overrides, software_id)
+        if software_id == ADFFS_ID and (root / BOOT_OVERRIDES_DIR).is_dir():
+            meta[file_field] = self.override_boot_scripts(meta[file_field], root / BOOT_OVERRIDES_DIR,
+                                                          software_id)
 
         convert_description(meta, self.out_dir, description_nodes)
 

@@ -29,9 +29,6 @@ VALID_FIELDS = (
     'mouse-capture', # force/never (auto is default, so never needed)
     'expose-files', # list of files in the disc or archive (paths relative to its root)
                     # to make available in the UI, e.g. a readme
-    'boot-overrides', # for ADFFS only: a directory (relative to the TOML file) of boot
-                      # scripts to put in !ADFFS.obey in place of ADFFS's own, each named
-                      # by the disc ID of the game it's for (see arclivecat/adffs.py)
 )
 
 VALID_FIELDS = set(VALID_FIELDS + MANDATORY_FIELDS)
@@ -93,12 +90,6 @@ def validate(meta, software_id, path):
         sf = meta['sound-filter']
         if type(sf) is not int or not 0 <= sf <= 2:
             fail(f'Invalid sound-filter: {sf!r} (must be 0, 1 or 2)')
-
-    if 'boot-overrides' in meta:
-        if type(meta['boot-overrides']) is not str:
-            fail('boot-overrides must be a directory name')
-        if 'archive' not in meta:
-            fail('boot-overrides needs an archive')
 
     expose_files = meta.get('expose-files', [])
     if type(expose_files) is not list or not all(type(f) is str for f in expose_files):
