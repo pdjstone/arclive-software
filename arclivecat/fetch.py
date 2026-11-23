@@ -104,9 +104,10 @@ class Fetcher:
     def cache_path(self, path, software_id):
         return self.cache_dir / filename_to_canonical(path, software_id)
 
-    def fetch(self, root, path, software_id, known_hash, app_path, toml_path):
-        """Puts the file (path: a URL, or relative to root, a str) in out_dir.
-        Returns (its name there, its hash, whether refresh found a new
+    def fetch(self, root, path, software_id, known_hash, app_path, toml_path, transform=None):
+        """Puts the file (path: a URL, or relative to root, a str) in out_dir,
+        changed by transform (bytes -> bytes) if it's given. Returns (its name
+        there, the hash of the file as fetched, whether refresh found a new
         version of it)"""
         cache_path = hash = None
         if self.refresh:
@@ -121,11 +122,17 @@ class Fetcher:
                 cache_path, hash = self.fetch_url(path, software_id, known_hash)
             else:
                 cache_path, hash = self.fetch_local(root, path, software_id, known_hash)
-        # Served as <id>-<hash><ext>, so each version of a file has its own URL
-        # and can be cached for good. dlcache keeps the plain <id><ext> name
+        # Served as <id>-<hash><ext> (the hash of what's served), so each
+        # version of a file has its own URL and can be cached for good. dlcache
+        # keeps the plain <id><ext> name
         canonical = PurePosixPath(filename_to_canonical(path, software_id))
-        new_name = f'{canonical.stem}-{hash[:12]}{canonical.suffix}'
-        shutil.copy(cache_path, self.out_dir / new_name)
+        if transform:
+            data = transform(cache_path.read_bytes())
+            new_name = f'{canonical.stem}-{sha256(data)[:12]}{canonical.suffix}'
+            (self.out_dir / new_name).write_bytes(data)
+        else:
+            new_name = f'{canonical.stem}-{hash[:12]}{canonical.suffix}'
+            shutil.copy(cache_path, self.out_dir / new_name)
         return new_name, hash, refreshed
 
     def refresh_file(self, root, path, software_id, known_hash, app_path, toml_path):
