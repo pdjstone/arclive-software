@@ -1,0 +1,46 @@
+| To install to HD:
+| 1. Copy !Chuck to HD
+| 2. Open !Chuck via Shift-Double left click
+| 3. Copy CHUCK from disc 2 into !Chuck
+| 4. Replace the contents of !Chuck.!Run with:
+|  ADFBootFloppy F1008101
+IF "<Obey$Dir>"="@" THEN ADFReserveMemory 800K
+IF "<Obey$Dir>"="@" THEN Set Obey$Dir ADFS::0.$.!Chuck
+StoreCSD
+DIR <Obey$Dir>
+
+Set Chuck$Dir <Obey$dir>
+ADFWimpSlot 464k
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt keeps IRQs off for up to ~1 ms, which can delay the
+| game's timer 1 palette changes
+RMEnsure MusicModule2 0 RMLoad <Chuck$Dir>.MUSMOD2
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 9 160 ELSE ScreenSize 160
+Echo <22><9>
+Set JSflag 0
+RMEnsure Joystick 0.0 Set JSflag 1
+IF ADFFS$OSVersion<&50000 AND JSflag=1 THEN RMLoad ADFFS:extras.JoyMod
+IF JSflag=0 THEN <Chuck$Dir>.JSTest
+
+LOAD <Chuck$Dir>.ChuckProg
+ADFCRC 8000 B1E4 384A2AF7 ChuckProg
+| Correct JoyMod Joystick code in intro
+MEMA 9EC8 EF0EFFC2 722000FF >B1B8 EF000011
+IF ADFFS$CPUID>=&A10 THEN GOARM3JIT 8000 ELSE GO 8000
+LOAD <Chuck$Dir>.GAME
+ADFCRC 8000 25928 7B553C55 GAME
+| Correct JoyMod Joystick code in game
+MEMA 8418 EF0EFFC2 722000FF
+GO 8000
+MusSampleRate 2
+FX 19
+FX 19
+IF "<Chuck$Dir>"="ADFS::0.$.!Chuck" THEN ADFReserveMemory 0
+Unset Chuck$Dir
+IF ADFFS$OSVersion>=&35000 THEN GOARM3JIT
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
+IF JSflag>0 THEN RMEnsure Joystick 0.0 Set JSflag 0
+IF JSflag>0 THEN RMKill Joystick
+Unset JSflag
+RMKill MusicModule2
+RestoreCSD

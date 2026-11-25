@@ -41,6 +41,7 @@ from toml.decoder import TomlDecodeError
 from tqdm import tqdm
 
 from arclivecat import errors
+from arclivecat.adffs import ADFFS_ID, BOOT_OVERRIDES_DIR, override_boot_scripts
 from arclivecat.descriptions import DOCS_DIR, convert_description, parse_markdown_file
 from arclivecat.errors import CatalogueError, report, show_status
 from arclivecat.fetch import Fetcher
@@ -98,8 +99,12 @@ class Build:
         known_hash = hashes.get(software_id)
         file_field = 'disc' if 'disc' in meta else 'archive'
         source = meta[file_field]
+        transform = None
+        if software_id == ADFFS_ID and (scripts_dir := root / BOOT_OVERRIDES_DIR).is_dir():
+            def transform(data):
+                return override_boot_scripts(data, scripts_dir, software_id)
         meta[file_field], hash, refreshed = self.fetcher.fetch(
-            root, source, software_id, known_hash, meta.get('app-path'), path)
+            root, source, software_id, known_hash, meta.get('app-path'), path, transform)
         if known_hash and known_hash != hash and not refreshed:
             raise CatalogueError(f"file hash for {software_id} doesn't match")
         if not known_hash and not refreshed:

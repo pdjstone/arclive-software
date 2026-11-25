@@ -16,6 +16,10 @@ Descriptions are Markdown in both. The text up to the first heading is the short
 
 To move a title from a `.toml` to its own `.md` (in the same directory), run `./toml2md.py ID`; `-n` prints the `.md` without changing anything.
 
+### ADFFS boot scripts
+
+The JASPP titles are started by [ADFFS](https://www.jaspp.org.uk/) with `*ADFBootFloppy <disc ID>`, which runs ADFFS's boot script for that game from `!ADFFS.obey` (a zip of Obey files named by disc ID). The scripts in `boot-overrides/`, beside ADFFS's catalogue file (`catalogue/games/jaspp/`), replace ADFFS's own: each is named by the disc ID it replaces (e.g. `F1026001` for Nebulus). When it builds the `adffs` title, the build puts them into `!ADFFS.obey`, keeping the file's metadata. Each override is committed first as ADFFS's script and then changed, so `git log -p` on it shows why.
+
 ## Building
 
 `toml2json.py` runs with [uv](https://docs.astral.sh/uv/), which installs its dependencies:

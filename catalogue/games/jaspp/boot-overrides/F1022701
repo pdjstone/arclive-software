@@ -1,0 +1,54 @@
+| To HD install:
+| 1. Copy !Lemmings to HD
+| 2. Copy the floppy image as !Lemmings.F1022701
+| 3. Replace the contents of !Lemmings.!Run with:
+|  ADFBootFloppy F1022701
+IfThere <Obey$Dir>.F1022701 THEN ADFMount <Obey$Dir>.F1022701
+Set Obey$Dir ADFS::0.$.!Lemmings
+StoreCSD
+DIR <Obey$Dir>
+
+Set Lem$Dir <Obey$Dir>
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 9 80 ELSE ScreenSize 80
+Echo <22><9>
+HideCommandWindow
+RMAFree 200
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt can run past VSync with IRQs off, which moves the
+| palette change above the panel down the screen (e.g. while +/- is held)
+RMEnsure MusicModule2 0 RMLoad <Lem$Dir>.MusMod2
+Mussamplerate 3
+
+IF ADFFS$CPUID<=3 THEN ADFWimpSlot 496k 664k ELSE ADFWimpSlot 664k
+SetEval fix$up 0
+IF ADFFS$CPUID>=&A10 OR ADFFS$OSVersion>=&35000 THEN SetEval fix$up 1
+IF fix$up THEN GOARM3JIT 0
+| Correct cursor plot code
+IF fix$up THEN JITMEMORYA 243F4 E4960004 E2466909
+IF fix$up THEN JITMEMORYA 243F8 E58F0078 E2466E45
+IF fix$up THEN JITMEMORYA 243FC E5960000 E3A00601
+IF fix$up THEN JITMEMORYA 24400 E58F0138 E5806000
+IF fix$up THEN JITMEMORYA 24478 E8990007 EA036EE1
+IF fix$up THEN JITMEMORYA 24540 E8890007 EA036EBC
+IF fix$up THEN MEMA 100004 E51F600C E08FF006 >100010 E8990006 EAFC9118 E8990004 EAFC9116 E8990007 EAFC9114 E8990003 EAFC9112 E8990001 EAFC9110 E51F6040 E08FF006
+IF fix$up THEN MEMA 100044 E8890006 EAFC913D E8890004 EAFC913B E8890007 EAFC9139 E8890003 EAFC9137 E8890001 EAFC9135
+
+LOAD <Lem$Dir>.LemBoot 8000
+| Correct T1 palette swap
+IF ADFFS$OSVersion>=&50000 THEN MEMA 8008 7600
+IF ADFFS$VIDC20 THEN MEMA 8008 5400 3C00
+
+ADFClipScreen 40:27 0 16
+GO 8000
+ADFClipScreen
+<Lem$Dir>.LrestMouse
+IF fix$up THEN GOARM3JIT
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
+RMKill MusicModule2
+FX 15 0
+IF Lem$Speaker = 1 THEN *Speaker On
+IF Lem$Speaker = 0 THEN *Speaker Off
+UnSet Lem$Speaker
+UnSet Lem$Dir
+UnSet fix$up
+RestoreCSD

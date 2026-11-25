@@ -1,0 +1,44 @@
+IF "<Obey$Dir>"="@" THEN Set Obey$Dir ADFS::0.$.!Nebulus
+StoreCSD
+DIR <Obey$Dir>
+
+Set Nebu$Dir <Obey$dir>
+
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 13 80 ELSE ScreenSize 80
+RMAFree 200
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt keeps IRQs off for up to 1 ms, which delays the title
+| screen's palette changes
+RMEnsure MusicModule 1.02 RMLoad <Nebu$Dir>.MusMod
+Set JSflag 0
+IF ADFFS$OSVersion<&50000 THEN RMEnsure Joystick 0.0 Set JSflag 1
+IF JSflag>0 THEN RMLoad ADFFS:extras.JoyMod
+
+ADFWimpSlot 540k
+
+LOAD <Nebu$Dir>.LOADER 6FC38
+ADFCRC 6FC38 70CDC CD18118A LOADER
+| Decode stage 1
+MEMA 6FBF0 E28F8084 E3A07003 E1A01008 E2410044 E2805040 E4902004 E5913000 E0832002 E4953004 E0822003 E4812004 E35200BE 1AFFFFF7 E2888044 E2577001 1AFFFFF1 EF000011
+IF ADFFS$OSVersion>=&35000 THEN GOARM3JIT 0
+GO 6FBF0
+| Decode stage 2
+MEMA 6FF34 EF000011
+GO 6FD04
+MEMA 6FBF0 E28F8D0E >6FF34 E3A000C8
+GO 6FBF0
+MEMA 70980 E28FDA01 | Speed up decoding
+MEMA 70A78 EF000011 | Load main code
+GO 70980
+| Correct JoyMod Joystick code
+MEMA 36480 EF063F40 73A00001 63A00000 E92D0001 EF0A1540 E8BD0001 73A00002 E92D0001 EF0EFFC2 E3300000 E8BD0001 03A00003 E1A00000
+ADFClipScreen 8:5 0 28
+ADFGO 8000
+ADFClipScreen
+IF ADFFS$OSVersion>=&35000 THEN GOARM3JIT
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
+IF JSflag>0 THEN RMEnsure Joystick Set JSflag 0
+IF JSflag>0 THEN RMKill Joystick
+Unset JSflag
+RMKill MusicModule
+RestoreCSD

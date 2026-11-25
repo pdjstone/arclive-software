@@ -1,0 +1,33 @@
+| To install to HD:
+| 1. Copy !JamesPond to HD
+| 2. Replace the contents of !JamesPond.!Run with:
+|  ADFBootFloppy F1021101
+IF "<Obey$Dir>"="@" THEN Set Obey$Dir ADFS::0.$.!JamesPond
+StoreCSD
+DIR <Obey$Dir>
+HideCommandWindow
+Set Pond$Dir <Obey$Dir>
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory 13 80 ELSE ScreenSize 80
+RMAFree 256
+| Archimedes Live: use the game's own MusicModule, not ADFFS's MusMod2 on QTM.
+| QTM's sound interrupt keeps IRQs off for up to ~1 ms, which can delay the
+| game's timer 1 palette changes
+RMEnsure MusicModule2 0 RMLoad <Pond$Dir>.MUSMOD2
+Set JSflag 0
+IF ADFFS$OSVersion<&50000 THEN RMEnsure Joystick 0.0 Set JSflag 1
+IF JSflag>0 THEN RMLoad ADFFS:extras.JoyMod
+mussamplerate 3
+fx19
+ADFWimpSlot 480k
+IF ADFFS$CPUID>=&A10 THEN GOARM3JIT 0
+ADFClipScreen 8:5
+<Pond$Dir>.Loader
+ADFClipScreen
+IF ADFFS$CPUID>=&A10 THEN GOARM3JIT
+IF ADFFS$OSVersion>=&35000 THEN ADFRemapVideoMemory
+IF JSflag>0 THEN RMEnsure Joystick 0.0 Set JSflag 0
+IF JSflag>0 THEN RMKill Joystick
+UnSet JSflag
+RMKill MusicModule2
+UnSet Pond$Dir
+RestoreCSD
