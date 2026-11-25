@@ -83,7 +83,7 @@ def make_toml(repo_url, packages) -> tomlkit.document:
             title, year, publisher = m.groups()
             arc_meta['title']  = title.strip()
             arc_meta['year'] = int(year)
-            arc_meta['publisher'] = publisher
+            arc_meta['publisher'] = f'{publisher} / Provided by JASPP'
         else:
             arc_meta['title'] = title
         if package_id != 'adffs':

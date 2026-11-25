@@ -3,7 +3,7 @@
 [alone-in-the-dark]
 title = "Alone In the Dark"
 year = 1995
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -23,7 +23,7 @@ app-path = "Apps.Games.!Alone"
 [battle-chess]
 title = "Battle Chess"
 year = 1993
-publisher = "Krisalis Software"
+publisher = "Krisalis Software  / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -40,7 +40,7 @@ app-path = "Apps.Games.!Battle"
 [cannon-fodder]
 title = "Cannon Fodder"
 year = 1994
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -60,7 +60,7 @@ app-path = "Apps.Games.!Cannon"
 [champions]
 title = "Champions"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -72,7 +72,7 @@ app-path = "Apps.Games.Champions"
 [chuck-rock]
 title = "Chuck Rock"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -86,7 +86,7 @@ app-path = "Apps.Games.!Chuck"
 [gods]
 title = "Gods"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -107,7 +107,7 @@ app-path = "Apps.Games.!Gods"
 [heimdall]
 title = "Heimdall"
 year = 1993
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -125,7 +125,7 @@ app-path = "Apps.Games.!Heimdall"
 [hero-quest]
 title = "Hero Quest"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -157,7 +157,7 @@ app-path = "Apps.Games.!HeroQuest"
 [jahangir-khan-squash]
 title = "Jahangir Khan World Championship Squash"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -175,7 +175,7 @@ app-path = "Apps.Games.!JKSquash"
 [james-pond]
 title = "James Pond"
 year = 1990
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -233,7 +233,7 @@ app-path = "Apps.Games.KrisalisCol"
 [lemmings]
 title = "Lemmings"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -253,7 +253,7 @@ app-path = "Apps.Games.!Lemmings"
 [lemmings-2-the-tribes]
 title = "Lemmings 2: The Tribes"
 year = 1994
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -271,7 +271,7 @@ app-path = "Apps.Games.!Lemmings2"
 [lotus-turbo-challenge-2]
 title = "Lotus Turbo Challenge 2"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -291,7 +291,7 @@ app-path = "Apps.Games.!LOTUS"
 [mad-professor-mariarti]
 title = "Mad Professor Mariarti"
 year = 1990
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -305,7 +305,7 @@ app-path = "Apps.Games.!MadProf"
 [manchester-united]
 title = "Manchester United"
 year = 1990
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -319,7 +319,7 @@ app-path = "Apps.Games.!!MUFC!!"
 [manchester-united-europe]
 title = "Manchester United Europe"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -331,7 +331,7 @@ app-path = "Apps.Games.!ManUnited"
 [nebulus]
 title = "Nebulus"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -344,7 +344,7 @@ app-path = "Apps.Games.!Nebulus"
 [oh-no-more-lemmings]
 title = "Oh, No! More Lemmings"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -356,7 +356,7 @@ app-path = "Apps.Games.!OhNoLemms"
 [omar-sharifs-bridge]
 title = "Omar Sharif's Bridge"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -373,26 +373,10 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/Omar-Sharifs-Bridg
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!Bridge"
 
-[Xxpipe-mania]
-title = "Pipe Mania"
-year = 1989
-publisher = "Krisalis Software"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """Pipe Mania is a game of great ingenuity, simple in concept and fiendishly challenging to play.
-
-You'll need to act instinctively, but think strategically!
-
-One wrong move, one brief hesitation or mis-placed pipe section, and you'll drown in a sea of slime!"""
-archive = "https://www.jaspp.org.uk/packages/release-packages/Pipe-Mania_0-3"
-tags = "game,ex-commercial,hidden"
-app-path = "Apps.Games.!PipeMania"
-
 [populous]
 title = "Populous"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -409,7 +393,7 @@ app-path = "Apps.Games.!Populous"
 [quest-for-gold]
 title = "Quest For Gold"
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -422,7 +406,7 @@ app-path = "Apps.Games.!!GOLD!!"
 [simcity]
 title = "SimCity"
 year = 1993
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -432,9 +416,9 @@ tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!SimCity"
 
 [simcity2000-a5000]
-title = "SimCity 2000 [A5000 version]"
+title = "SimCity 2000"
 year = 1994
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -446,7 +430,7 @@ app-path = "Apps.Games.!SC2000"
 [speedball-2]
 title = "SpeedBall 2"
 year = 1994
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -469,7 +453,7 @@ app-path = "Apps.Games.!SpeedBall"
 [world-champ-boxing-manager]
 title = "World Championship Boxing Manager"
 year = 1991
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
@@ -481,7 +465,7 @@ app-path = "Apps.Games.!BoxingMan"
 [world-class-leaderboard]
 title = "World Class Leaderboard"
 year = 1993
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"

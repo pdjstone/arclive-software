@@ -1,6 +1,6 @@
 +++
 year = 1989
-publisher = "Krisalis Software"
+publisher = "Krisalis Software / provided by JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
