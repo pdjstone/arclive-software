@@ -18,7 +18,7 @@ Cartoon 2D platformer where you play a small furry creature with a large mallet 
 Controls:
 - <kbd>Z</kbd> - Left
 - <kbd>X</kbd> - Right
-- <kbd>Enter</kbd> - Use hammer/jump (hold down longer for bigger swing)
+- <kbd>Enter</kbd> - Use hammer (hold down longer for bigger swing)
 
-
+Menu screen: same controls to navigate.
 

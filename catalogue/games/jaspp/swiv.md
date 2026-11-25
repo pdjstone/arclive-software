@@ -1,12 +1,13 @@
 +++
 year = 1992
-publisher = "Krisalis Software"
+publisher = "Krisalis Software, JASPP"
 depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
 archive = "https://www.jaspp.org.uk/packages/release-packages/SWIV_0-3"
 tags = "game,ex-commercial"
 app-path = "Apps.Games.!Swiv"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=457"
 +++
 
 # S.W.I.V.
@@ -47,7 +48,6 @@ In game:
 - <kbd>F1</kbd> - Pause
 - <kbd>Escape</kbd> - Quit the game
 
-On the title screens:
+Title screen:
 
-- <kbd>F1</kbd> - Options. <kbd>F5</kbd>/<kbd>F6</kbd>/<kbd>F7</kbd> set player 1 to joystick 1, joystick 2 or keyboard, and <kbd>F8</kbd>/<kbd>F9</kbd>/<kbd>F10</kbd> do the same for player 2
-- <kbd>F2</kbd> - Choose your own keys (the cursor keys can't be used, and the choice isn't saved)
+- <kbd>F2</kbd> - Redefine keys
