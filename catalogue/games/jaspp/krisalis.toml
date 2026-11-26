@@ -34,8 +34,9 @@ Combat, mortal combat, is the heart and soul of chess, but this aspect of it can
 
 Lots of computer chess games capture the basics of chess. Only Battle Chess brings chess to life by combining a magnificent chess logic system with colourful, humourous, and dramatic three-dimensional animations."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Battle-Chess_0-4"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!Battle"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=173"
 
 [cannon-fodder]
 title = "Cannon Fodder"
@@ -54,8 +55,9 @@ AND DON'T FORGET TO WASH YOUR HANDS AFTERWARDS..."
 
 WAR HAS NEVER BEEN SO MUCH FUN..."""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Cannon-Fodder_0-4"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!Cannon"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=188"
 
 [champions]
 title = "Champions"
@@ -192,8 +194,9 @@ Choice of weapons or just blow up baddies with bubble-action!
 
 So many different enemies and pickups you'll wish you had eight tentacles!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/James-Pond_0-3"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.!JamesPond"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=75"
 
 [krisalis-collection]
 title = "Krisalis Collection, The"
@@ -249,6 +252,7 @@ A quick brain, the ability to plan ahead and lifetimes dedication to the Save A 
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings_0-3"
 tags = "game,ex-commercial"
 app-path = "Apps.Games.!Lemmings"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=96"
 
 [lemmings-2-the-tribes]
 title = "Lemmings 2: The Tribes"
@@ -267,6 +271,7 @@ Meet the Highland Lemmings, Space Lemmings, Beach-Bum Lemmings, Circus Lemmings 
 archive = "https://www.jaspp.org.uk/packages/release-packages/Lemmings-2-The-Tribes_0-3"
 tags = "game,ex-commercial"
 app-path = "Apps.Games.!Lemmings2"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=279"
 
 [lotus-turbo-challenge-2]
 title = "Lotus Turbo Challenge 2"
@@ -328,19 +333,6 @@ archive = "https://www.jaspp.org.uk/packages/release-packages/Manchester-United-
 tags = "game,ex-commercial,hidden"
 app-path = "Apps.Games.!ManUnited"
 
-[nebulus]
-title = "Nebulus"
-year = 1992
-publisher = "Krisalis Software / provided by JASPP"
-depends = "adffs"
-ff-ms = 28000
-min-mem = "4MB"
-description = """Down on the planet Nebulus all is not well. Someone or something has been building giant towers in the sea and they didn't even apply for planning permission.
-In the offices of Destructo Inc. you awake from your afternoon nap with the phone almost erupting on your desk. The boss is shouting about some little destruction job he's got for you. Still half asleep you feel like throwing the phone in the bin but he starts talking about the brand new Mk.7 Mini-Sub he's got for you and the words "pay rise". You're out of your office in a flash, leaving the phone dangling out of the window as the boss goes on to talk about the extreme danger involved..."""
-archive = "https://www.jaspp.org.uk/packages/release-packages/Nebulus_0-3"
-tags = "game,ex-commercial"
-app-path = "Apps.Games.!Nebulus"
-
 [oh-no-more-lemmings]
 title = "Oh, No! More Lemmings"
 year = 1992
@@ -352,6 +344,7 @@ description = """100 Brand New Lemmings Adventures!"""
 archive = "https://www.jaspp.org.uk/packages/release-packages/Oh-No-More-Lemmings_0-3"
 tags = "game,ex-commercial"
 app-path = "Apps.Games.!OhNoLemms"
+info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=333"
 
 [omar-sharifs-bridge]
 title = "Omar Sharif's Bridge"
