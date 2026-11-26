@@ -5,7 +5,7 @@ depends = "adffs"
 ff-ms = 28000
 min-mem = "4MB"
 archive = "https://www.jaspp.org.uk/packages/release-packages/Krisalis-Collection_0-4"
-tags = "game,ex-commercial,hidden"
+tags = "game,ex-commercial"
 app-path = "Apps.Games.KrisalisCol.!PipeMania"
 mouse-capture = "force"
 info-url = "https://forums.jaspp.org.uk/forum/viewtopic.php?t=276"
